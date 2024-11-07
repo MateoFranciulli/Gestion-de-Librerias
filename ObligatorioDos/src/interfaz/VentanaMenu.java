@@ -28,10 +28,10 @@ public class VentanaMenu extends javax.swing.JFrame {
 
         jmbBarraMenu = new javax.swing.JMenuBar();
         jmRegistro = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jitemRegistroEditorial = new javax.swing.JMenuItem();
+        jItemRegistroGenero = new javax.swing.JMenuItem();
+        jItemRegistroAutor = new javax.swing.JMenuItem();
+        jItemRegistroLibro = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jmRegistrarVenta = new javax.swing.JMenuItem();
         jmAnularVenta = new javax.swing.JMenuItem();
@@ -45,36 +45,56 @@ public class VentanaMenu extends javax.swing.JFrame {
         jmRegistro.setText("Registros");
         jmRegistro.setActionCommand("Registro");
 
-        jMenuItem1.setText("Registro Editorial");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jitemRegistroEditorial.setText("Registro Editorial");
+        jitemRegistroEditorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jitemRegistroEditorialActionPerformed(evt);
             }
         });
-        jmRegistro.add(jMenuItem1);
+        jmRegistro.add(jitemRegistroEditorial);
 
-        jMenuItem2.setText("Registro Género");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jItemRegistroGenero.setText("Registro Género");
+        jItemRegistroGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jItemRegistroGeneroActionPerformed(evt);
             }
         });
-        jmRegistro.add(jMenuItem2);
+        jmRegistro.add(jItemRegistroGenero);
 
-        jMenuItem3.setText("Registro Autor");
-        jmRegistro.add(jMenuItem3);
+        jItemRegistroAutor.setText("Registro Autor");
+        jItemRegistroAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jItemRegistroAutorActionPerformed(evt);
+            }
+        });
+        jmRegistro.add(jItemRegistroAutor);
 
-        jMenuItem4.setText("Registro Libro");
-        jmRegistro.add(jMenuItem4);
+        jItemRegistroLibro.setText("Registro Libro");
+        jItemRegistroLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jItemRegistroLibroActionPerformed(evt);
+            }
+        });
+        jmRegistro.add(jItemRegistroLibro);
 
         jmbBarraMenu.add(jmRegistro);
 
         jMenu5.setText("Ventas");
 
         jmRegistrarVenta.setText("Registrar Venta");
+        jmRegistrarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmRegistrarVentaActionPerformed(evt);
+            }
+        });
         jMenu5.add(jmRegistrarVenta);
 
         jmAnularVenta.setText("Anular Venta");
+        jmAnularVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmAnularVentaActionPerformed(evt);
+            }
+        });
         jMenu5.add(jmAnularVenta);
 
         jmbBarraMenu.add(jMenu5);
@@ -82,9 +102,19 @@ public class VentanaMenu extends javax.swing.JFrame {
         jMenu6.setText("Consultas");
 
         jmConsultaVentas.setText("Consulta de Ventas");
+        jmConsultaVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmConsultaVentasActionPerformed(evt);
+            }
+        });
         jMenu6.add(jmConsultaVentas);
 
         jmConsultaLibros.setText("Consulta de Libros");
+        jmConsultaLibros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmConsultaLibrosActionPerformed(evt);
+            }
+        });
         jMenu6.add(jmConsultaLibros);
 
         jmbBarraMenu.add(jMenu6);
@@ -105,13 +135,47 @@ public class VentanaMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void jitemRegistroEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jitemRegistroEditorialActionPerformed
+      
+        VentanaRegistroEditorial ventana = new VentanaRegistroEditorial();
+        ventana.setVisible(true);
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jitemRegistroEditorialActionPerformed
+
+    private void jItemRegistroGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemRegistroGeneroActionPerformed
+        VentanaRegistroGenero ventana = new VentanaRegistroGenero();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jItemRegistroGeneroActionPerformed
+
+    private void jItemRegistroAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemRegistroAutorActionPerformed
+        VentanaRegistroAutor ventana = new VentanaRegistroAutor();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jItemRegistroAutorActionPerformed
+
+    private void jItemRegistroLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemRegistroLibroActionPerformed
+        VentanaRegistroLibro ventana = new VentanaRegistroLibro();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jItemRegistroLibroActionPerformed
+
+    private void jmRegistrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmRegistrarVentaActionPerformed
+        VentanaRegistrarVentas ventana = new VentanaRegistrarVentas();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jmRegistrarVentaActionPerformed
+
+    private void jmAnularVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAnularVentaActionPerformed
+        VentanaAnularVenta ventana = new VentanaAnularVenta();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jmAnularVentaActionPerformed
+
+    private void jmConsultaLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmConsultaLibrosActionPerformed
+        VentanaConsultaLibros ventana = new VentanaConsultaLibros();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jmConsultaLibrosActionPerformed
+
+    private void jmConsultaVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmConsultaVentasActionPerformed
+       VentanaConsultaVentas ventana = new VentanaConsultaVentas();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jmConsultaVentasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -119,12 +183,12 @@ public class VentanaMenu extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jItemRegistroAutor;
+    private javax.swing.JMenuItem jItemRegistroGenero;
+    private javax.swing.JMenuItem jItemRegistroLibro;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jitemRegistroEditorial;
     private javax.swing.JMenuItem jmAnularVenta;
     private javax.swing.JMenuItem jmConsultaLibros;
     private javax.swing.JMenuItem jmConsultaVentas;

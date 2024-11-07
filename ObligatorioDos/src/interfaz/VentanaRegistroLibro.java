@@ -4,6 +4,10 @@
  */
 package interfaz;
 
+import java.awt.Image;
+import java.io.*;
+import javax.swing.*;
+
 /**
  *
  * @author Usuario
@@ -51,6 +55,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         lblEjemplares = new javax.swing.JLabel();
         txtEjemplares = new javax.swing.JTextField();
         jbIngresarLibro = new javax.swing.JButton();
+        labelFoto = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -117,7 +122,12 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         lblFoto.setText("Foto :");
         lblFoto.setFocusable(false);
 
-        btnFoto.setText("Sin foto");
+        btnFoto.setText("Seleccionar Foto");
+        btnFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFotoActionPerformed(evt);
+            }
+        });
 
         lblEjemplares.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblEjemplares.setText("Cantidad de ejemplares :");
@@ -130,6 +140,8 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         });
 
         jbIngresarLibro.setText("Ingresar");
+
+        labelFoto.setText("        Sin Foto");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,11 +181,8 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
                                     .addComponent(lblIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(txtIsbn1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(42, 42, 42)
+                            .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblPrecioCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,6 +199,12 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbIngresarLibro)
                         .addGap(14, 14, 14))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,14 +232,16 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
                     .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtIsbn1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblIsbn, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEjemplares, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEjemplares, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFoto)
                     .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbIngresarLibro))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addComponent(jbIngresarLibro)
+                    .addComponent(labelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFoto)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -246,6 +263,23 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEjemplaresActionPerformed
 
+    private void btnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFotoActionPerformed
+        JFileChooser selectorArchivo = new JFileChooser();
+        selectorArchivo.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png", "gif"));
+
+        int resultado = selectorArchivo.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivoSeleccionado = selectorArchivo.getSelectedFile();
+            ImageIcon iconoImagen = new ImageIcon(archivoSeleccionado.getAbsolutePath());
+
+            Image imagen = iconoImagen.getImage();
+            Image imagenEscalada = imagen.getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(), Image.SCALE_SMOOTH);
+            labelFoto.setIcon(new ImageIcon(imagenEscalada));
+            labelFoto.setText("");
+        }
+
+    }//GEN-LAST:event_btnFotoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -258,6 +292,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton jbIngresarLibro;
+    private javax.swing.JLabel labelFoto;
     private javax.swing.JLabel lblAutorLibro;
     private javax.swing.JLabel lblEditorialLibro;
     private javax.swing.JLabel lblEjemplares;
