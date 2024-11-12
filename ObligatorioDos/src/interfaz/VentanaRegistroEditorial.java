@@ -1,15 +1,20 @@
 package interfaz;
 import dominio.*;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class VentanaRegistroEditorial extends javax.swing.JFrame {
-
+    
+    // Para añadir a listas, aca declaro e inizialiso los "DefaultListModel" 
+    private DefaultListModel<String> liEditorialesIngresadasModel = new DefaultListModel<>();
+    private DefaultListModel<String> liPaisEditorialRegistradaModel = new DefaultListModel<>();
+    
     /**
      * Creates new form VentanaRegistro
      */
     public VentanaRegistroEditorial() {
         initComponents();
-        
+        liEditorialesIngresadas.setModel(liEditorialesIngresadasModel); // asigna el modelo a la Jlist para luego usar addElement 
+        liPaisEditorialRegistrada.setModel(liPaisEditorialRegistradaModel);
     }
 
     /**
@@ -130,28 +135,22 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame {
     private void jbIngresarEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarEditorialActionPerformed
         String nombre = this.txtNombreEditorial.getText();
         String pais = this.txtPaisEditorial.getText();
-        
-        
-        if (!Editorial.verificoEditorial(nombre)) {
-            JOptionPane.showMessageDialog(null, "Nombre ya registrado,"
-                    + "porfavor registre uno válido."); 
-           
-        }else{
-            
-           Editorial editorial = new Editorial(nombre, pais);//objeto editorial  
-           modelo.agregarEditorial(editorial);// añado la editorial a la lista
-           JOptionPane.showMessageDialog(null, "Nueva Editorial creada:\n" + editorial);
-        
-        }
-        
 
-        //vacio campos
-        txtNombreEditorial.setText(" ");
-        txtPaisEditorial.setText(" ");
-        
-        
-       
-        
+        if (!Editorial.verificoEditorial(nombre)) {
+            JOptionPane.showMessageDialog(null, "Nombre ya registrado, por favor registre uno válido.");
+        } else {
+            Editorial editorial = new Editorial(nombre, pais); // objeto editorial
+            modelo.agregarEditorial(editorial); // añado la editorial a la lista            
+            liEditorialesIngresadasModel.addElement(nombre); // añado el nombre al modelo de la lista
+            liPaisEditorialRegistradaModel.addElement(pais); // añado el país al modelo de la lista
+            JOptionPane.showMessageDialog(null, "Nueva Editorial creada:\n" + editorial);
+        }
+
+        // vacío campos
+        txtNombreEditorial.setText("");
+        txtPaisEditorial.setText("");
+
+
     }//GEN-LAST:event_jbIngresarEditorialActionPerformed
 
     private void txtNombreEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreEditorialActionPerformed
@@ -180,4 +179,5 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreEditorial;
     private javax.swing.JTextField txtPaisEditorial;
     // End of variables declaration//GEN-END:variables
+
 }
