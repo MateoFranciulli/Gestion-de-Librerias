@@ -59,7 +59,6 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("RegistroEditorial");
 
         lblRegistroEditorial.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N

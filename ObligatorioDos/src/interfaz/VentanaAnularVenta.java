@@ -39,7 +39,6 @@ public class VentanaAnularVenta extends javax.swing.JFrame {
         liGenerosAutor = new javax.swing.JList<>();
         jbIngresarAutor = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("RegistroEditorial");
 
         lblRegistroAutor.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N

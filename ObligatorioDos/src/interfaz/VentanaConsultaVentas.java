@@ -43,8 +43,6 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setText("Isbn");
 
         txtIsbn.addActionListener(new java.awt.event.ActionListener() {

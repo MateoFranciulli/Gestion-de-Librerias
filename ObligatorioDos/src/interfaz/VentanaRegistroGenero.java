@@ -39,7 +39,6 @@ public class VentanaRegistroGenero extends javax.swing.JFrame {
         txtAreaDescripcion = new javax.swing.JTextArea();
         jbIngresarGenero = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("RegistroEditorial");
 
         lblRegistroGenero.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
