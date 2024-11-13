@@ -12,7 +12,7 @@ public class Modelo {
         editoriales.add(editorial);
     }
 
-    public List<Editorial> getEditoriales() {
+    public ArrayList<Editorial> getEditoriales() {
         return editoriales;
     }
     public static boolean verificoEditorial(String nombre) {
@@ -32,7 +32,7 @@ public class Modelo {
         generos.add(genero);
     }
 
-    public List<Genero> getGeneros() {
+    public ArrayList<Genero> getGeneros() {
         return generos;
     }
     public static boolean verificoGeneros(String nombre) {
@@ -53,7 +53,7 @@ public class Modelo {
         autores.add(autor);
     }
 
-    public List<Autor> getAutores() {
+    public ArrayList<Autor> getAutores() {
         return autores;
     }
     public static boolean verificoAutores(String nombre) {
