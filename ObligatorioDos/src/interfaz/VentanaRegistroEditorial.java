@@ -135,14 +135,26 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame {
     private void jbIngresarEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarEditorialActionPerformed
         String nombre = this.txtNombreEditorial.getText();
         String pais = this.txtPaisEditorial.getText();
-
-        if (!Editorial.verificoEditorial(nombre)) {
+        
+        
+        if (!modelo.verificoEditorial(nombre)) {
             JOptionPane.showMessageDialog(null, "Nombre ya registrado, por favor registre uno válido.");
-        } else {
+        } else 
+            // Validación para asegurarse de que solo se ingresen letras
+            if (!nombre.matches("[a-zA-Z ]+")||!pais.matches("[a-zA-Z ]+")) { // esta validacion fue hecha con ayuda de chat GPT (link:https://chatgpt.com/share/66fb3ee0-30e0-800d-a8cb-438856f220ca)
+                JOptionPane.showMessageDialog(null,"Los datos solo admiten letras, ingrese datos válidos");
+        }else 
+        
+            if(nombre.length()<2||pais.length()<2){
+                JOptionPane.showMessageDialog(null, "Complete todos los campos.");
+        }
+        
+        //caso correcto
+        else{
             Editorial editorial = new Editorial(nombre, pais); // objeto editorial
-            modelo.agregarEditorial(editorial); // añado la editorial a la lista            
-            liEditorialesIngresadasModel.addElement(nombre); // añado el nombre al modelo de la lista
-            liPaisEditorialRegistradaModel.addElement(pais); // añado el país al modelo de la lista
+            modelo.agregarEditorial(editorial); // aniado la editorial a la lista            
+            liEditorialesIngresadasModel.addElement(nombre); // aniado el nombre al modelo de la lista
+            liPaisEditorialRegistradaModel.addElement(pais); // aniado el país al modelo de la lista
             JOptionPane.showMessageDialog(null, "Nueva Editorial creada:\n" + editorial);
         }
 

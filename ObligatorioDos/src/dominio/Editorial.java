@@ -31,14 +31,4 @@ private String pais;
         return "Editorial:"+"\n Nombre: "+nombre+ " , Pais: "+ pais ;
     }
     
-    public static boolean verificoEditorial(String nombre) {
-        boolean retorno = true;
-        for (Editorial editorial : Modelo.editoriales) {
-            if (editorial.getNombre().equalsIgnoreCase(nombre)) {
-                retorno = false; // Retorna false si se encuentra una coincidencia
-            }
-        }
-        return retorno ; 
-    }
-    
 }
