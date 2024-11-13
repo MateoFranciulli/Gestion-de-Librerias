@@ -1,5 +1,5 @@
 package interfaz;
-import dominio.Observable;
+
 import dominio.*;
 import javax.swing.*;
 
@@ -15,8 +15,8 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame implements Obse
     public VentanaRegistroEditorial(Modelo modelo) {
         this.modelo = modelo;
         initComponents();
-        liEditorialesIngresadas.setModel(liEditorialesIngresadasModel);
-        liPaisEditorialRegistrada.setModel(liPaisEditorialRegistradaModel);
+        //liEditorialesIngresadas.setModel(liEditorialesIngresadasModel);
+        //liPaisEditorialRegistrada.setModel(liPaisEditorialRegistradaModel);
         cargarEditoriales(); // cargar editoriales al iniciar
         modelo.añadirObservador(this);
     }
@@ -159,28 +159,19 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame implements Obse
     private void jbIngresarEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarEditorialActionPerformed
         String nombre = this.txtNombreEditorial.getText();
         String pais = this.txtPaisEditorial.getText();
-        
-        
+
         if (!modelo.verificoEditorial(nombre)) {
-            
             JOptionPane.showMessageDialog(null, "Nombre ya registrado, por favor registre uno válido.");
-            
         } else if (!nombre.matches("[a-zA-Z ]+") || !pais.matches("[a-zA-Z ]+")) {
-            
             JOptionPane.showMessageDialog(null,"Los datos solo admiten letras, ingrese datos válidos");
-            
         } else if (nombre.length() < 2 || pais.length() < 2) {
-            
             JOptionPane.showMessageDialog(null, "Complete todos los campos.");
-            
         } else {
-            
             Editorial editorial = new Editorial(nombre, pais);
             modelo.agregarEditorial(editorial);
             JOptionPane.showMessageDialog(null, "Nueva Editorial creada:\n" + editorial);
         }
 
-        // vacío campos
         txtNombreEditorial.setText("");
         txtPaisEditorial.setText("");
 

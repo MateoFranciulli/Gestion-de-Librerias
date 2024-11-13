@@ -4,6 +4,8 @@
  */
 package interfaz;
 
+import dominio.Modelo;
+
 /**
  *
  * @author Usuario
@@ -136,9 +138,9 @@ public class VentanaMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jitemRegistroEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jitemRegistroEditorialActionPerformed
-      
-        VentanaRegistroEditorial ventana = new VentanaRegistroEditorial();
-        ventana.setVisible(true);
+    Modelo modelo = new Modelo(); 
+    VentanaRegistroEditorial ventana = new VentanaRegistroEditorial(modelo);
+    ventana.setVisible(true);
 
     }//GEN-LAST:event_jitemRegistroEditorialActionPerformed
 

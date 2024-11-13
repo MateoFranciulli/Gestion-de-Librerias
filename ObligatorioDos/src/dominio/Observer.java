@@ -9,8 +9,9 @@ package dominio;
  *
  * @author mateofranciulli
  */
-public interface Observer {
 
+
+public interface Observer {
     void actualizar(Object arg);
 }
 

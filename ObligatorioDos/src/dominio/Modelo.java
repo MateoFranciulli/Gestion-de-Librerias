@@ -1,10 +1,11 @@
 package dominio;
 import dominio.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
+
+
 
 public class Modelo extends Observable {
+  
     public static ArrayList<Editorial> editoriales = new ArrayList<>();
 
     public void agregarEditorial(Editorial editorial) {
