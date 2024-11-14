@@ -1,7 +1,9 @@
 package dominio;
 import dominio.*;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
@@ -10,8 +12,10 @@ import java.util.*;
 
 
 public class Modelo extends Observable implements Serializable{    
-    public Modelo(){
-        
+ private static final long serialVersionUID = 1L;    
+//private static final long serialVersionUID = -8391326021940632313L;
+    public Modelo() throws IOException{
+        cargarDatos();
     }
   
     public static ArrayList<Editorial> editoriales = new ArrayList<>();
@@ -92,17 +96,26 @@ public class Modelo extends Observable implements Serializable{
         return retorno ; 
     }
     
- public void guardarDatos() {
-    try {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"));
-        out.writeObject(this);
-        out.close();
-    } catch(IOException e) {
-        System.out.println("No se pudo guardar los datos: " + e.getMessage());
+    public void guardarDatos() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"))) {
+            out.writeObject(this);
+        } catch (IOException e) {
+            System.out.println("No se pudo guardar los datos: " + e.getMessage());
+        }
+        setChanged();
+        notifyObservers();
     }
-    setChanged();
-    notifyObservers();
-}
+
+    public void cargarDatos() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("sistema"))) {
+            Modelo modelo = (Modelo) in.readObject();
+            editoriales = modelo.editoriales != null ? modelo.editoriales : new ArrayList<>();
+            generos = modelo.generos != null ? modelo.generos : new ArrayList<>();
+            autores = modelo.autores != null ? modelo.autores : new ArrayList<>();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("No se pudo cargar los datos: " + e.getMessage());
+        }
+    }
     
     /*
     public void guardarDatos() {

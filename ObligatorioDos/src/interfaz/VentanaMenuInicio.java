@@ -9,8 +9,10 @@ public class VentanaMenuInicio extends javax.swing.JFrame {
     private Modelo modelo;
     /**
      * Creates new form VentanaMenuInicio
+     * @throws java.io.IOException
      */
-    public VentanaMenuInicio() {
+    public VentanaMenuInicio() throws IOException {
+         modelo = new Modelo();
         initComponents();
     }
 
@@ -91,24 +93,34 @@ public class VentanaMenuInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSistemaNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSistemaNuevoActionPerformed
+   try {
         Modelo modelo = new Modelo();
+        modelo.guardarDatos(); // Create the "sistema" file
         VentanaMenu vent = new VentanaMenu(modelo);
         vent.setVisible(true);
         this.dispose();
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error al iniciar el nuevo sistema!", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnSistemaNuevoActionPerformed
 
     private void bntSistemaAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSistemaAnteriorActionPerformed
-      try (FileInputStream ar = new FileInputStream("sistema")) {
-        ObjectInputStream leer = new ObjectInputStream(ar);
-        modelo = (Modelo) leer.readObject();
-        JOptionPane.showMessageDialog(null, "Sistema Recibido!", "Correcto", JOptionPane.INFORMATION_MESSAGE);
-    } catch (IOException | ClassNotFoundException ex) {
-        JOptionPane.showMessageDialog(null, "No existe un Sistema anterior o error al leer Archivo!", "Error", JOptionPane.ERROR_MESSAGE);
-        modelo = new Modelo();
-    }
-    VentanaMenu vent = new VentanaMenu(modelo);
-    vent.setVisible(true);
-    this.dispose();
+try (FileInputStream ar = new FileInputStream("sistema")) {
+            ObjectInputStream leer = new ObjectInputStream(ar);
+            modelo = (Modelo) leer.readObject();
+            JOptionPane.showMessageDialog(null, "Sistema Recibido!", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException | ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "No existe un Sistema anterior o error al leer Archivo!", "Error", JOptionPane.ERROR_MESSAGE);
+            try {
+                modelo = new Modelo();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error al iniciar el modelo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        VentanaMenu vent = new VentanaMenu(modelo);
+        vent.setVisible(true);
+        this.dispose();
+
         
         /*
         try{
