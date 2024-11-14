@@ -1,5 +1,8 @@
 package dominio;
 import dominio.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 
@@ -85,8 +88,17 @@ public class Modelo extends Observable {
         return retorno ; 
     }
     
-    
+    public void guardarDatos() {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"));
+            out.writeObject(this);
+            out.close();
+        } catch(IOException e) {
+            System.out.println("No hay datos"); 
+        }
+        notifyObservers();
+    }
 
     
-    //funcion que muestra los autores registrados en la lista
+    
 }
