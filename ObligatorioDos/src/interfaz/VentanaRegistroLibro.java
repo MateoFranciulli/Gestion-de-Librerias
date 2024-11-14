@@ -4,6 +4,7 @@
  */
 package interfaz;
 
+import dominio.Modelo;
 import java.awt.Image;
 import java.io.*;
 import javax.swing.*;
@@ -17,7 +18,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
     /**
      * Creates new form VentanaRegistro
      */
-    public VentanaRegistroLibro() {
+    public VentanaRegistroLibro(Modelo modelo) {
         initComponents();
     }
 

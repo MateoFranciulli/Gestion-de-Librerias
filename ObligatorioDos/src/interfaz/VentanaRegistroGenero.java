@@ -6,6 +6,7 @@ package interfaz;
 
 import dominio.Genero;
 import dominio.Modelo;
+import java.util.*;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -13,7 +14,7 @@ import javax.swing.JOptionPane;
  *
  * @author Usuario
  */
-public class VentanaRegistroGenero extends javax.swing.JFrame {
+public class VentanaRegistroGenero extends javax.swing.JFrame implements Observer {
 
     // Para añadir a listas, aca declaro e inizialiso los "DefaultListModel" 
     private DefaultListModel<String> liGenerosRegistradosModel = new DefaultListModel<>();
@@ -22,10 +23,13 @@ public class VentanaRegistroGenero extends javax.swing.JFrame {
     /**
      * Creates new form VentanaRegistro
      */
-    public VentanaRegistroGenero() {
+    public VentanaRegistroGenero(Modelo modelo) {
+        this.modelo = modelo;
         initComponents();
         liGenerosRegistrados.setModel(liGenerosRegistradosModel); // asigna el modelo a la Jlist para luego usar addElement 
         liDescGeneroRegistrado.setModel(liDescGeneroRegistradoModel);
+        cargarGeneros();
+        modelo.addObserver(this);
     }
 
     /**
@@ -147,6 +151,24 @@ public class VentanaRegistroGenero extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+     private void cargarGeneros() {
+        liGenerosRegistradosModel.clear();
+        liDescGeneroRegistradoModel.clear();
+        for (Genero genero : modelo.getGeneros()) {
+            liGenerosRegistradosModel.addElement(genero.getNombre());
+            liDescGeneroRegistradoModel.addElement(genero.getDescripcion());
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Genero) {
+            Genero genero = (Genero) arg;
+            liGenerosRegistradosModel.addElement(genero.getNombre());
+            liDescGeneroRegistradoModel.addElement(genero.getDescripcion());
+        }
+    }
     private void txtNombreGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreGeneroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreGeneroActionPerformed
@@ -167,8 +189,9 @@ public class VentanaRegistroGenero extends javax.swing.JFrame {
         } else {
             Genero genero = new Genero(nombre, descripcion); // objeto genero
             modelo.agregarGenero(genero); // aniado el genero a la lista            
-            liGenerosRegistradosModel.addElement(nombre); // aniado el nombre al modelo de la lista
-            liDescGeneroRegistradoModel.addElement(descripcion); // aniado la desc. al modelo de la lista
+            //liGenerosRegistradosModel.addElement(nombre); // aniado el nombre al modelo de la lista
+            //liDescGeneroRegistradoModel.addElement(descripcion); // aniado la desc. al modelo de la lista
+            cargarGeneros();
             JOptionPane.showMessageDialog(null, "Nuevo Género ingresado:\n" + genero);
         }
 

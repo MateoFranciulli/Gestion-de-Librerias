@@ -4,6 +4,8 @@
  */
 package interfaz;
 
+import dominio.Modelo;
+
 /**
  *
  * @author Usuario
@@ -13,7 +15,7 @@ public class VentanaConsultaLibros extends javax.swing.JFrame {
     /**
      * Creates new form VentanaConsultaLibros
      */
-    public VentanaConsultaLibros() {
+    public VentanaConsultaLibros(Modelo modelo) {
         initComponents();
     }
 

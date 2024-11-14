@@ -23,7 +23,7 @@ public class VentanaRegistroAutor extends javax.swing.JFrame {
     /**
      * Creates new form VentanaRegistro
      */
-    public VentanaRegistroAutor() {
+    public VentanaRegistroAutor(Modelo modelo) {
         initComponents();
     liGenerosAutor.setModel(liGenerosAutorModel);
     liAutoresRegistrados.setModel(liAutoresRegistradosModel);

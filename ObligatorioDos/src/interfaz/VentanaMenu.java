@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package interfaz;
 
 import dominio.Modelo;
@@ -149,37 +146,37 @@ public class VentanaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jitemRegistroEditorialActionPerformed
 
     private void jItemRegistroGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemRegistroGeneroActionPerformed
-        VentanaRegistroGenero ventana = new VentanaRegistroGenero();
+        VentanaRegistroGenero ventana = new VentanaRegistroGenero(modelo);
         ventana.setVisible(true);
     }//GEN-LAST:event_jItemRegistroGeneroActionPerformed
 
     private void jItemRegistroAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemRegistroAutorActionPerformed
-        VentanaRegistroAutor ventana = new VentanaRegistroAutor();
+        VentanaRegistroAutor ventana = new VentanaRegistroAutor(modelo);
         ventana.setVisible(true);
     }//GEN-LAST:event_jItemRegistroAutorActionPerformed
 
     private void jItemRegistroLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jItemRegistroLibroActionPerformed
-        VentanaRegistroLibro ventana = new VentanaRegistroLibro();
+        VentanaRegistroLibro ventana = new VentanaRegistroLibro(modelo);
         ventana.setVisible(true);
     }//GEN-LAST:event_jItemRegistroLibroActionPerformed
 
     private void jmRegistrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmRegistrarVentaActionPerformed
-        VentanaRegistrarVentas ventana = new VentanaRegistrarVentas();
+        VentanaRegistrarVentas ventana = new VentanaRegistrarVentas(modelo);
         ventana.setVisible(true);
     }//GEN-LAST:event_jmRegistrarVentaActionPerformed
 
     private void jmAnularVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAnularVentaActionPerformed
-        VentanaAnularVenta ventana = new VentanaAnularVenta();
+        VentanaAnularVenta ventana = new VentanaAnularVenta(modelo);
         ventana.setVisible(true);
     }//GEN-LAST:event_jmAnularVentaActionPerformed
 
     private void jmConsultaLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmConsultaLibrosActionPerformed
-        VentanaConsultaLibros ventana = new VentanaConsultaLibros();
+        VentanaConsultaLibros ventana = new VentanaConsultaLibros(modelo);
         ventana.setVisible(true);
     }//GEN-LAST:event_jmConsultaLibrosActionPerformed
 
     private void jmConsultaVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmConsultaVentasActionPerformed
-       VentanaConsultaVentas ventana = new VentanaConsultaVentas();
+       VentanaConsultaVentas ventana = new VentanaConsultaVentas(modelo);
         ventana.setVisible(true);
     }//GEN-LAST:event_jmConsultaVentasActionPerformed
 

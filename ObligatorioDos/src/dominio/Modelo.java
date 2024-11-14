@@ -14,7 +14,7 @@ public class Modelo extends Observable {
 
     public void agregarEditorial(Editorial editorial) {
         editoriales.add(editorial);
-        setChanged(); // Marca el modelo como cambiado
+        setChanged(); 
         notifyObservers(editorial);
     }
 
@@ -36,6 +36,8 @@ public class Modelo extends Observable {
 
     public void agregarGenero(Genero genero) {
         generos.add(genero);
+        setChanged(); 
+        notifyObservers(genero);
     }
 
     public ArrayList<Genero> getGeneros() {
