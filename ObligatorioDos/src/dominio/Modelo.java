@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 
 
+
 public class Modelo extends Observable {
   
     public static ArrayList<Editorial> editoriales = new ArrayList<>();
 
     public void agregarEditorial(Editorial editorial) {
         editoriales.add(editorial);
+        cambiar();
         notificarObservadores(editorial);
     }
 
@@ -66,6 +68,9 @@ public class Modelo extends Observable {
         }
         return retorno ; 
     }
+    
+    
+
     
     //funcion que muestra los autores registrados en la lista
 }
