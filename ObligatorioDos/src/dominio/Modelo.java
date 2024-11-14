@@ -53,12 +53,23 @@ public class Modelo extends Observable {
         return retorno ; 
     }
     
+    public Genero obtenerGeneroPorNombre(String nombre) {
+    for (Genero genero : generos) {
+        if (genero.getNombre().equals(nombre)) {
+            return genero;
+        }
+    }
+    return null;
+}
+    
     //VERIFICACIONES AUTOR
     
     public static ArrayList<Autor> autores = new ArrayList<>();
 
     public void agregarAutor(Autor autor) {
         autores.add(autor);
+        setChanged();
+        notifyObservers(autor);
     }
 
     public ArrayList<Autor> getAutores() {

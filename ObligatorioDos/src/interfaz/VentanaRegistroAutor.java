@@ -4,9 +4,10 @@
  */
 package interfaz;
 
-import dominio.Editorial;
+import dominio.Autor;
+import dominio.Genero;
 import dominio.Modelo;
-import java.util.List;
+import java.util.*;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -15,19 +16,23 @@ import javax.swing.ListSelectionModel;
  *
  * @author Usuario
  */
-public class VentanaRegistroAutor extends javax.swing.JFrame {
+public class VentanaRegistroAutor extends javax.swing.JFrame implements Observer{
 
     private DefaultListModel<String> liGenerosAutorModel = new DefaultListModel<>();
     private DefaultListModel<String> liAutoresRegistradosModel = new DefaultListModel<>();
-    
+    private Modelo modelo;
     /**
      * Creates new form VentanaRegistro
      */
     public VentanaRegistroAutor(Modelo modelo) {
+        this.modelo = modelo;
         initComponents();
-    liGenerosAutor.setModel(liGenerosAutorModel);
-    liAutoresRegistrados.setModel(liAutoresRegistradosModel);
-    liGenerosAutor.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        liGenerosAutor.setModel(liGenerosAutorModel);
+        liAutoresRegistrados.setModel(liAutoresRegistradosModel);
+        liGenerosAutor.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        cargarAutores();
+        cargarGeneros();
+        modelo.addObserver(this);
     
     }
 
@@ -162,36 +167,54 @@ public class VentanaRegistroAutor extends javax.swing.JFrame {
     private void txtNombreAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreAutorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreAutorActionPerformed
-    private Modelo modelo = new Modelo(); // creo modelo global
+     private void cargarGeneros() {
+        liGenerosAutorModel.clear();
+        for (Genero genero : modelo.getGeneros()) {
+            liGenerosAutorModel.addElement(genero.getNombre());
+        }
+    }
+     
+    private void cargarAutores() {
+        liAutoresRegistradosModel.clear();
+        for (Autor autor : modelo.getAutores()) {
+            liAutoresRegistradosModel.addElement(autor.getNombre());
+        }
+    }
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Genero) {
+            Genero genero = (Genero) arg;
+            liGenerosAutorModel.addElement(genero.getNombre());
+        }
+    }
+    
     private void jbIngresarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarAutorActionPerformed
         String nombre = this.txtNombreAutor.getText();
         String nacionalidad = this.txtNacionalidadAutor.getText();
         List<String> seleccion = liGenerosAutor.getSelectedValuesList();
-        
+        ArrayList<Genero> generosSeleccionados = new ArrayList<>();
+
+        for (String generoNombre : seleccion) {
+            Genero genero = modelo.obtenerGeneroPorNombre(generoNombre);
+            if (genero != null) {
+                generosSeleccionados.add(genero);
+            }
+        }
+
         if (!modelo.verificoAutores(nombre)) {
             JOptionPane.showMessageDialog(null, "Nombre ya registrado, por favor registre uno válido.");
-        } else 
-            // Validación para asegurarse de que solo se ingresen letras
-            if (!nombre.matches("[a-zA-Z ]+")||!nacionalidad.matches("[a-zA-Z ]+")) { // esta validacion fue hecha con ayuda de chat GPT (link:https://chatgpt.com/share/66fb3ee0-30e0-800d-a8cb-438856f220ca)
-                JOptionPane.showMessageDialog(null,"Los datos solo admiten letras, ingrese datos válidos");
-        }else 
-        
-            if(nombre.length()<2||nacionalidad.length()<2){
-                JOptionPane.showMessageDialog(null, "Complete todos los campos.");
-        }else if(seleccion.isEmpty()||modelo.generos.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Seleccione los generos del autor, si no hay añadalos.");
+        } else if (!nombre.matches("[a-zA-Z ]+") || !nacionalidad.matches("[a-zA-Z ]+")) {
+            JOptionPane.showMessageDialog(null, "Los datos solo admiten letras, ingrese datos válidos");
+        } else if (nombre.length() == 0 || nacionalidad.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Complete todos los campos.");
+        } else if (generosSeleccionados.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Seleccione los géneros del autor.");
+        } else {
+            Autor autor = new Autor(nombre, nacionalidad, generosSeleccionados);
+            modelo.agregarAutor(autor);
+            cargarAutores();
+            JOptionPane.showMessageDialog(null, "Autor añadido:\n" + autor);
         }
-        
-        //caso correcto
-        /*else{
-            Autor autor = new Autor(nombre,nacionalidad,seleccion);
-            modelo.agregarAutor(autor);             
-            liAutoresRegistradosModel.addElement(); // aniado el autor
-            JOptionPane.showMessageDialog(null, "Autor añadido:
-                                                     \n"+nombre
-                                                    "\n"+nacionalidad
-                                                    "\n"+seleccion);
-        }*/
         
         // vacío campos
         txtNombreAutor.setText("");
@@ -220,4 +243,6 @@ public class VentanaRegistroAutor extends javax.swing.JFrame {
     private javax.swing.JTextField txtNacionalidadAutor;
     private javax.swing.JTextField txtNombreAutor;
     // End of variables declaration//GEN-END:variables
+
+   
 }

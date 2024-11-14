@@ -1,14 +1,16 @@
 package dominio;
 
+import java.util.ArrayList;
+
 public class Autor {
     private String nombre;
     private String nacionalidad;
-    private Genero genero; // saco el genero de la clase genero
+    private ArrayList<Genero> generos;
 
-    public Autor(String nombre, String nacionalidad, Genero genero) {
+    public Autor(String nombre, String nacionalidad, ArrayList<Genero> generos) {
         this.nombre = nombre;
         this.nacionalidad = nacionalidad;
-        this.genero = genero;
+        this.generos = generos;
     }
 
     public String getNombre() {
@@ -27,12 +29,12 @@ public class Autor {
         this.nacionalidad = nacionalidad;
     }
 
-    public Genero getGenero() {
-        return genero;
+    public ArrayList<Genero> getGeneros() {
+        return generos;
     }
 
-    public void setGenero(Genero genero) {
-        this.genero = genero;
+    public void setGeneros(ArrayList<Genero> generos) {
+        this.generos = generos;
     }
 
     @Override
@@ -40,6 +42,6 @@ public class Autor {
         return "Autor:" +
                 "\n Nombre: " + nombre +
                 "\n Nacionalidad: " + nacionalidad +
-                "\n Género: " + genero.getNombre();
+                "\n Géneros: " + generos.stream().map(Genero::getNombre).reduce((a, b) -> a + ", " + b).orElse("");
     }
 }
