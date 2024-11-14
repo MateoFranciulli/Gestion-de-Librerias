@@ -139,7 +139,7 @@ public class VentanaMenu extends javax.swing.JFrame {
 
     private void jitemRegistroEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jitemRegistroEditorialActionPerformed
     Modelo modelo = new Modelo(); 
-    VentanaRegistroEditorial ventana = new VentanaRegistroEditorial(modelo);
+    VentanaRegistroEditorial ventana = new VentanaRegistroEditorial();
     ventana.setVisible(true);
 
     }//GEN-LAST:event_jitemRegistroEditorialActionPerformed

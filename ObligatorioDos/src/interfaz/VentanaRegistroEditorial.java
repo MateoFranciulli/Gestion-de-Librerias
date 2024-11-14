@@ -9,12 +9,12 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame implements Obse
     // Para añadir a listas, aca declaro e inizialiso los "DefaultListModel" 
     private DefaultListModel<String> liEditorialesIngresadasModel = new DefaultListModel<>();
     private DefaultListModel<String> liPaisEditorialRegistradaModel = new DefaultListModel<>();
-    private Modelo modelo = new Modelo(); // creo modelo global
+    private Modelo modelo;
     /**
      * Creates new form VentanaRegistro
      */
-    public VentanaRegistroEditorial(Modelo modelo) {
-        this.modelo = modelo;
+    public VentanaRegistroEditorial() {
+        this.modelo = Modelo.getInstance();
         initComponents();
         liEditorialesIngresadas.setModel(liEditorialesIngresadasModel);
         liPaisEditorialRegistrada.setModel(liPaisEditorialRegistradaModel);
