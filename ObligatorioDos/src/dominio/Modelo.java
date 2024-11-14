@@ -1,28 +1,22 @@
 package dominio;
-import dominio.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+
+import java.io.*;
 import java.util.*;
 
+public class Modelo extends Observable implements Serializable {
+    private static final long serialVersionUID = 1L;
 
+    public ArrayList<Editorial> editoriales = new ArrayList<>();
+    public ArrayList<Genero> generos = new ArrayList<>();
+    public ArrayList<Autor> autores = new ArrayList<>();
 
-
-public class Modelo extends Observable implements Serializable{    
- private static final long serialVersionUID = 1L;    
-//private static final long serialVersionUID = -8391326021940632313L;
-    public Modelo() throws IOException{
+    public Modelo() {
         cargarDatos();
     }
-  
-    public static ArrayList<Editorial> editoriales = new ArrayList<>();
 
     public void agregarEditorial(Editorial editorial) {
         editoriales.add(editorial);
-        setChanged(); 
+        setChanged();
         notifyObservers(editorial);
         guardarDatos();
     }
@@ -30,22 +24,19 @@ public class Modelo extends Observable implements Serializable{
     public ArrayList<Editorial> getEditoriales() {
         return editoriales;
     }
-    public static boolean verificoEditorial(String nombre) {
-        boolean retorno = true;
+
+    public  boolean verificoEditorial(String nombre) {
         for (Editorial editorial : editoriales) {
             if (editorial.getNombre().equalsIgnoreCase(nombre)) {
-                retorno = false; // Retorna false si se encuentra una coincidencia
+                return false;
             }
         }
-        return retorno ; 
+        return true;
     }
-   
-    //VERIFICACIONES GENERO
-    public static ArrayList<Genero> generos = new ArrayList<>();
 
     public void agregarGenero(Genero genero) {
         generos.add(genero);
-        setChanged(); 
+        setChanged();
         notifyObservers(genero);
         guardarDatos();
     }
@@ -53,28 +44,24 @@ public class Modelo extends Observable implements Serializable{
     public ArrayList<Genero> getGeneros() {
         return generos;
     }
-    public static boolean verificoGeneros(String nombre) {
-        boolean retorno = true;
+
+    public  boolean verificoGeneros(String nombre) {
         for (Genero genero : generos) {
             if (genero.getNombre().equalsIgnoreCase(nombre)) {
-                retorno = false; // Retorna false si se encuentra una coincidencia
+                return false;
             }
         }
-        return retorno ; 
+        return true;
     }
-    
+
     public Genero obtenerGeneroPorNombre(String nombre) {
-    for (Genero genero : generos) {
-        if (genero.getNombre().equals(nombre)) {
-            return genero;
+        for (Genero genero : generos) {
+            if (genero.getNombre().equals(nombre)) {
+                return genero;
+            }
         }
+        return null;
     }
-    return null;
-}
-    
-    //VERIFICACIONES AUTOR
-    
-    public static ArrayList<Autor> autores = new ArrayList<>();
 
     public void agregarAutor(Autor autor) {
         autores.add(autor);
@@ -86,38 +73,50 @@ public class Modelo extends Observable implements Serializable{
     public ArrayList<Autor> getAutores() {
         return autores;
     }
-    public static boolean verificoAutores(String nombre) {
-        boolean retorno = true;
-        for (Autor autor: autores) {
+
+    public  boolean verificoAutores(String nombre) {
+        for (Autor autor : autores) {
             if (autor.getNombre().equalsIgnoreCase(nombre)) {
-                retorno = false; // Retorna false si se encuentra una coincidencia
+                return false;
             }
         }
-        return retorno ; 
+        return true;
     }
-    
+
     public void guardarDatos() {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"))) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"));
             out.writeObject(this);
+            out.close();
+            System.out.println("Datos guardados correctamente.");
         } catch (IOException e) {
             System.out.println("No se pudo guardar los datos: " + e.getMessage());
+            e.printStackTrace();
         }
-        setChanged();
         notifyObservers();
     }
 
     public void cargarDatos() {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("sistema"))) {
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("sistema"));
             Modelo modelo = (Modelo) in.readObject();
             editoriales = modelo.editoriales != null ? modelo.editoriales : new ArrayList<>();
             generos = modelo.generos != null ? modelo.generos : new ArrayList<>();
             autores = modelo.autores != null ? modelo.autores : new ArrayList<>();
+            in.close();
+            System.out.println("Datos cargados correctamente.");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("No se pudo cargar los datos: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-    
-    /*
+
+    @Override
+    public void notifyObservers() {
+        setChanged();
+        super.notifyObservers();
+    }
+}   /*
     public void guardarDatos() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"));
@@ -129,10 +128,3 @@ public class Modelo extends Observable implements Serializable{
         notifyObservers();
     }
 */
-    @Override
-    public void notifyObservers(){
-        setChanged();
-        super.notifyObservers();
-    }
-    
-}

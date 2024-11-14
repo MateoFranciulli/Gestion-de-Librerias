@@ -111,11 +111,7 @@ try (FileInputStream ar = new FileInputStream("sistema")) {
             JOptionPane.showMessageDialog(null, "Sistema Recibido!", "Correcto", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException | ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "No existe un Sistema anterior o error al leer Archivo!", "Error", JOptionPane.ERROR_MESSAGE);
-            try {
-                modelo = new Modelo();
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Error al iniciar el modelo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            modelo = new Modelo();
         }
         VentanaMenu vent = new VentanaMenu(modelo);
         vent.setVisible(true);
