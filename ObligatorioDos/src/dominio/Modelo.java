@@ -3,12 +3,13 @@ import dominio.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
 
 
 
-public class Modelo extends Observable {    
+public class Modelo extends Observable implements Serializable{    
     public Modelo(){
         
     }
@@ -19,6 +20,7 @@ public class Modelo extends Observable {
         editoriales.add(editorial);
         setChanged(); 
         notifyObservers(editorial);
+        guardarDatos();
     }
 
     public ArrayList<Editorial> getEditoriales() {
@@ -41,6 +43,7 @@ public class Modelo extends Observable {
         generos.add(genero);
         setChanged(); 
         notifyObservers(genero);
+        guardarDatos();
     }
 
     public ArrayList<Genero> getGeneros() {
@@ -73,6 +76,7 @@ public class Modelo extends Observable {
         autores.add(autor);
         setChanged();
         notifyObservers(autor);
+        guardarDatos();
     }
 
     public ArrayList<Autor> getAutores() {
@@ -99,6 +103,10 @@ public class Modelo extends Observable {
         notifyObservers();
     }
 
-    
+    @Override
+    public void notifyObservers(){
+        setChanged();
+        super.notifyObservers();
+    }
     
 }

@@ -15,10 +15,11 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class VentanaRegistroGenero extends javax.swing.JFrame implements Observer {
-
+    
     // Para añadir a listas, aca declaro e inizialiso los "DefaultListModel" 
     private DefaultListModel<String> liGenerosRegistradosModel = new DefaultListModel<>();
     private DefaultListModel<String> liDescGeneroRegistradoModel = new DefaultListModel<>();
+    private Modelo modelo; // creo modelo global
         
     /**
      * Creates new form VentanaRegistro
@@ -172,7 +173,7 @@ public class VentanaRegistroGenero extends javax.swing.JFrame implements Observe
     private void txtNombreGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreGeneroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreGeneroActionPerformed
-    private Modelo modelo = new Modelo(); // creo modelo global
+
     private void jbIngresarGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarGeneroActionPerformed
         String nombre = this.txtNombreGenero.getText();
         String descripcion = this.txtAreaDescripcion.getText();

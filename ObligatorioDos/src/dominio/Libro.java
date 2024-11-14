@@ -4,10 +4,12 @@
  */
 package dominio;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ivanc
  */
-public class Libro {
+public class Libro implements Serializable {
     
 }

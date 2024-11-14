@@ -1,6 +1,8 @@
 package dominio;
 
-public class Genero {
+import java.io.Serializable;
+
+public class Genero implements Serializable{
     
 private String nombre;
 private String descripcion;

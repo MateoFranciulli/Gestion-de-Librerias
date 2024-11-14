@@ -1,6 +1,8 @@
 package dominio;
 
+import java.io.Serializable;
 
-public class Consultas {
+
+public class Consultas implements Serializable{
     
 }

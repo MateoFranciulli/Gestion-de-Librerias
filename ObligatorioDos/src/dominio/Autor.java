@@ -1,8 +1,9 @@
 package dominio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Autor {
+public class Autor implements Serializable{
     private String nombre;
     private String nacionalidad;
     private ArrayList<Genero> generos;

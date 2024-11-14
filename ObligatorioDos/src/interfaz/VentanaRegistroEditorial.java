@@ -178,7 +178,7 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame implements Obse
 
         txtNombreEditorial.setText("");
         txtPaisEditorial.setText("");
-
+        
 
     }//GEN-LAST:event_jbIngresarEditorialActionPerformed
 

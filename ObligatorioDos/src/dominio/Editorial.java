@@ -1,7 +1,8 @@
 package dominio;
 import dominio.*;
+import java.io.Serializable;
 
-public class Editorial {
+public class Editorial implements Serializable{
 
 private String nombre;
 private String pais;

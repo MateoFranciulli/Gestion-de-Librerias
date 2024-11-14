@@ -1,5 +1,7 @@
 package dominio;
 
-public class Registro {
+import java.io.Serializable;
+
+public class Registro implements Serializable {
     
 }
