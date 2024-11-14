@@ -1,6 +1,6 @@
 package dominio;
 import dominio.*;
-import java.util.ArrayList;
+import java.util.*;
 
 
 
@@ -11,8 +11,8 @@ public class Modelo extends Observable {
 
     public void agregarEditorial(Editorial editorial) {
         editoriales.add(editorial);
-        cambiar();
-        notificarObservadores(editorial);
+        setChanged(); // Marca el modelo como cambiado
+        notifyObservers(editorial);
     }
 
     public ArrayList<Editorial> getEditoriales() {

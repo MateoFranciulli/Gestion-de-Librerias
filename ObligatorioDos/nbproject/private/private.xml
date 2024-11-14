@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ivanc/Desktop/ivan/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaRegistroAutor.java</file>
-            <file>file:/C:/Users/Ivanc/Desktop/ivan/NetBeansProjects/ObligatorioDos/src/dominio/Modelo.java</file>
-            <file>file:/C:/Users/Ivanc/Desktop/ivan/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaRegistroEditorial.java</file>
-            <file>file:/C:/Users/Ivanc/Desktop/ivan/NetBeansProjects/ObligatorioDos/src/dominio/Autor.java</file>
+            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaMenu.java</file>
+            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaRegistroEditorial.java</file>
+            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/dominio/Modelo.java</file>
+            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/dominio/Observer.java</file>
+            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/dominio/Observable.java</file>
         </group>
     </open-files>
 </project-private>

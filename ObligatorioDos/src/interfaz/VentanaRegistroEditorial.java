@@ -1,6 +1,7 @@
 package interfaz;
 
 import dominio.*;
+import java.util.*;
 import javax.swing.*;
 
 public class VentanaRegistroEditorial extends javax.swing.JFrame implements Observer {
@@ -17,8 +18,8 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame implements Obse
         initComponents();
         liEditorialesIngresadas.setModel(liEditorialesIngresadasModel);
         liPaisEditorialRegistrada.setModel(liPaisEditorialRegistradaModel);
-        cargarEditoriales(); // cargar editoriales al iniciar
-        modelo.annadirObservador(this);
+        cargarEditoriales();
+        modelo.addObserver(this); // Añadir la ventana como observador
     }
 
     /**
@@ -148,8 +149,8 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame implements Obse
         }
     }
 
-     @Override
-    public void actualizar(Object arg) {
+  @Override
+    public void update(Observable o, Object arg) {
         if (arg instanceof Editorial) {
             Editorial editorial = (Editorial) arg;
             liEditorialesIngresadasModel.addElement(editorial.getNombre());
@@ -172,6 +173,7 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame implements Obse
             Editorial editorial = new Editorial(nombre, pais);
             modelo.agregarEditorial(editorial);
             JOptionPane.showMessageDialog(null, "Nueva Editorial creada:\n" + editorial);
+            
         }
 
         txtNombreEditorial.setText("");
