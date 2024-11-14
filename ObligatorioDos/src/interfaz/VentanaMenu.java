@@ -18,6 +18,7 @@ public class VentanaMenu extends javax.swing.JFrame {
         
         this.modelo = modelo;
         initComponents();
+       
     }
 
     /**

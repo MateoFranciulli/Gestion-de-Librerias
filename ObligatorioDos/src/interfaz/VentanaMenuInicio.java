@@ -98,7 +98,20 @@ public class VentanaMenuInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSistemaNuevoActionPerformed
 
     private void bntSistemaAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSistemaAnteriorActionPerformed
-      try{
+      try (FileInputStream ar = new FileInputStream("sistema")) {
+        ObjectInputStream leer = new ObjectInputStream(ar);
+        modelo = (Modelo) leer.readObject();
+        JOptionPane.showMessageDialog(null, "Sistema Recibido!", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+    } catch (IOException | ClassNotFoundException ex) {
+        JOptionPane.showMessageDialog(null, "No existe un Sistema anterior o error al leer Archivo!", "Error", JOptionPane.ERROR_MESSAGE);
+        modelo = new Modelo();
+    }
+    VentanaMenu vent = new VentanaMenu(modelo);
+    vent.setVisible(true);
+    this.dispose();
+        
+        /*
+        try{
             FileInputStream ar= new FileInputStream("sistema");
               if(ar==null){
                 JOptionPane.showMessageDialog(null,"No existe un Sistema anterior!","Error",JOptionPane.ERROR_MESSAGE);
@@ -115,6 +128,8 @@ public class VentanaMenuInicio extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
           JOptionPane.showMessageDialog(null,"Error al leer Archivo!","Error",JOptionPane.ERROR_MESSAGE);
         }
+      
+      */
         //ar.close();  
     }//GEN-LAST:event_bntSistemaAnteriorActionPerformed
 

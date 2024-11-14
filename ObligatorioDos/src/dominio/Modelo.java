@@ -92,6 +92,19 @@ public class Modelo extends Observable implements Serializable{
         return retorno ; 
     }
     
+ public void guardarDatos() {
+    try {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"));
+        out.writeObject(this);
+        out.close();
+    } catch(IOException e) {
+        System.out.println("No se pudo guardar los datos: " + e.getMessage());
+    }
+    setChanged();
+    notifyObservers();
+}
+    
+    /*
     public void guardarDatos() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"));
@@ -102,7 +115,7 @@ public class Modelo extends Observable implements Serializable{
         }
         notifyObservers();
     }
-
+*/
     @Override
     public void notifyObservers(){
         setChanged();
