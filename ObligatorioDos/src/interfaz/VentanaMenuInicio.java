@@ -1,5 +1,6 @@
 package interfaz;
 import dominio.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -93,7 +94,14 @@ public class VentanaMenuInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSistemaNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSistemaNuevoActionPerformed
-   try {
+  try {
+        // Delete the existing system file
+        File sistemaFile = new File("sistema");
+        if (sistemaFile.exists()) {
+            sistemaFile.delete();
+        }
+
+        // Create a new system
         Modelo modelo = new Modelo();
         modelo.guardarDatos(); // Create the "sistema" file
         VentanaMenu vent = new VentanaMenu(modelo);

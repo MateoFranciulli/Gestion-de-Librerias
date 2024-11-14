@@ -97,19 +97,25 @@ public class Modelo extends Observable implements Serializable {
     }
 
     public void cargarDatos() {
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("sistema"));
+ 
+        File sistemaFile = new File("sistema");
+        if (!sistemaFile.exists()) {
+            System.out.println("No se encontró el archivo 'sistema'. Creando un nuevo sistema.");
+            return; // File does not exist, no need to load data
+        }
+
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(sistemaFile))) {
             Modelo modelo = (Modelo) in.readObject();
             editoriales = modelo.editoriales != null ? modelo.editoriales : new ArrayList<>();
             generos = modelo.generos != null ? modelo.generos : new ArrayList<>();
             autores = modelo.autores != null ? modelo.autores : new ArrayList<>();
-            in.close();
             System.out.println("Datos cargados correctamente.");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("No se pudo cargar los datos: " + e.getMessage());
             e.printStackTrace();
         }
     }
+    
 
     @Override
     public void notifyObservers() {
