@@ -37,6 +37,7 @@ public class VentanaConsultaLibros extends javax.swing.JFrame {
         btnConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Consulta de Libros");
 
         lblTitulo.setText("Título");
 

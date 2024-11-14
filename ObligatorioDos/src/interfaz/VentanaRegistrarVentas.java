@@ -47,7 +47,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         btnRegistrar = new javax.swing.JButton();
         lblTotal = new javax.swing.JLabel();
 
-        setTitle("RegistroEditorial");
+        setTitle("Registro de Ventas");
 
         lblRegistroAutor.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblRegistroAutor.setText("Registro de ventas");

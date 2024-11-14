@@ -11,7 +11,7 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="title" type="java.lang.String" value="RegistroEditorial"/>
+    <Property name="title" type="java.lang.String" value="Registro de Libro"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>

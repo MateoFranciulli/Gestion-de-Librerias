@@ -46,7 +46,7 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame implements Obse
         lblEditorialesRegistradas = new javax.swing.JLabel();
         jbIngresarEditorial = new javax.swing.JButton();
 
-        setTitle("RegistroEditorial");
+        setTitle("Registro de Editorial");
 
         lblRegistroEditorial.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblRegistroEditorial.setText("Registro de editorial ");

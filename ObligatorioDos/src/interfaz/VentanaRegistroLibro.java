@@ -60,7 +60,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
-        setTitle("RegistroEditorial");
+        setTitle("Registro de Libro");
 
         lblRegistroEditorial.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblRegistroEditorial.setText("Registro de Libro");

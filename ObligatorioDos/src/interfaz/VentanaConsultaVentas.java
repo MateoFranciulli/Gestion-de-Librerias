@@ -45,6 +45,8 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
+        setTitle("Consulta de Ventas");
+
         jLabel1.setText("Isbn");
 
         txtIsbn.addActionListener(new java.awt.event.ActionListener() {

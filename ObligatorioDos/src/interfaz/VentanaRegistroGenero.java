@@ -54,7 +54,7 @@ public class VentanaRegistroGenero extends javax.swing.JFrame implements Observe
         txtAreaDescripcion = new javax.swing.JTextArea();
         jbIngresarGenero = new javax.swing.JButton();
 
-        setTitle("RegistroEditorial");
+        setTitle("Registro de género");
 
         lblRegistroGenero.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblRegistroGenero.setText("Registro de género");

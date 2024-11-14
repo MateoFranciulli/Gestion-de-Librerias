@@ -61,7 +61,7 @@ public class VentanaRegistroAutor extends javax.swing.JFrame implements Observer
         liGenerosAutor = new javax.swing.JList<>();
         jbIngresarAutor = new javax.swing.JButton();
 
-        setTitle("RegistroEditorial");
+        setTitle("Registro de Autor");
 
         lblRegistroAutor.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblRegistroAutor.setText("Registro de autor");
@@ -174,20 +174,20 @@ public class VentanaRegistroAutor extends javax.swing.JFrame implements Observer
         }
     }
      
-    private void cargarAutores() {
-        liAutoresRegistradosModel.clear();
-        for (Autor autor : modelo.getAutores()) {
-            liAutoresRegistradosModel.addElement(autor.getNombre());
-        }
+   private void cargarAutores() {
+    liAutoresRegistradosModel.clear();
+    for (Autor autor : modelo.getAutores()) {
+        liAutoresRegistradosModel.addElement(autor.getNombre());
     }
+}
+    
+    
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Genero) {
-            Genero genero = (Genero) arg;
-            liGenerosAutorModel.addElement(genero.getNombre());
+        if (arg instanceof Autor) {
+            cargarAutores();
         }
     }
-    
     private void jbIngresarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarAutorActionPerformed
         String nombre = this.txtNombreAutor.getText();
         String nacionalidad = this.txtNacionalidadAutor.getText();
