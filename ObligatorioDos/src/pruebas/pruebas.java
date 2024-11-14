@@ -1,11 +1,15 @@
 package pruebas;
+import dominio.Modelo;
 import interfaz.*;
+
 
 public class pruebas {
     public static void main(String[] args) {
-        VentanaMenu vent=new VentanaMenu();
+        Modelo modelo = new Modelo();         
+        VentanaMenu vent=new VentanaMenu(modelo);
         vent.setVisible(true);
-    
+     
+        
     
     }
  

@@ -5,17 +5,11 @@ import java.util.*;
 
 
 
-public class Modelo extends Observable {
-    private static Modelo instance;
+public class Modelo extends Observable {    
     public Modelo(){
         
     }
-       public static synchronized Modelo getInstance() {
-        if (instance == null) {
-            instance = new Modelo();
-        }
-        return instance;
-    }
+  
     public static ArrayList<Editorial> editoriales = new ArrayList<>();
 
     public void agregarEditorial(Editorial editorial) {

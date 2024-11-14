@@ -11,11 +11,15 @@ import dominio.Modelo;
  * @author Usuario
  */
 public class VentanaMenu extends javax.swing.JFrame {
+    
+    private Modelo modelo;
 
     /**
      * Creates new form VentanaMenu
      */
-    public VentanaMenu() {
+    public VentanaMenu(Modelo modelo) {
+        
+        this.modelo = modelo;
         initComponents();
     }
 
@@ -138,8 +142,8 @@ public class VentanaMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jitemRegistroEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jitemRegistroEditorialActionPerformed
-    Modelo modelo = new Modelo(); 
-    VentanaRegistroEditorial ventana = new VentanaRegistroEditorial();
+    
+    VentanaRegistroEditorial ventana = new VentanaRegistroEditorial(modelo);
     ventana.setVisible(true);
 
     }//GEN-LAST:event_jitemRegistroEditorialActionPerformed

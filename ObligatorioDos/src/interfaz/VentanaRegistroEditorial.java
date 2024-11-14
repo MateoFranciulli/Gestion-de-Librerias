@@ -13,8 +13,9 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame implements Obse
     /**
      * Creates new form VentanaRegistro
      */
-    public VentanaRegistroEditorial() {
-        this.modelo = Modelo.getInstance();
+    public VentanaRegistroEditorial(Modelo modelo) {
+        this.modelo = modelo;
+//this.modelo = Modelo.getInstance();
         initComponents();
         liEditorialesIngresadas.setModel(liEditorialesIngresadasModel);
         liPaisEditorialRegistrada.setModel(liPaisEditorialRegistradaModel);
