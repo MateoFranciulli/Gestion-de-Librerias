@@ -4,6 +4,7 @@
  */
 package interfaz;
 
+import dominio.*;
 import dominio.Modelo;
 import java.awt.Image;
 import java.io.*;
@@ -15,13 +16,27 @@ import javax.swing.*;
  */
 public class VentanaRegistroLibro extends javax.swing.JFrame {
 
+    private Modelo modelo;
+    private File fotoSeleccionada;
     /**
      * Creates new form VentanaRegistro
      */
     public VentanaRegistroLibro(Modelo modelo) {
+        this.modelo = modelo;
         initComponents();
+        cargarListas();
+        btnFoto.addActionListener(evt -> seleccionarFoto());
+        jbIngresarLibro.addActionListener(evt -> registrarLibro()); 
     }
 
+   private void cargarListas() {
+        liEditorialesLibro.setListData(modelo.getEditoriales().stream().map(Editorial::getNombre).toArray(String[]::new));
+        liGenerosLibro.setListData(modelo.getGeneros().stream().map(Genero::getNombre).toArray(String[]::new));
+        liAutoresLibro.setListData(modelo.getAutores().stream().map(Autor::getNombre).toArray(String[]::new));
+    
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -247,6 +262,75 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+   private void seleccionarFoto() {
+        JFileChooser selectorArchivo = new JFileChooser();
+        selectorArchivo.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png", "gif"));
+
+        int resultado = selectorArchivo.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            fotoSeleccionada = selectorArchivo.getSelectedFile();
+            ImageIcon iconoImagen = new ImageIcon(fotoSeleccionada.getAbsolutePath());
+
+            Image imagen = iconoImagen.getImage();
+            Image imagenEscalada = imagen.getScaledInstance(labelFoto.getWidth(), labelFoto.getHeight(), Image.SCALE_SMOOTH);
+            labelFoto.setIcon(new ImageIcon(imagenEscalada));
+            labelFoto.setText("");
+        }
+    }
+
+     private void registrarLibro() {
+        try {
+            String isbn = txtIsbn.getText();
+            String titulo = txtTitulo.getText();
+            double precioCosto = Double.parseDouble(txtPrecioCosto1.getText());
+            double precioVenta = Double.parseDouble(txtPrecioVenta.getText());
+            int ejemplares = Integer.parseInt(txtEjemplares.getText());
+            String editorial = liEditorialesLibro.getSelectedValue();
+            String genero = liGenerosLibro.getSelectedValue();
+            String autor = liAutoresLibro.getSelectedValue();
+
+            if (ejemplares < 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad de ejemplares debe ser mayor o igual a 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            modelo.agregarLibro(new Libro(isbn, titulo, precioCosto, precioVenta, ejemplares, editorial, genero, autor));
+
+            if (fotoSeleccionada != null) {
+                File carpetaImagenes = new File("imagenes");
+                if (!carpetaImagenes.exists()) {
+                    carpetaImagenes.mkdirs();
+                }
+
+                File archivoDestino = new File(carpetaImagenes, isbn + obtenerExtensionArchivo(fotoSeleccionada));
+                copiarArchivo(fotoSeleccionada, archivoDestino);
+            }
+
+            JOptionPane.showMessageDialog(this, "Libro registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al registrar el libro: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    private String obtenerExtensionArchivo(File archivo) {
+        String nombre = archivo.getName();
+        int ultimoIndice = nombre.lastIndexOf('.');
+        return ultimoIndice == -1 ? "" : nombre.substring(ultimoIndice);
+    }
+
+    private void copiarArchivo(File origen, File destino) throws IOException {
+        try (InputStream is = new FileInputStream(origen); OutputStream os = new FileOutputStream(destino)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        }
+    }
+    
+    
     private void txtIsbn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIsbn1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIsbn1ActionPerformed
@@ -263,6 +347,12 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEjemplaresActionPerformed
 
+      private void loadLists() {
+        // Load editorials, genres, and authors into the respective lists
+        liEditorialesLibro.setListData(modelo.getEditoriales().stream().map(Editorial::getNombre).toArray(String[]::new));
+        liGenerosLibro.setListData(modelo.getGeneros().stream().map(Genero::getNombre).toArray(String[]::new));
+    }
+    
     private void btnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFotoActionPerformed
         JFileChooser selectorArchivo = new JFileChooser();
         selectorArchivo.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png", "gif"));

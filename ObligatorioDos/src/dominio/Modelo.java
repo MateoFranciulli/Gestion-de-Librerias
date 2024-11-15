@@ -9,7 +9,9 @@ public class Modelo extends Observable implements Serializable {
     public ArrayList<Editorial> editoriales = new ArrayList<>();
     public ArrayList<Genero> generos = new ArrayList<>();
     public ArrayList<Autor> autores = new ArrayList<>();
-
+    public ArrayList<Libro> libros = new ArrayList<>();
+    
+    
     public Modelo() {
         cargarDatos();
     }
@@ -83,6 +85,20 @@ public class Modelo extends Observable implements Serializable {
         return true;
     }
 
+    public void agregarLibro(Libro libro) {
+         if (libros == null) { // Ensure libros is initialized
+            libros = new ArrayList<>();
+        }
+        libros.add(libro);
+        setChanged();
+        notifyObservers(libro);
+        guardarDatos();
+    }
+
+    public ArrayList<Libro> getLibros() {
+        return libros;
+    }
+    
     public void guardarDatos() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"));
@@ -101,7 +117,7 @@ public class Modelo extends Observable implements Serializable {
         File sistemaFile = new File("sistema");
         if (!sistemaFile.exists()) {
             System.out.println("No se encontró el archivo 'sistema'. Creando un nuevo sistema.");
-            return; // File does not exist, no need to load data
+            return; 
         }
 
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(sistemaFile))) {
@@ -109,6 +125,7 @@ public class Modelo extends Observable implements Serializable {
             editoriales = modelo.editoriales != null ? modelo.editoriales : new ArrayList<>();
             generos = modelo.generos != null ? modelo.generos : new ArrayList<>();
             autores = modelo.autores != null ? modelo.autores : new ArrayList<>();
+            libros = modelo.libros != null ? modelo.libros : new ArrayList<>();
             System.out.println("Datos cargados correctamente.");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("No se pudo cargar los datos: " + e.getMessage());
