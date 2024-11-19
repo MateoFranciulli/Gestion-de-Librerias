@@ -4,21 +4,64 @@
  */
 package interfaz;
 
+import dominio.Libro;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import dominio.Modelo;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
 public class VentanaRegistrarVentas extends javax.swing.JFrame {
-
+    private int factura=1;
+    private Modelo modelo;
+    private ArrayList<Libro> listaVentas = new ArrayList<>();
+    
     /**
      * Creates new form VentanaRegistro
      */
     public VentanaRegistrarVentas(Modelo modelo) {
+        this.modelo=modelo;
         initComponents();
+        cargarListaLibros();
+        fechaActual();//que no se pueda tocar
+        cargarTotal();
+        txtFactura.setText(factura+"");//que no se pueda tocar
+        
     }
-
+    private void cargarListaLibros() {
+    // Ordena los libros por título y luego combina ISBN y título
+    jlLibros.setListData(modelo.getLibros().stream()
+        .sorted((libro1, libro2) -> libro1.getTitulo().compareToIgnoreCase(libro2.getTitulo()))
+        .map(libro -> libro.getIsbn() + " - " + libro.getTitulo())
+        .toArray(String[]::new));
+    
+    }
+    
+    private void actualizarListaVentas() {
+    String[] datos = listaVentas.stream()
+        .map(libro -> libro.getEjemplares() + " - " + libro.getTitulo()+ " - $" + libro.getPrecioVenta())
+        .toArray(String[]::new);
+    jlVenta.setListData(datos);
+    }
+    
+    private void cargarTotal() {
+        double total = 0.0;
+        Iterator<Libro> iterador = listaVentas.iterator();
+    
+        while (iterador.hasNext()) {
+            Libro libro = iterador.next();
+            total += libro.getPrecioVenta(); // Sumar el precio de venta de cada libro
+        }
+    
+        lblTotal.setText("Total: $" + total);
+    }
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,7 +84,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         jlLibros = new javax.swing.JList<>();
         lblCliente1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jlLibros1 = new javax.swing.JList<>();
+        jlVenta = new javax.swing.JList<>();
         btnDerecha = new javax.swing.JButton();
         btnIzquierda = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
@@ -76,6 +119,17 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         lblLibros.setFocusable(false);
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        txtFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFacturaActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(jlLibros);
 
@@ -83,7 +137,9 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         lblCliente1.setText("Cliente :");
         lblCliente1.setFocusable(false);
 
-        jScrollPane2.setViewportView(jlLibros1);
+        jlVenta.setMaximumSize(new java.awt.Dimension(258, 147));
+        jlVenta.setMinimumSize(new java.awt.Dimension(258, 147));
+        jScrollPane2.setViewportView(jlVenta);
 
         btnDerecha.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnDerecha.setText("->");
@@ -102,6 +158,11 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         });
 
         btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         lblTotal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblTotal.setText("Total : ");
@@ -143,9 +204,11 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
                                     .addComponent(btnDerecha, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnIzquierda, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(162, 162, 162))
+                                    .addComponent(jScrollPane2))))
                         .addGap(40, 40, 40))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(73, 73, 73)
@@ -176,15 +239,15 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
                     .addComponent(lblLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(btnDerecha)
                         .addGap(38, 38, 38)
-                        .addComponent(btnIzquierda)))
+                        .addComponent(btnIzquierda))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
@@ -196,18 +259,93 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void fechaActual(){
+        LocalDate fechaActual = LocalDate.now();
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault());
+        txtFecha.setText(fechaActual.format(formatoFecha));
+    }
+    
+    private void aumentarFactura(){
+        factura++;
+    }
+       
     private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
-        // TODO add your handling code here:
+            
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void btnDerechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDerechaActionPerformed
-        // TODO add your handling code here:
+    // Obtener el libro seleccionado de la lista jlLibros
+    String seleccionado = jlLibros.getSelectedValue();
+    
+    if (seleccionado == null) {
+        // No se seleccionó ningún libro
+       JOptionPane.showMessageDialog(this, "Seleccione libro ", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    // Extraer el ISBN de la selección (suponiendo que el formato es "ISBN-Título")
+    String isbn = seleccionado.split("-")[0].trim();
+
+    // Buscar el libro en el modelo usando el ISBN
+    Libro libroEncontrado = modelo.getLibros().stream()
+        .filter(libro -> libro.getIsbn().equals(isbn))
+        .findFirst().orElse(null);
+
+
+   /* // Evitar duplicados en listaVentas
+    if (listaVentas.contains(libroEncontrado)) {
+        javax.swing.JOptionPane.showMessageDialog(this, "El libro ya está en la lista de ventas.");
+        return;
+    }*/
+
+    // Agregar el libro a la lista de ventas
+    listaVentas.add(libroEncontrado);
+
+    // Actualizar la lista jlVenta
+    actualizarListaVentas();
+    cargarTotal();
     }//GEN-LAST:event_btnDerechaActionPerformed
 
     private void btnIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzquierdaActionPerformed
-        // TODO add your handling code here:
+
+        String seleccionado = jlVenta.getSelectedValue();
+
+            if (seleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Seleccione un libro de la lista de ventas.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+         Iterator<Libro> iterador = listaVentas.iterator();
+
+        while (iterador.hasNext()) {
+            Libro libro = iterador.next();
+            if (seleccionado.equals(libro.getEjemplares() + " - " + libro.getTitulo() + " - $" + libro.getPrecioVenta())) {
+                iterador.remove(); // Eliminar el libro de la lista
+                
+            }
+        }
+
+        actualizarListaVentas(); 
+        cargarTotal(); 
     }//GEN-LAST:event_btnIzquierdaActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        
+        
+        
+        aumentarFactura();
+        txtFactura.setText(factura+"");//que no se pueda tocar
+        txtCliente.setText("");
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        txtFactura.setText("");
+        txtCliente.setText("");
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    
+    private void txtFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFacturaActionPerformed
+
+    }//GEN-LAST:event_txtFacturaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,7 +360,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> jlLibros;
-    private javax.swing.JList<String> jlLibros1;
+    private javax.swing.JList<String> jlVenta;
     private javax.swing.JLabel lblCliente1;
     private javax.swing.JLabel lblFactura;
     private javax.swing.JLabel lblFecha;
@@ -234,4 +372,6 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
     private javax.swing.JTextField txtFactura;
     private javax.swing.JTextField txtFecha;
     // End of variables declaration//GEN-END:variables
+
+
 }

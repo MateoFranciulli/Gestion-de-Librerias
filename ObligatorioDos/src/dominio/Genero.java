@@ -6,7 +6,7 @@ public class Genero implements Serializable{
     
 private String nombre;
 private String descripcion;
- private static final long serialVersionUID = 1L;
+
     public Genero(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;

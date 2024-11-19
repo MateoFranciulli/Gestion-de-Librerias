@@ -4,12 +4,12 @@ import java.io.*;
 import java.util.*;
 
 public class Modelo extends Observable implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     public ArrayList<Editorial> editoriales = new ArrayList<>();
     public ArrayList<Genero> generos = new ArrayList<>();
     public ArrayList<Autor> autores = new ArrayList<>();
     public ArrayList<Libro> libros = new ArrayList<>();
+    public ArrayList<Ventas> ventas = new ArrayList<>();
     
     
     public Modelo() {
@@ -99,6 +99,15 @@ public class Modelo extends Observable implements Serializable {
         return libros;
     }
     
+    public  boolean verificoLibros(String isbn) {
+        for (Libro libro : libros) {
+            if (libro.getIsbn().equalsIgnoreCase(isbn)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     public void guardarDatos() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"));
@@ -106,7 +115,7 @@ public class Modelo extends Observable implements Serializable {
             out.close();
             System.out.println("Datos guardados correctamente.");
         } catch (IOException e) {
-            System.out.println("No se pudo guardar los datos: " + e.getMessage());
+            System.out.println("No se pudo guardar los datos: " + e.getMessage()); 
             e.printStackTrace();
         }
         notifyObservers();
@@ -116,7 +125,7 @@ public class Modelo extends Observable implements Serializable {
  
         File sistemaFile = new File("sistema");
         if (!sistemaFile.exists()) {
-            System.out.println("No se encontró el archivo 'sistema'. Creando un nuevo sistema.");
+            System.out.println("No se encontro el archivo sistema. Creando un nuevo sistema.");
             return; 
         }
 
@@ -128,11 +137,22 @@ public class Modelo extends Observable implements Serializable {
             libros = modelo.libros != null ? modelo.libros : new ArrayList<>();
             System.out.println("Datos cargados correctamente.");
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("No se pudo cargar los datos: " + e.getMessage());
+            System.out.println("No se pudo cargar los datos: " + e.getMessage()); // avisarle al usuario 
             e.printStackTrace();
         }
     }
     
+     public ArrayList<Ventas> getVentas() {
+        return ventas;
+    }
+    
+     public void agregarVentas(Ventas venta) {
+        ventas.add(venta);
+        setChanged();
+        notifyObservers(ventas);
+        guardarDatos();
+    }
+     
 
     @Override
     public void notifyObservers() {

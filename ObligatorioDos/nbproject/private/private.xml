@@ -3,15 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaMenu.java</file>
-            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/pruebas/pruebas.java</file>
-            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaRegistroEditorial.java</file>
-            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/dominio/Editorial.java</file>
-            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaRegistrarVentas.java</file>
-            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/dominio/Modelo.java</file>
-            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaMenuInicio.java</file>
-            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/dominio/Genero.java</file>
-            <file>file:/Users/mateofranciulli/NetBeansProjects/ObligatorioDos/src/dominio/Autor.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ivan/NetBeansProjects/ObligatorioDos/src/dominio/Modelo.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ivan/NetBeansProjects/ObligatorioDos/src/dominio/Libro.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ivan/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaRegistrarVentas.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ivan/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaRegistroAutor.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ivan/NetBeansProjects/ObligatorioDos/src/dominio/Ventas.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/ivan/NetBeansProjects/ObligatorioDos/src/interfaz/VentanaRegistroLibro.java</file>
         </group>
     </open-files>
 </project-private>

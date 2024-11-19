@@ -8,6 +8,7 @@ import dominio.*;
 import dominio.Modelo;
 import java.awt.Image;
 import java.io.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -27,14 +28,16 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         cargarListas();
         btnFoto.addActionListener(evt -> seleccionarFoto());
         jbIngresarLibro.addActionListener(evt -> registrarLibro()); 
-    }
+        //liGenerosLibro.addListSelectionListener(evt -> cargarAutoresPorGenero());
+}
 
-   private void cargarListas() {
+    private void cargarListas() {
         liEditorialesLibro.setListData(modelo.getEditoriales().stream().map(Editorial::getNombre).toArray(String[]::new));
         liGenerosLibro.setListData(modelo.getGeneros().stream().map(Genero::getNombre).toArray(String[]::new));
+        //cargarAutoresPorGenero();
         liAutoresLibro.setListData(modelo.getAutores().stream().map(Autor::getNombre).toArray(String[]::new));
-    
     }
+    
     
     
     /**
@@ -277,10 +280,25 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
             labelFoto.setText("");
         }
     }
+    /* private void cargarAutoresPorGenero() {
+        String generoSeleccionado = liGenerosLibro.getSelectedValue();
+        if (generoSeleccionado != null) {
+            ArrayList<Autor> autoresConEseGenero = new ArrayList<>();
+            for (Autor autor : modelo.getAutores()) {
+                if (autor.getGeneros().contains(generoSeleccionado)) {
+                autoresConEseGenero.add(autor);
+                }
+            }
+            liAutoresLibro.setListData(autoresConEseGenero.stream().map(Autor::getNombre).toArray(String[]::new));
+        } else {
+        JOptionPane.showMessageDialog(this, "Tienes que seleccionar un genero", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }*/
 
+   
      private void registrarLibro() {
         try {
-            String isbn = txtIsbn.getText();
+            String isbn = txtIsbn1.getText();
             String titulo = txtTitulo.getText();
             double precioCosto = Double.parseDouble(txtPrecioCosto1.getText());
             double precioVenta = Double.parseDouble(txtPrecioVenta.getText());
@@ -288,11 +306,51 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
             String editorial = liEditorialesLibro.getSelectedValue();
             String genero = liGenerosLibro.getSelectedValue();
             String autor = liAutoresLibro.getSelectedValue();
-
-            if (ejemplares < 0) {
-                JOptionPane.showMessageDialog(this, "La cantidad de ejemplares debe ser mayor o igual a 0.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+            
+            //validacion listas chequeadas
+            if(liEditorialesLibro.getSelectedValue() == null){
+                JOptionPane.showMessageDialog(this, "Seleccione una editorial ", "Error", JOptionPane.ERROR_MESSAGE);
+            }else if(liGenerosLibro.getSelectedValue() == null){
+                JOptionPane.showMessageDialog(this, "Seleccione genero ", "Error", JOptionPane.ERROR_MESSAGE);
+            }else if(liAutoresLibro.getSelectedValue() == null){
+                JOptionPane.showMessageDialog(this, "Seleccione autor ", "Error", JOptionPane.ERROR_MESSAGE);
+                     
+                
+            //validaciones isbn
+            }else if(!modelo.verificoLibros(isbn)){
+                JOptionPane.showMessageDialog(this, "Isbn ya añadido anteriormente", "Error", JOptionPane.ERROR_MESSAGE); 
+                txtIsbn1.setText("");
+            }else if(txtIsbn1.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Coloquele un isbn al libro", "Error", JOptionPane.ERROR_MESSAGE); 
+                txtIsbn1.setText("");
+            }else if(isbn.matches("[a-zA-Z ]+")){
+                JOptionPane.showMessageDialog(this, "Isbn incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+                txtIsbn1.setText("");
+                
+            //validaciones titulo
+            }else if(txtTitulo.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Coloquele un título", "Error", JOptionPane.ERROR_MESSAGE); 
+                txtTitulo.setText("");
+            }else if(!titulo.matches("[a-zA-Z ]+")){
+                JOptionPane.showMessageDialog(this, "El título debe ser de letras", "Error", JOptionPane.ERROR_MESSAGE);
+                txtTitulo.setText("");
+            
+            //validaciones precios
+            }else if(txtPrecioVenta.getText().isEmpty()||txtPrecioVenta.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Coloquele precios", "Error", JOptionPane.ERROR_MESSAGE); 
+                txtPrecioCosto1.setText("");
+                txtPrecioVenta.setText("");
+            }else if((txtPrecioCosto1.getText().matches("[a-zA-Z ]+"))||(txtPrecioVenta.getText().matches("[a-zA-Z ]+"))){
+                JOptionPane.showMessageDialog(this, "Coloquele precios numérico", "Error", JOptionPane.ERROR_MESSAGE); 
+                txtPrecioCosto1.setText("");
+                txtPrecioVenta.setText("");
+                
+            //validacion ejemplares
+            }else if (ejemplares < 0||txtEjemplares.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "La cantidad de ejemplares debe ser mayor o igual a 0.", "Error", JOptionPane.ERROR_MESSAGE);    
             }
+
+            else{
 
             modelo.agregarLibro(new Libro(isbn, titulo, precioCosto, precioVenta, ejemplares, editorial, genero, autor));
 
@@ -308,10 +366,13 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Libro registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             dispose();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al registrar el libro: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+        
+        
     }
 
     private String obtenerExtensionArchivo(File archivo) {
@@ -347,11 +408,6 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEjemplaresActionPerformed
 
-      private void loadLists() {
-        // Load editorials, genres, and authors into the respective lists
-        liEditorialesLibro.setListData(modelo.getEditoriales().stream().map(Editorial::getNombre).toArray(String[]::new));
-        liGenerosLibro.setListData(modelo.getGeneros().stream().map(Genero::getNombre).toArray(String[]::new));
-    }
     
     private void btnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFotoActionPerformed
         JFileChooser selectorArchivo = new JFileChooser();

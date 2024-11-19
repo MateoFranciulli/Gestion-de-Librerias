@@ -95,15 +95,15 @@ public class VentanaMenuInicio extends javax.swing.JFrame {
 
     private void btnSistemaNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSistemaNuevoActionPerformed
   try {
-        // Delete the existing system file
+        //Borrar el sistema que existe, si existe
         File sistemaFile = new File("sistema");
         if (sistemaFile.exists()) {
             sistemaFile.delete();
         }
 
-        // Create a new system
+        
         Modelo modelo = new Modelo();
-        modelo.guardarDatos(); // Create the "sistema" file
+        modelo.guardarDatos(); //Creo nuevo sistema
         VentanaMenu vent = new VentanaMenu(modelo);
         vent.setVisible(true);
         this.dispose();
@@ -118,35 +118,13 @@ try (FileInputStream ar = new FileInputStream("sistema")) {
             modelo = (Modelo) leer.readObject();
             JOptionPane.showMessageDialog(null, "Sistema Recibido!", "Correcto", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException | ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "No existe un Sistema anterior o error al leer Archivo!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No existe un Sistema anterior o error al leer Archivo!, Se inicia con nuevo sistema", "Error", JOptionPane.ERROR_MESSAGE);
             modelo = new Modelo();
         }
         VentanaMenu vent = new VentanaMenu(modelo);
         vent.setVisible(true);
         this.dispose();
-
-        
-        /*
-        try{
-            FileInputStream ar= new FileInputStream("sistema");
-              if(ar==null){
-                JOptionPane.showMessageDialog(null,"No existe un Sistema anterior!","Error",JOptionPane.ERROR_MESSAGE);
-               }else{
-                ObjectInputStream leer = new ObjectInputStream(ar);
-                modelo = (Modelo)leer.readObject();
-                JOptionPane.showMessageDialog(null,"Sistema Recibido!","Correcto",JOptionPane.INFORMATION_MESSAGE);
-                VentanaMenu vent = new VentanaMenu(modelo);
-                vent.setVisible(true);
-                this.dispose();
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null,"Error al leer Archivo!","Error",JOptionPane.ERROR_MESSAGE);
-        } catch (ClassNotFoundException ex) {
-          JOptionPane.showMessageDialog(null,"Error al leer Archivo!","Error",JOptionPane.ERROR_MESSAGE);
-        }
-      
-      */
-        //ar.close();  
+  
     }//GEN-LAST:event_bntSistemaAnteriorActionPerformed
 
     /**

@@ -7,7 +7,7 @@ public class Autor implements Serializable{
     private String nombre;
     private String nacionalidad;
     private ArrayList<Genero> generos;
- private static final long serialVersionUID = 1L;
+    
     public Autor(String nombre, String nacionalidad, ArrayList<Genero> generos) {
         this.nombre = nombre;
         this.nacionalidad = nacionalidad;

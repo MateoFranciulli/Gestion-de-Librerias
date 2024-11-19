@@ -45,6 +45,11 @@ public class VentanaMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión de librerías - Realizado por: Mateo Franciulli 310956, Iván Castelli 306188");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jmRegistro.setText("Registros");
         jmRegistro.setActionCommand("Registro");
@@ -180,6 +185,12 @@ public class VentanaMenu extends javax.swing.JFrame {
        VentanaConsultaVentas ventana = new VentanaConsultaVentas(modelo);
         ventana.setVisible(true);
     }//GEN-LAST:event_jmConsultaVentasActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        //Windows closing 
+        //es para serializar
+        
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
