@@ -28,17 +28,31 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         cargarListas();
         btnFoto.addActionListener(evt -> seleccionarFoto());
         jbIngresarLibro.addActionListener(evt -> registrarLibro()); 
-        //liGenerosLibro.addListSelectionListener(evt -> cargarAutoresPorGenero());
+        liGenerosLibro.addListSelectionListener(evt -> cargarAutoresPorGenero());
 }
 
     private void cargarListas() {
         liEditorialesLibro.setListData(modelo.getEditoriales().stream().map(Editorial::getNombre).toArray(String[]::new));
         liGenerosLibro.setListData(modelo.getGeneros().stream().map(Genero::getNombre).toArray(String[]::new));
-        //cargarAutoresPorGenero();
-        liAutoresLibro.setListData(modelo.getAutores().stream().map(Autor::getNombre).toArray(String[]::new));
+        cargarAutoresPorGenero(); 
+        
     }
     
-    
+    private void cargarAutoresPorGenero() {
+    String generoSeleccionado = liGenerosLibro.getSelectedValue();
+    if (generoSeleccionado != null) {
+        ArrayList<Autor> autoresConEseGenero = new ArrayList<>();
+        for (Autor autor : modelo.getAutores()) {
+            for (Genero genero : autor.getGeneros()) {
+                if (genero.getNombre().equals(generoSeleccionado)) {
+                    autoresConEseGenero.add(autor);
+                    
+                }
+            }
+        }
+        liAutoresLibro.setListData(autoresConEseGenero.stream().map(Autor::getNombre).toArray(String[]::new));
+    } 
+}
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -280,20 +294,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
             labelFoto.setText("");
         }
     }
-    /* private void cargarAutoresPorGenero() {
-        String generoSeleccionado = liGenerosLibro.getSelectedValue();
-        if (generoSeleccionado != null) {
-            ArrayList<Autor> autoresConEseGenero = new ArrayList<>();
-            for (Autor autor : modelo.getAutores()) {
-                if (autor.getGeneros().contains(generoSeleccionado)) {
-                autoresConEseGenero.add(autor);
-                }
-            }
-            liAutoresLibro.setListData(autoresConEseGenero.stream().map(Autor::getNombre).toArray(String[]::new));
-        } else {
-        JOptionPane.showMessageDialog(this, "Tienes que seleccionar un genero", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }*/
+
 
    
      private void registrarLibro() {
