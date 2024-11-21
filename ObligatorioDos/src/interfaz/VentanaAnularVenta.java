@@ -113,6 +113,10 @@ public class VentanaAnularVenta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cargarListaDatos(){
+    
+    
+    }
     private void txtNFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNFacturaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNFacturaActionPerformed

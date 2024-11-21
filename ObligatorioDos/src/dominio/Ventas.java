@@ -1,22 +1,33 @@
 package dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Ventas implements Serializable{
     private String fecha;
     private String cliente;
     private int factura;
-    private int precio;
-    private int importe;
-
-    public Ventas(String fecha, String cliente,int factura, int precio, int importe) {
+    private double precio;
+    private int cantidad;
+    //private ArrayList<Libro> librosVendidos;
+    
+    public Ventas(String fecha, String cliente, double precio, int factura, int cantidad) {
+        this.cantidad = cantidad; 
         this.fecha = fecha;
         this.cliente = cliente;
         this.precio = precio;
-        this.importe = importe;
         this.factura= factura;
+       // this.librosVendidos=librosVendidos;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    
     public String getFecha() {
         return fecha;
     }
@@ -41,21 +52,26 @@ public class Ventas implements Serializable{
         this.factura = factura;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
-
-    public int getImporte() {
-        return importe;
-    }
-
-    public void setImporte(int importe) {
-        this.importe = importe;
-    }
-  
+    
+    /*public ArrayList<Libro> getLibrosVendidos() {
+        return librosVendidos;
+    }*/
+    
+    @Override
+    public String toString() {
+        return "Venta:" +
+                "\n Fecha: " + fecha +
+                "\n Cliente: " + cliente +//completar
+                "\n Precio: " + precio + //completar
+                "\n Factura: "+ factura +//completar
+                "\n Cantidad: "+ cantidad;
    
+    }
 }

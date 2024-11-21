@@ -307,7 +307,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
             String editorial = liEditorialesLibro.getSelectedValue();
             String genero = liGenerosLibro.getSelectedValue();
             String autor = liAutoresLibro.getSelectedValue();
-            
+            int cantidad =0;
             //validacion listas chequeadas
             if(liEditorialesLibro.getSelectedValue() == null){
                 JOptionPane.showMessageDialog(this, "Seleccione una editorial ", "Error", JOptionPane.ERROR_MESSAGE);
@@ -353,7 +353,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
 
             else{
 
-            modelo.agregarLibro(new Libro(isbn, titulo, precioCosto, precioVenta, ejemplares, editorial, genero, autor));
+            modelo.agregarLibro(new Libro(isbn, titulo, precioCosto, precioVenta, ejemplares, editorial, genero, autor,cantidad));
 
             if (fotoSeleccionada != null) {
                 File carpetaImagenes = new File("imagenes");

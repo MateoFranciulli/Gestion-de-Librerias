@@ -19,9 +19,10 @@ private String autor;
 private double precioCosto;
 private double precioVenta;
 private int ejemplares;
+private int cantidadVendido=0;
 
 
-    public Libro(String isbn, String titulo, double precioCosto, double precioVenta, int ejemplares, String editorial, String genero, String autor) {
+    public Libro(String isbn, String titulo, double precioCosto, double precioVenta, int ejemplares, String editorial, String genero, String autor, int cantidadVendido) {
     this.isbn = isbn;
     this.titulo = titulo;
     this.precioCosto = precioCosto;
@@ -30,7 +31,16 @@ private int ejemplares;
     this.editorial = editorial;
     this.genero = genero;
     this.autor = autor;
+    this.cantidadVendido = 0; // Inicializar a 0
     
+    }
+
+    public int getCantidadVendido() {
+        return cantidadVendido;
+    }
+
+    public void setCantidadVendido(int cantidadVendido) {
+        this.cantidadVendido = cantidadVendido;
     }
 
     public String getIsbn() {

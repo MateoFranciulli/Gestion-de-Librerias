@@ -151,8 +151,7 @@ public class Modelo extends Observable implements Serializable {
         setChanged();
         notifyObservers(ventas);
         guardarDatos();
-    }
-     
+    }     
 
     @Override
     public void notifyObservers() {

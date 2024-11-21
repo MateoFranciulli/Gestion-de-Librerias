@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import dominio.Modelo;
+import dominio.Ventas;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
@@ -42,24 +43,43 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         .toArray(String[]::new));
     
     }
-    
+            
+            
     private void actualizarListaVentas() {
     String[] datos = listaVentas.stream()
-        .map(libro -> libro.getEjemplares() + " - " + libro.getTitulo()+ " - $" + libro.getPrecioVenta())
+        .map(libro -> libro.getCantidadVendido() + " - " + libro.getTitulo()+ " - $" + libro.getPrecioVenta())
         .toArray(String[]::new);
     jlVenta.setListData(datos);
     }
     
     private void cargarTotal() {
         double total = 0.0;
+        double cantidad = 0;
         Iterator<Libro> iterador = listaVentas.iterator();
     
         while (iterador.hasNext()) {
             Libro libro = iterador.next();
-            total += libro.getPrecioVenta(); // Sumar el precio de venta de cada libro
+            cantidad = libro.getPrecioVenta() * libro.getCantidadVendido();
+            total += cantidad; // Sumar el precio de venta de cada libro
+            cantidad=0;
+
+            //si aprieto el boton derecha con un libro ya seleccinoado lo sumo de nuevo
+            
         }
     
         lblTotal.setText("Total: $" + total);
+    }
+    private double obtenerTotalNumerico() {
+        // Obtener el texto actual del lblTotal
+        String textoTotal = lblTotal.getText();
+
+        // Eliminar el prefijo "Total: $" y convertir el resto a double
+        return Double.parseDouble(textoTotal.replace("Total: $", "").trim());
+        /*catch (NumberFormatException e) {
+        // Manejo de errores si el texto no es convertible
+        JOptionPane.showMessageDialog(this, "Error al obtener el total numérico.", "Error", JOptionPane.ERROR_MESSAGE);
+        return 0.0;
+        }*/
     }
  
     /**
@@ -291,14 +311,16 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         .findFirst().orElse(null);
 
 
-   /* // Evitar duplicados en listaVentas
+    // Evitar duplicados en listaVentas
     if (listaVentas.contains(libroEncontrado)) {
-        javax.swing.JOptionPane.showMessageDialog(this, "El libro ya está en la lista de ventas.");
-        return;
-    }*/
-
+        libroEncontrado.setCantidadVendido(libroEncontrado.getCantidadVendido() + 1);
+        //sumas 1 a la cantidad en lista venta y restas 1 a ejemplares
+        
+    }else{
     // Agregar el libro a la lista de ventas
+    libroEncontrado.setCantidadVendido(libroEncontrado.getCantidadVendido() + 1);
     listaVentas.add(libroEncontrado);
+    }
 
     // Actualizar la lista jlVenta
     actualizarListaVentas();
@@ -327,18 +349,65 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         cargarTotal(); 
     }//GEN-LAST:event_btnIzquierdaActionPerformed
 
+    
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        String fecha = txtFecha.getText();
+        String cliente = txtCliente.getText();
+        double precio = obtenerTotalNumerico();
+        int cantidad = 0;
+        if (listaVentas.isEmpty()) {
+           JOptionPane.showMessageDialog(this, "Seleccione los libros vendidos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+        Ventas venta = new Ventas (fecha, cliente, precio, factura, cantidad);
         
         
+        modelo.agregarVentas(venta); // ESTO NO DEBERIA IR AL FINAL ?
         
+        JOptionPane.showMessageDialog(null, "Venta realizada:\n" + venta);
         aumentarFactura();
         txtFactura.setText(factura+"");//que no se pueda tocar
         txtCliente.setText("");
+        //Aca iria el checkeo de que haya stock, y vender la cantidad que se pueda.
+        
+        //llamar a un metodo que vea la cantidad de stock , la compare con la cantidad de ventas, deje en 0 el stock si es menor a la cantidad de ventas
+        // sino que le reste la cantidad de ventas al stock, basicamente actualizarlo.
+        
+        borrarCantidadVentas();
+        
+        
+        //dispose();?
+        
+        }
+        //QUE HAYAN VALORES SELECCIONADOS ETC
+        /*
+        Al momento de registrar la factura, verificar si hay stock suficiente
+        para la venta de cada uno de los libros. En caso que no alcance de alguno/algunos,
+        indicarlo mediante una única ventana emergente y vender solamente la cantidad disponible e 
+        informar el nuevo total. Ejemplo: si se piden 3 unidades de un libro y en stock hay 2,
+        se venden solamente 2 y se informa en la ventana. Si no hay stock de ninguno de los libros a
+        vender, la venta no debe generarse. Además, al registrar la factura, se deben descontar del
+        stock todos los libros vendidos en ella. Se adjunta ejemplo de la ventana
+        
+        */
+        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void borrarCantidadVentas(){
+        Iterator<Libro> iterador = listaVentas.iterator();
+           while (iterador.hasNext()) {
+                     
+            Libro libro = iterador.next();
+            libro.setCantidadVendido(0);                                          
+            
+        }
+    }
+    
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         txtFactura.setText("");
         txtCliente.setText("");
+        borrarCantidadVentas();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
