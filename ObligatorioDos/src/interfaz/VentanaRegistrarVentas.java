@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class VentanaRegistrarVentas extends javax.swing.JFrame {
-    private int factura=1;
+    private int factura;
     private Modelo modelo;
     private ArrayList<Libro> listaVentas = new ArrayList<>();
     
@@ -32,8 +32,16 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         cargarListaLibros();
         fechaActual();//que no se pueda tocar
         cargarTotal();
+        primeraFactura();
         txtFactura.setText(factura+"");//que no se pueda tocar
         
+    }
+    
+    private void primeraFactura(){
+       //poco convencional pero porque hay un error sino no se porque
+        if(factura == 0){
+            aumentarFactura();
+        }
     }
     private void cargarListaLibros() {
     // Ordena los libros por título y luego combina ISBN y título
@@ -109,6 +117,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         lblTotal = new javax.swing.JLabel();
         txtFactura = new javax.swing.JLabel();
         txtFecha = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setTitle("Registro de Ventas");
 
@@ -190,42 +199,38 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(167, 167, 167)
-                        .addComponent(lblVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblRegistroAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblRegistroAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnDerecha, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(btnIzquierda, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(162, 162, 162))
-                                            .addComponent(jScrollPane2)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(btnDerecha, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnIzquierda, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(40, 40, 40))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(jLabel1)))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(73, 73, 73)
                 .addComponent(btnRegistrar)
@@ -249,21 +254,29 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
                     .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 36, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblVenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(btnDerecha)
-                        .addGap(38, 38, 38)
-                        .addComponent(btnIzquierda))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 5, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(btnDerecha)
+                                .addGap(38, 38, 38)
+                                .addComponent(btnIzquierda)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
@@ -306,13 +319,13 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
     // Evitar duplicados en listaVentas
     if (listaVentas.contains(libroEncontrado)) {
         libroEncontrado.setCantidadVendido(libroEncontrado.getCantidadVendido() + 1);
-        libroEncontrado.setEjemplares(libroEncontrado.getEjemplares() - 1);
+        //libroEncontrado.setEjemplares(libroEncontrado.getEjemplares() - 1);
         
     }else{
     libroEncontrado.setCantidadVendido(0);    
     // Agregar el libro a la lista de ventas
     libroEncontrado.setCantidadVendido(libroEncontrado.getCantidadVendido() + 1);
-    libroEncontrado.setEjemplares(libroEncontrado.getEjemplares() - 1);
+    //libroEncontrado.setEjemplares(libroEncontrado.getEjemplares() - 1);
     listaVentas.add(libroEncontrado);
     
     }
@@ -339,7 +352,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
                 }
 
 
-                libroSeleccionado.setEjemplares(libroSeleccionado.getEjemplares() + 1);
+                //libroSeleccionado.setEjemplares(libroSeleccionado.getEjemplares() + 1);
                 
                 actualizarListaVentas();
                 cargarTotal();
@@ -348,36 +361,58 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
 
     
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        String fecha = txtFecha.getText();
-        String cliente = txtCliente.getText();
-        double precio = obtenerTotalNumerico();
-        int cantidad = 0;
-        if (listaVentas.isEmpty()) {
-           JOptionPane.showMessageDialog(this, "Seleccione los libros vendidos", "Error", JOptionPane.ERROR_MESSAGE);
+    String fecha = txtFecha.getText();
+    String cliente = txtCliente.getText();
+    double precio = obtenerTotalNumerico();
+    int cantidad = 0;
+
+    if (listaVentas.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Seleccione los libros vendidos", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    StringBuilder mensajeStock = new StringBuilder();
+    ArrayList<Libro> librosSinStock = new ArrayList<>();
+
+    for (Libro libro : listaVentas) {
+        if (libro.getEjemplares() < libro.getCantidadVendido()) {
+            mensajeStock.append("No hay suficiente stock para el libro: ").append(libro.getTitulo())
+                    .append(". Disponible: ").append(libro.getEjemplares()).append(", Solicitado: ")
+                    .append(libro.getCantidadVendido()).append("\n");
+            libro.setCantidadVendido(libro.getEjemplares()); // Ajustar a la cantidad disponible
         }
-        else{
-        Ventas venta = new Ventas (fecha, cliente, precio, factura, cantidad);
-        
-        
-        
-        
-        JOptionPane.showMessageDialog(null, "Venta realizada:\n" + venta);
-        aumentarFactura();
-        txtFactura.setText(factura+"");//que no se pueda tocar
-        txtCliente.setText("");
-        //Aca iria el checkeo de que haya stock, y vender la cantidad que se pueda.
-        
-        //llamar a un metodo que vea la cantidad de stock , la compare con la cantidad de ventas, deje en 0 el stock si es menor a la cantidad de ventas
-        // sino que le reste la cantidad de ventas al stock, basicamente actualizarlo.
-        
-        
-        modelo.agregarVentas(venta);
-        borrarCantidadVentas();
-        
-        
-        //dispose();
-        
+
+        if (libro.getCantidadVendido() == 0) {
+            librosSinStock.add(libro); // Añadir a la lista de libros sin stock
         }
+    }
+
+    listaVentas.removeAll(librosSinStock); // Eliminar libros sin stock de listaVentas
+
+    if (listaVentas.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No hay stock suficiente para realizar la venta.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    } else if (mensajeStock.length() > 0) {
+        JOptionPane.showMessageDialog(this, mensajeStock.toString(), "Stock Insuficiente", JOptionPane.WARNING_MESSAGE);
+    } else {
+
+    Ventas venta = new Ventas(fecha, cliente, obtenerTotalNumerico(), factura, cantidad);
+    modelo.agregarVentas(venta);
+    
+    for (Libro libro : listaVentas) {
+        libro.setEjemplares(libro.getEjemplares() - libro.getCantidadVendido()); // Descontar del stock
+        libro.setCantidadVendido(0); // Reiniciar la cantidad vendida
+    }
+
+    JOptionPane.showMessageDialog(null, "Venta realizada:\n" + venta);
+    aumentarFactura();
+    txtFactura.setText(factura + "");
+    txtCliente.setText("");
+    listaVentas.clear();
+    actualizarListaVentas();
+    cargarTotal();
+        
+    }
         //QUE HAYAN VALORES SELECCIONADOS ETC
         /*
         Al momento de registrar la factura, verificar si hay stock suficiente
@@ -421,6 +456,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
     private javax.swing.JButton btnDerecha;
     private javax.swing.JButton btnIzquierda;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> jlLibros;
