@@ -10,12 +10,23 @@ public class Modelo extends Observable implements Serializable {
     public ArrayList<Autor> autores = new ArrayList<>();
     public ArrayList<Libro> libros = new ArrayList<>();
     public ArrayList<Ventas> ventas = new ArrayList<>();
-    
+    private int numeroFactura;
     
     public Modelo() {
         cargarDatos();
+        this.numeroFactura = 1;
     }
 
+     public int getNumeroFactura() {
+        return numeroFactura;
+    }
+
+    public void incrementarNumeroFactura() {
+        this.numeroFactura++;
+    }
+    
+    
+    
     public void agregarEditorial(Editorial editorial) {
         editoriales.add(editorial);
         setChanged();

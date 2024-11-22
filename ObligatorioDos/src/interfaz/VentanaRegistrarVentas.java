@@ -12,14 +12,16 @@ import dominio.Modelo;
 import dominio.Ventas;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
-public class VentanaRegistrarVentas extends javax.swing.JFrame {
-    private int factura;
+public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observer {
+    //private int factura;
     private Modelo modelo;
     private ArrayList<Libro> listaVentas = new ArrayList<>();
     
@@ -32,17 +34,13 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         cargarListaLibros();
         fechaActual();//que no se pueda tocar
         cargarTotal();
-        primeraFactura();
-        txtFactura.setText(factura+"");//que no se pueda tocar
         
+        txtFactura.setText(modelo.getNumeroFactura()+"");//que no se pueda tocar
+        
+        modelo.addObserver(this);
     }
     
-    private void primeraFactura(){
-       //poco convencional pero porque hay un error sino no se porque
-        if(factura == 0){
-            aumentarFactura();
-        }
-    }
+ 
     private void cargarListaLibros() {
     // Ordena los libros por título y luego combina ISBN y título
     jlLibros.setListData(modelo.getLibros().stream()
@@ -294,9 +292,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         txtFecha.setText(fechaActual.format(formatoFecha));
     }
     
-    private void aumentarFactura(){
-        factura++;
-    }
+    
        
     private void btnDerechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDerechaActionPerformed
     // Obtener el libro seleccionado de la lista jlLibros
@@ -396,7 +392,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, mensajeStock.toString(), "Stock Insuficiente", JOptionPane.WARNING_MESSAGE);
     } else {
 
-    Ventas venta = new Ventas(fecha, cliente, obtenerTotalNumerico(), factura, cantidad);
+    Ventas venta = new Ventas(fecha, cliente, obtenerTotalNumerico(), modelo.getNumeroFactura(), cantidad);
     modelo.agregarVentas(venta);
     
     for (Libro libro : listaVentas) {
@@ -405,8 +401,8 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
     }
 
     JOptionPane.showMessageDialog(null, "Venta realizada:\n" + venta);
-    aumentarFactura();
-    txtFactura.setText(factura + "");
+    modelo.incrementarNumeroFactura();
+    txtFactura.setText(modelo.getNumeroFactura() + "");
     txtCliente.setText("");
     listaVentas.clear();
     actualizarListaVentas();
@@ -446,6 +442,14 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Modelo) {
+            // Actualizar la lista de libros cuando el modelo cambie
+            cargarListaLibros();
+            cargarTotal();
+        }
+    }
     /**
      * @param args the command line arguments
      */

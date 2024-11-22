@@ -26,9 +26,11 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblNombreEditorial" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
-                  <Component id="lblPaisEditorial" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
                   <Component id="lblEditorialesRegistradas" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="lblPaisEditorial" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lblNombreEditorial" alignment="0" pref="154" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
