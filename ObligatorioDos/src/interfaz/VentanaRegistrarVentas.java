@@ -32,7 +32,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
         this.modelo=modelo;
         initComponents();
         cargarListaLibros();
-        fechaActual();//que no se pueda tocar
+        fechaActual();
         cargarTotal();
         
         txtFactura.setText(modelo.getNumeroFactura()+"");//que no se pueda tocar
@@ -359,7 +359,6 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
     String fecha = txtFecha.getText();
     String cliente = txtCliente.getText();
-    double precio = obtenerTotalNumerico();
     int cantidad = 0;
 
     if (listaVentas.isEmpty()) {
@@ -392,7 +391,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
         JOptionPane.showMessageDialog(this, mensajeStock.toString(), "Stock Insuficiente", JOptionPane.WARNING_MESSAGE);
     } else {
 
-    Ventas venta = new Ventas(fecha, cliente, obtenerTotalNumerico(), modelo.getNumeroFactura(), cantidad);
+    Ventas venta = new Ventas(fecha, cliente, obtenerTotalNumerico(), modelo.getNumeroFactura(), cantidad, listaVentas );
     modelo.agregarVentas(venta);
     
     for (Libro libro : listaVentas) {

@@ -9,15 +9,23 @@ public class Ventas implements Serializable{
     private int factura;
     private double precio;
     private int cantidad;
-    //private ArrayList<Libro> librosVendidos;
+    private ArrayList<Libro> librosVendidos;
     
-    public Ventas(String fecha, String cliente, double precio, int factura, int cantidad) {
+    public Ventas(String fecha, String cliente, double precio, int factura, int cantidad, ArrayList<Libro> librosVendidos) {
         this.cantidad = cantidad; 
         this.fecha = fecha;
         this.cliente = cliente;
         this.precio = precio;
         this.factura= factura;
-       // this.librosVendidos=librosVendidos;
+       this.librosVendidos=librosVendidos;
+    }
+
+    public ArrayList<Libro> getLibrosVendidos() {
+        return librosVendidos;
+    }
+
+    public void setLibrosVendidos(ArrayList<Libro> librosVendidos) {
+        this.librosVendidos = librosVendidos;
     }
 
     public int getCantidad() {

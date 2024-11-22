@@ -19,7 +19,7 @@ private String autor;
 private double precioCosto;
 private double precioVenta;
 private int ejemplares;
-private int cantidadVendido=0;
+private int cantidadVendido=0;//Valor aux
 
 
     public Libro(String isbn, String titulo, double precioCosto, double precioVenta, int ejemplares, String editorial, String genero, String autor, int cantidadVendido) {
