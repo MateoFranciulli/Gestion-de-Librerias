@@ -391,8 +391,15 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
         JOptionPane.showMessageDialog(this, mensajeStock.toString(), "Stock Insuficiente", JOptionPane.WARNING_MESSAGE);
     } else {
 
+        
+        
+    for (Libro libro : listaVentas) {
+        System.out.println("Título: " + libro.getTitulo() + ", Cantidad Vendida: " + libro.getCantidadVendido() + ", Precio de Venta: $" + libro.getPrecioVenta());
+    }    
     Ventas venta = new Ventas(fecha, cliente, obtenerTotalNumerico(), modelo.getNumeroFactura(), cantidad, listaVentas );
+    
     modelo.agregarVentas(venta);
+    
     
     for (Libro libro : listaVentas) {
         libro.setEjemplares(libro.getEjemplares() - libro.getCantidadVendido()); // Descontar del stock

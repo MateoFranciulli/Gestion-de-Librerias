@@ -20,6 +20,8 @@ public class Ventas implements Serializable{
        this.librosVendidos=librosVendidos;
     }
 
+    
+    
     public ArrayList<Libro> getLibrosVendidos() {
         return librosVendidos;
     }

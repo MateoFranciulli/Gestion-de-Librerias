@@ -122,28 +122,77 @@ private Modelo modelo;
     }// </editor-fold>//GEN-END:initComponents
 
    
-      private void cargarListaDatos(Ventas venta) {
-        ArrayList<String> datosLibros = new ArrayList<>();
-        for (Ventas libro : modelo.getVentas()) {
-            if (libro.getCantidad() > 0) {
-                datosLibros.add(libro.getCantidad() + " - " );
-            }
+private void cargarListaDatos(Ventas venta) {
+    ArrayList<String> datosLibros = new ArrayList<>();
+    for (Libro libro : venta.getLibrosVendidos()) {
+        System.out.println("Cargando libro: " + libro.getTitulo());  // Depuración
+        String datos = "Cliente: " + venta.getCliente() + " - " + libro.getTitulo() + " - " + libro.getCantidadVendido() + " - " + libro.getPrecioVenta() + " - " + libro.getEditorial() + " - " + libro.getAutor();
+        datosLibros.add(datos);
+    }
+    if (datosLibros.isEmpty()) {
+        System.out.println("No hay libros vendidos en esta venta.");  // Depuración
+    }
+    liDatosLibros.setListData(datosLibros.toArray(new String[0]));
+}
+  
+
+private Ventas buscarVentaPorNumeroFactura(int numeroFactura) {
+    ArrayList<Ventas> ventaLib = new ArrayList<>();
+    ventaLib = modelo.getVentas();
+    for (Ventas venta : ventaLib) {
+        if (venta.getFactura() == numeroFactura) {
+            // Transformar la lista de libros vendidos a un arreglo de String
+            String[] datosLibros = venta.getLibrosVendidos().stream()
+                .map(libro -> venta.getCliente() + " - " + libro.getTitulo() + " - " + libro.getCantidadVendido() + " - " + libro.getPrecioVenta() + " - " + libro.getEditorial() + " - " + libro.getAutor())
+                .toArray(String[]::new);
+            
+            // Establecer los datos en la lista
+            liDatosLibros.setListData(datosLibros);
+
+            return venta;
         }
-        liDatosLibros.setListData(datosLibros.toArray(new String[0]));
-        
-       
-    
     }
     
-      private Ventas buscarVentaPorNumeroFactura(int numeroFactura) {
-        for (Ventas venta : modelo.getVentas()) {
-            if (venta.getFactura() == numeroFactura) {
-                return venta;
-            }
-        }
-        return null;
-    }
+    return null; // Si no se encuentra la venta
+}
+
+
+/*
+private Ventas buscarVentaPorNumeroFactura(int numeroFactura) {
     
+    for (Ventas venta : modelo.getVentas()) {
+        if (venta.getFactura() == numeroFactura) {
+            System.out.println("Venta encontrada: " + venta.getFactura());  // Depuración
+            System.out.println("Cliente: " + venta.getCliente());
+            System.out.println("Fecha: " + venta.getFecha());
+            System.out.println("Precio: " + venta.getPrecio());
+            System.out.println("Cantidad: " + venta.getCantidad());
+            System.out.println("Libros Vendidos:");
+           
+            
+            for (Libro libro : venta.getLibrosVendidos()) {
+                System.out.println("  Título: " + libro.getTitulo());
+                System.out.println("  Autor: " + libro.getAutor());
+                System.out.println("  Editorial: " + libro.getEditorial());
+                System.out.println("  Precio Venta: " + libro.getPrecioVenta());
+                System.out.println("  Cantidad Vendido: " + libro.getCantidadVendido());
+            }
+            return venta;
+        }
+    }
+    return null; // Si no se encuentra la venta
+} */
+/*
+private Ventas buscarVentaPorNumeroFactura(int numeroFactura) {
+    for (Ventas venta : modelo.getVentas()) {
+        if (venta.getFactura() == numeroFactura) {
+            return venta;
+        }
+    }
+    return null;
+}
+ 
+*/
     
     
     private void txtNFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNFacturaActionPerformed
@@ -185,9 +234,10 @@ private Modelo modelo;
         try {
             int numeroFactura = Integer.parseInt(txtNFactura.getText().trim());
             Ventas venta = buscarVentaPorNumeroFactura(numeroFactura);
-
+ 
             if (venta != null) {
-                cargarListaDatos(venta);
+                 cargarListaDatos(venta);
+                 
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró la venta con el número de factura especificado.", "Error", JOptionPane.ERROR_MESSAGE);
             }
