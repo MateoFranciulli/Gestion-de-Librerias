@@ -8,18 +8,28 @@ import dominio.Libro;
 import dominio.Modelo;
 import dominio.Ventas;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
-public class VentanaAnularVenta extends javax.swing.JFrame {
+public class VentanaAnularVenta extends javax.swing.JFrame implements Observer {
 private Modelo modelo;
 
     public VentanaAnularVenta(Modelo modelo) {
         this.modelo = modelo;
+        modelo.addObserver(this);
         initComponents();
+    }
+      @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Ventas) {
+            Ventas venta = (Ventas) arg;
+            cargarListaDatos(venta);
+        }
     }
 
     /**
@@ -124,75 +134,45 @@ private Modelo modelo;
    
 private void cargarListaDatos(Ventas venta) {
     ArrayList<String> datosLibros = new ArrayList<>();
-    for (Libro libro : venta.getLibrosVendidos()) {
-        System.out.println("Cargando libro: " + libro.getTitulo());  // Depuración
-        String datos = "Cliente: " + venta.getCliente() + " - " + libro.getTitulo() + " - " + libro.getCantidadVendido() + " - " + libro.getPrecioVenta() + " - " + libro.getEditorial() + " - " + libro.getAutor();
-        datosLibros.add(datos);
+    String datosVenta = "Cliente: " + venta.getCliente()
+            + " - Fecha: " + venta.getFecha()
+            + " - Factura: " + venta.getFactura()
+            + " - Precio Total: " + venta.getPrecio();
+    datosLibros.add(datosVenta);
+    System.out.println("PrimeerREGISTRO");
+
+    if (venta.getLibrosVendidos() != null) {
+        System.out.println("Cantidad de libros vendidos: " + venta.getLibrosVendidos().size());
+        for (Libro libro : venta.getLibrosVendidos()) {
+            String datosLibro = "Título: " + libro.getTitulo()
+                    + " - Cantidad: " + libro.getCantidadVendido()
+                    + " - Precio: " + libro.getPrecioVenta()
+                    + " - Editorial: " + libro.getEditorial()
+                    + " - Autor: " + libro.getAutor();
+            datosLibros.add(datosLibro);
+            System.out.println("Entro anular");
+        }
+    } else {
+        System.out.println("La lista de libros vendidos es nula.");
     }
+
     if (datosLibros.isEmpty()) {
-        System.out.println("No hay libros vendidos en esta venta.");  // Depuración
+        JOptionPane.showMessageDialog(this, "No hay libros vendidos en esta venta.");
     }
+    
     liDatosLibros.setListData(datosLibros.toArray(new String[0]));
 }
-  
-
-private Ventas buscarVentaPorNumeroFactura(int numeroFactura) {
-    ArrayList<Ventas> ventaLib = new ArrayList<>();
-    ventaLib = modelo.getVentas();
+    
+    private Ventas buscarVentaPorNumeroFactura(int numeroFactura) {
+    ArrayList<Ventas> ventaLib = modelo.getVentas();
     for (Ventas venta : ventaLib) {
         if (venta.getFactura() == numeroFactura) {
-            // Transformar la lista de libros vendidos a un arreglo de String
-            String[] datosLibros = venta.getLibrosVendidos().stream()
-                .map(libro -> venta.getCliente() + " - " + libro.getTitulo() + " - " + libro.getCantidadVendido() + " - " + libro.getPrecioVenta() + " - " + libro.getEditorial() + " - " + libro.getAutor())
-                .toArray(String[]::new);
-            
-            // Establecer los datos en la lista
-            liDatosLibros.setListData(datosLibros);
-
-            return venta;
-        }
-    }
-    
-    return null; // Si no se encuentra la venta
-}
-
-
-/*
-private Ventas buscarVentaPorNumeroFactura(int numeroFactura) {
-    
-    for (Ventas venta : modelo.getVentas()) {
-        if (venta.getFactura() == numeroFactura) {
-            System.out.println("Venta encontrada: " + venta.getFactura());  // Depuración
-            System.out.println("Cliente: " + venta.getCliente());
-            System.out.println("Fecha: " + venta.getFecha());
-            System.out.println("Precio: " + venta.getPrecio());
-            System.out.println("Cantidad: " + venta.getCantidad());
-            System.out.println("Libros Vendidos:");
-           
-            
-            for (Libro libro : venta.getLibrosVendidos()) {
-                System.out.println("  Título: " + libro.getTitulo());
-                System.out.println("  Autor: " + libro.getAutor());
-                System.out.println("  Editorial: " + libro.getEditorial());
-                System.out.println("  Precio Venta: " + libro.getPrecioVenta());
-                System.out.println("  Cantidad Vendido: " + libro.getCantidadVendido());
-            }
             return venta;
         }
     }
     return null; // Si no se encuentra la venta
-} */
-/*
-private Ventas buscarVentaPorNumeroFactura(int numeroFactura) {
-    for (Ventas venta : modelo.getVentas()) {
-        if (venta.getFactura() == numeroFactura) {
-            return venta;
-        }
-    }
-    return null;
 }
- 
-*/
+    
     
     
     private void txtNFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNFacturaActionPerformed

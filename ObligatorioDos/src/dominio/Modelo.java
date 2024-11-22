@@ -153,16 +153,19 @@ public class Modelo extends Observable implements Serializable {
         }
     }
     
-     public ArrayList<Ventas> getVentas() {
-        return ventas;
-    }
     
-     public void agregarVentas(Ventas venta) {
+    
+    
+    public void agregarVentas(Ventas venta) {
         ventas.add(venta);
         setChanged();
-        notifyObservers(ventas);
+        notifyObservers(venta);
         guardarDatos();
-    }     
+    }
+
+    public ArrayList<Ventas> getVentas() {
+        return ventas;
+    }  
 
     @Override
     public void notifyObservers() {

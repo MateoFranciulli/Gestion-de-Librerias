@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
 public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observer {
     //private int factura;
     private Modelo modelo;
-    private ArrayList<Libro> listaVentas = new ArrayList<>();
+    public ArrayList<Libro> listaVentas = new ArrayList<>();
     
     /**
      * Creates new form VentanaRegistro
@@ -390,45 +390,30 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
     } else if (mensajeStock.length() > 0) {
         JOptionPane.showMessageDialog(this, mensajeStock.toString(), "Stock Insuficiente", JOptionPane.WARNING_MESSAGE);
     } else {
+        
+        ArrayList<Libro> ventasAGuardar = new ArrayList<>(listaVentas); 
+        Ventas venta = new Ventas(fecha, cliente, obtenerTotalNumerico(), modelo.getNumeroFactura(), cantidad, ventasAGuardar);
+        modelo.agregarVentas(venta);
 
-        
-        
-    for (Libro libro : listaVentas) {
-        System.out.println("Título: " + libro.getTitulo() + ", Cantidad Vendida: " + libro.getCantidadVendido() + ", Precio de Venta: $" + libro.getPrecioVenta());
-    }    
-    Ventas venta = new Ventas(fecha, cliente, obtenerTotalNumerico(), modelo.getNumeroFactura(), cantidad, listaVentas );
-    
-    modelo.agregarVentas(venta);
-    
-    
-    for (Libro libro : listaVentas) {
-        libro.setEjemplares(libro.getEjemplares() - libro.getCantidadVendido()); // Descontar del stock
-        libro.setCantidadVendido(0); // Reiniciar la cantidad vendida
-    }
+        for (Libro libro : listaVentas) {
+            libro.setEjemplares(libro.getEjemplares() - libro.getCantidadVendido()); // Descontar del stock
+            //libro.setCantidadVendido(0); // Reiniciar la cantidad vendida
+        }
 
-    JOptionPane.showMessageDialog(null, "Venta realizada:\n" + venta);
-    modelo.incrementarNumeroFactura();
-    txtFactura.setText(modelo.getNumeroFactura() + "");
-    txtCliente.setText("");
-    listaVentas.clear();
-    actualizarListaVentas();
-    cargarTotal();
-        
+        JOptionPane.showMessageDialog(null, "Venta realizada:\n" + venta);
+        modelo.incrementarNumeroFactura();
+        txtFactura.setText(modelo.getNumeroFactura() + "");
+        txtCliente.setText("");
+        listaVentas.clear();
+        actualizarListaVentas();
+        cargarTotal();
     }
-        //QUE HAYAN VALORES SELECCIONADOS ETC
-        /*
-        Al momento de registrar la factura, verificar si hay stock suficiente
-        para la venta de cada uno de los libros. En caso que no alcance de alguno/algunos,
-        indicarlo mediante una única ventana emergente y vender solamente la cantidad disponible e 
-        informar el nuevo total. Ejemplo: si se piden 3 unidades de un libro y en stock hay 2,
-        se venden solamente 2 y se informa en la ventana. Si no hay stock de ninguno de los libros a
-        vender, la venta no debe generarse. Además, al registrar la factura, se deben descontar del
-        stock todos los libros vendidos en ella. Se adjunta ejemplo de la ventana
-        
-        */
+ 
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
-
+    
+    
+    
     private void borrarCantidadVentas(){
         Iterator<Libro> iterador = listaVentas.iterator();
            while (iterador.hasNext()) {

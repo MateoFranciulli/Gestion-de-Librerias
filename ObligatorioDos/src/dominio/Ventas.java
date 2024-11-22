@@ -17,8 +17,11 @@ public class Ventas implements Serializable{
         this.cliente = cliente;
         this.precio = precio;
         this.factura= factura;
-       this.librosVendidos=librosVendidos;
+       this.librosVendidos=librosVendidos != null ? librosVendidos : new ArrayList<>();;
+        System.out.println("Libros vendidos inicializados: " + (librosVendidos != null ? librosVendidos.size() : "null"));
     }
+
+  
 
     
     
@@ -81,7 +84,8 @@ public class Ventas implements Serializable{
                 "\n Cliente: " + cliente +//completar
                 "\n Precio: " + precio + //completar
                 "\n Factura: "+ factura +//completar
-                "\n Cantidad: "+ cantidad;
+                "\n Cantidad: "+ cantidad+
+               "\n Libros" + librosVendidos;
    
     }
 }

@@ -31,7 +31,7 @@ private int cantidadVendido=0;//Valor aux
     this.editorial = editorial;
     this.genero = genero;
     this.autor = autor;
-    this.cantidadVendido = 0; // Inicializar a 0
+    this.cantidadVendido =cantidadVendido;// Inicializar a 0
     
     }
 
@@ -107,6 +107,13 @@ private int cantidadVendido=0;//Valor aux
         this.ejemplares = ejemplares;
     }
 
+    
+
+    @Override
+    public String toString() {
+        return "Libro{" + "isbn=" + isbn + ", titulo=" + titulo + ", editorial=" + editorial + ", genero=" + genero + ", autor=" + autor 
+                + ", precioCosto=" + precioCosto + ", precioVenta=" + precioVenta + ", ejemplares=" + ejemplares  + '}';
+    }
     
     
 }
