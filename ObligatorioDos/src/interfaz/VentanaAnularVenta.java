@@ -4,18 +4,21 @@
  */
 package interfaz;
 
+import dominio.Libro;
 import dominio.Modelo;
+import dominio.Ventas;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
 public class VentanaAnularVenta extends javax.swing.JFrame {
+private Modelo modelo;
 
-    /**
-     * Creates new form VentanaRegistro
-     */
     public VentanaAnularVenta(Modelo modelo) {
+        this.modelo = modelo;
         initComponents();
     }
 
@@ -60,6 +63,11 @@ public class VentanaAnularVenta extends javax.swing.JFrame {
         jScrollPane4.setViewportView(liDatosLibros);
 
         jbIngresarNFactura.setText("Ingresar");
+        jbIngresarNFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbIngresarNFacturaActionPerformed(evt);
+            }
+        });
 
         jbAnularVenta.setText("Anular venta");
         jbAnularVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -113,17 +121,77 @@ public class VentanaAnularVenta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cargarListaDatos(){
-    
-    
+   
+      private void cargarListaDatos(Ventas venta) {
+        ArrayList<String> datosLibros = new ArrayList<>();
+        for (Ventas libro : modelo.getVentas()) {
+            if (libro.getCantidad() > 0) {
+                datosLibros.add(libro.getCantidad() + " - " );
+            }
+        }
+        liDatosLibros.setListData(datosLibros.toArray(new String[0]));
     }
+    
+      private Ventas buscarVentaPorNumeroFactura(int numeroFactura) {
+        for (Ventas venta : modelo.getVentas()) {
+            if (venta.getFactura() == numeroFactura) {
+                return venta;
+            }
+        }
+        return null;
+    }
+    
+    
+    
     private void txtNFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNFacturaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNFacturaActionPerformed
 
     private void jbAnularVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularVentaActionPerformed
-        // TODO add your handling code here:
+     try {
+            int numeroFactura = Integer.parseInt(txtNFactura.getText().trim());
+            Ventas venta = buscarVentaPorNumeroFactura(numeroFactura);
+
+            if (venta != null) {
+                int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea anular esta venta?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    anularVenta(venta);
+                    JOptionPane.showMessageDialog(this, "Venta anulada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró la venta con el número de factura especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Número de factura inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    
+
     }//GEN-LAST:event_jbAnularVentaActionPerformed
+
+       private void anularVenta(Ventas venta) {
+        modelo.getVentas().remove(venta);
+        for (Libro libro : modelo.getLibros()) {
+            libro.setEjemplares(libro.getEjemplares() + venta.getCantidad());
+            libro.setCantidadVendido(0);
+        }
+        modelo.guardarDatos();
+    }
+        
+    private void jbIngresarNFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarNFacturaActionPerformed
+       
+        try {
+            int numeroFactura = Integer.parseInt(txtNFactura.getText().trim());
+            Ventas venta = buscarVentaPorNumeroFactura(numeroFactura);
+
+            if (venta != null) {
+                cargarListaDatos(venta);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró la venta con el número de factura especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Número de factura inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbIngresarNFacturaActionPerformed
 
     /**
      * @param args the command line arguments
