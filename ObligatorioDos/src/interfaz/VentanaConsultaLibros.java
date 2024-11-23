@@ -36,7 +36,7 @@ public class VentanaConsultaLibros extends javax.swing.JFrame implements Observe
     }
     
     private void configurarPanelLibros() {
-    panelLibros.setLayout(new java.awt.GridLayout(0, 5)); // Ejemplo: diseño con 5 columnas
+    panelLibros.setLayout(new java.awt.GridLayout(5,5)); // Ejemplo: diseño con 5 columnas
     }
 
     
@@ -181,29 +181,34 @@ public class VentanaConsultaLibros extends javax.swing.JFrame implements Observe
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         panelLibros.removeAll();
+    
+    String genero = txtGenero.getText().toUpperCase();
+    String titulo = txtTitulo.getText().toUpperCase();
+    String autor = txtAutor.getText().toUpperCase();
+
+    if (genero.isEmpty() || titulo.isEmpty() || autor.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Complete todos los campos");
+    } else {
+        Iterator<Libro> iterador = modelo.getLibros().iterator();
         
-        String genero = txtGenero.getText().toUpperCase();
-        String titulo = txtTitulo.getText().toUpperCase();
-        String autor = txtAutor.getText().toUpperCase();
-        //ArrayList<Libro> librosBoton = new ArrayList<>();
-        
-        if (genero.isEmpty()||titulo.isEmpty() || autor.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Complete todos los campos");
-        }else{
-            Iterator<Libro> iterador = modelo.getLibros().iterator();
-            
-            while (iterador.hasNext()) {
-                Libro libro = iterador.next();
-                if (libro.getGenero().toUpperCase().contains(genero) || 
-                        libro.getTitulo().toUpperCase().contains(titulo) ||
-                        libro.getAutor().toUpperCase().contains(autor)) {
-                
+        while (iterador.hasNext()) {
+            Libro libro = iterador.next();
+            if (libro.getGenero().toUpperCase().contains(genero) || 
+                libro.getTitulo().toUpperCase().contains(titulo) ||
+                libro.getAutor().toUpperCase().contains(autor)) {
+
                 JButton nuevo = new JButton();
-                File archivoImagen = new File("ObligatorioDos\\imagenes\\" + libro.getIsbn() + ".jpg");
-                if (libro.getFoto() != null) { //exists();
-                    ImageIcon icono = new ImageIcon(libro.getFoto().getScaledInstance(100, 150, Image.SCALE_SMOOTH));
-                    nuevo.setIcon(icono);
+                String rutaImagen = "imagenes/" + libro.getIsbn() + ".png";
+                System.out.println("Ruta de la imagen: " + rutaImagen);  // Verifica la ruta
+
+                File archivoImagen = new File(rutaImagen);
+                if (archivoImagen.exists()) {
+                    // Si la imagen existe, carga la imagen y la escala
+                    ImageIcon icono = new ImageIcon(archivoImagen.getAbsolutePath());
+                    Image imagenEscalada = icono.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                    nuevo.setIcon(new ImageIcon(imagenEscalada));
                 } else {
+                    // Si no existe la imagen, muestra el ISBN
                     nuevo.setText(libro.getIsbn());
                 }
                 nuevo.addActionListener(new LibroListener(libro));
@@ -217,7 +222,7 @@ public class VentanaConsultaLibros extends javax.swing.JFrame implements Observe
         txtGenero.setText("");
         txtTitulo.setText("");
         txtAutor.setText("");
-    } 
+    }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
