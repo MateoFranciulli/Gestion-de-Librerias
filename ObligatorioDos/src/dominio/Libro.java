@@ -4,6 +4,8 @@
  */
 package dominio;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 /**
@@ -20,9 +22,12 @@ private double precioCosto;
 private double precioVenta;
 private int ejemplares;
 private int cantidadVendido=0;//Valor aux
+private transient BufferedImage foto;
 
 
-    public Libro(String isbn, String titulo, double precioCosto, double precioVenta, int ejemplares, String editorial, String genero, String autor, int cantidadVendido) {
+    public Libro(String isbn, String titulo, double precioCosto, double precioVenta,
+            int ejemplares, String editorial, String genero, String autor, 
+            int cantidadVendido,BufferedImage foto) {
     this.isbn = isbn;
     this.titulo = titulo;
     this.precioCosto = precioCosto;
@@ -32,7 +37,16 @@ private int cantidadVendido=0;//Valor aux
     this.genero = genero;
     this.autor = autor;
     this.cantidadVendido =cantidadVendido;// Inicializar a 0
+    this.foto=foto;
     
+    }
+
+    public BufferedImage getFoto() {
+        return foto;
+    }
+
+    public void setFoto(BufferedImage  foto) {
+        this.foto = foto;
     }
 
     public int getCantidadVendido() {
@@ -111,8 +125,10 @@ private int cantidadVendido=0;//Valor aux
 
     @Override
     public String toString() {
-        return "Libro{" + "isbn=" + isbn + ", titulo=" + titulo + ", editorial=" + editorial + ", genero=" + genero + ", autor=" + autor 
-                + ", precioCosto=" + precioCosto + ", precioVenta=" + precioVenta + ", ejemplares=" + ejemplares  + '}';
+        return "Libro{" + "isbn=" + isbn + ", titulo=" + titulo + ", editorial=" 
+                + editorial + ", genero=" + genero + ", autor=" + autor 
+                + ", precioCosto=" + precioCosto + ", precioVenta=" + precioVenta +
+                ", ejemplares=" + ejemplares  + '}';
     }
     
     

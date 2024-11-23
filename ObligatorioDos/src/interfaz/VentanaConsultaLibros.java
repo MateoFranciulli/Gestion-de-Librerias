@@ -4,20 +4,70 @@
  */
 package interfaz;
 
+import dominio.Libro;
 import dominio.Modelo;
+import dominio.Ventas;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
-public class VentanaConsultaLibros extends javax.swing.JFrame {
-
+public class VentanaConsultaLibros extends javax.swing.JFrame implements Observer {
+    private Modelo modelo;
     /**
      * Creates new form VentanaConsultaLibros
      */
     public VentanaConsultaLibros(Modelo modelo) {
+        this.modelo = modelo;
         initComponents();
+        configurarPanelLibros();
+        
     }
+    
+    private void configurarPanelLibros() {
+    panelLibros.setLayout(new java.awt.GridLayout(0, 5)); // Ejemplo: diseño con 5 columnas
+    }
+
+    
+    
+    //cargar panel
+    
+     private class LibroListener implements ActionListener {
+        private Libro libro;
+
+        public LibroListener(Libro libro) {
+            this.libro = libro;
+        }
+
+       @Override
+        public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(null, 
+        "Detalles del libro:\n" +
+        "Título: " + libro.getTitulo() + "\n" +
+        "Autor: " + libro.getAutor() + "\n" +
+        "Género: " + libro.getGenero());
+        }
+     }
+
+    
+    /*@Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Ventas) {
+            Ventas venta = (Ventas) arg;
+            cargarListaDatos(venta);
+        }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,6 +85,7 @@ public class VentanaConsultaLibros extends javax.swing.JFrame {
         txtGenero = new javax.swing.JTextField();
         txtAutor = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
+        panelLibros = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Consulta de Libros");
@@ -52,6 +103,22 @@ public class VentanaConsultaLibros extends javax.swing.JFrame {
         });
 
         btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelLibrosLayout = new javax.swing.GroupLayout(panelLibros);
+        panelLibros.setLayout(panelLibrosLayout);
+        panelLibrosLayout.setHorizontalGroup(
+            panelLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 403, Short.MAX_VALUE)
+        );
+        panelLibrosLayout.setVerticalGroup(
+            panelLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,16 +126,13 @@ public class VentanaConsultaLibros extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(109, 109, 109))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(lblAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -76,25 +140,33 @@ public class VentanaConsultaLibros extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 361, Short.MAX_VALUE)))
-                .addGap(109, 109, 109))
+                                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(43, 43, 43)
+                        .addComponent(panelLibros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 24, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(96, 96, 96)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(96, 96, 96)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(panelLibros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnConsultar)
                 .addGap(21, 21, 21))
@@ -107,6 +179,47 @@ public class VentanaConsultaLibros extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAutorActionPerformed
 
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        panelLibros.removeAll();
+        
+        String genero = txtGenero.getText().toUpperCase();
+        String titulo = txtTitulo.getText().toUpperCase();
+        String autor = txtAutor.getText().toUpperCase();
+        //ArrayList<Libro> librosBoton = new ArrayList<>();
+        
+        if (genero.isEmpty()||titulo.isEmpty() || autor.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos");
+        }else{
+            Iterator<Libro> iterador = modelo.getLibros().iterator();
+            
+            while (iterador.hasNext()) {
+                Libro libro = iterador.next();
+                if (libro.getGenero().toUpperCase().contains(genero) || 
+                        libro.getTitulo().toUpperCase().contains(titulo) ||
+                        libro.getAutor().toUpperCase().contains(autor)) {
+                
+                JButton nuevo = new JButton();
+                File archivoImagen = new File("ObligatorioDos\\imagenes\\" + libro.getIsbn() + ".jpg");
+                if (libro.getFoto() != null) { //exists();
+                    ImageIcon icono = new ImageIcon(libro.getFoto().getScaledInstance(100, 150, Image.SCALE_SMOOTH));
+                    nuevo.setIcon(icono);
+                } else {
+                    nuevo.setText(libro.getIsbn());
+                }
+                nuevo.addActionListener(new LibroListener(libro));
+                panelLibros.add(nuevo);
+            }
+        }
+
+        panelLibros.revalidate();
+        panelLibros.repaint();
+
+        txtGenero.setText("");
+        txtTitulo.setText("");
+        txtAutor.setText("");
+    } 
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -116,8 +229,14 @@ public class VentanaConsultaLibros extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblAutor;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel panelLibros;
     private javax.swing.JTextField txtAutor;
     private javax.swing.JTextField txtGenero;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
-}
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    }

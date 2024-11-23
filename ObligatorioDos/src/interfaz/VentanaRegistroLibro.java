@@ -7,8 +7,10 @@ package interfaz;
 import dominio.*;
 import dominio.Modelo;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -352,8 +354,11 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
             }
 
             else{
-
-            modelo.agregarLibro(new Libro(isbn, titulo, precioCosto, precioVenta, ejemplares, editorial, genero, autor,cantidad));
+             BufferedImage  foto = null;
+            if (fotoSeleccionada != null) {
+                foto = convertirArchivoAImagen(fotoSeleccionada);
+            }
+            modelo.agregarLibro(new Libro(isbn, titulo, precioCosto, precioVenta, ejemplares, editorial, genero, autor,cantidad, foto));
 
             if (fotoSeleccionada != null) {
                 File carpetaImagenes = new File("imagenes");
@@ -374,6 +379,15 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         }
         
         
+    }
+     
+     private BufferedImage convertirArchivoAImagen(File archivo) {
+        try {
+            return ImageIO.read(archivo);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private String obtenerExtensionArchivo(File archivo) {
