@@ -8,6 +8,7 @@ public class Ventas implements Serializable{
     private String cliente;
     private int factura;
     private double precio;
+    private double precioVenta;
     private int cantidad;
     private ArrayList<Libro> librosVendidos;
     
@@ -17,7 +18,7 @@ public class Ventas implements Serializable{
         this.cliente = cliente;
         this.precio = precio;
         this.factura= factura;
-       this.librosVendidos=librosVendidos != null ? librosVendidos : new ArrayList<>();;
+        this.librosVendidos=librosVendidos != null ? librosVendidos : new ArrayList<>();;
         System.out.println("Libros vendidos inicializados: " + (librosVendidos != null ? librosVendidos.size() : "null"));
     }
 

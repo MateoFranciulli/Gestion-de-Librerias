@@ -1,6 +1,9 @@
 package interfaz;
 
+import dominio.Libro;
 import dominio.Modelo;
+import dominio.Ventas;
+import static java.lang.Integer.parseInt;
 
 /*
  * 
@@ -12,13 +15,26 @@ import dominio.Modelo;
  * @author mateofranciulli
  */
 public class VentanaConsultaVentas extends javax.swing.JFrame {
-
+    Modelo modelo;
     /**
      * Creates new form VentanaConsultaVentas
      */
     public VentanaConsultaVentas(Modelo modelo) {
+        this.modelo=modelo;
         initComponents();
     }
+    
+    
+    String fecha;
+    String cliente;
+    String factura;
+    String cantidad;
+    String precioVenta;
+    String precioCosto;
+    String importe;
+    int ejemplares=0;
+    int recaudado=0;
+    int ganancias=0;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -193,7 +209,60 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPanelAuxActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
+    String isbn = txtIsbn.getText();
+    
+
+    // Obtén el modelo de la tabla
+    javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    
+    // Limpia las filas existentes (si deseas que se reemplacen los datos anteriores)
+    tableModel.setRowCount(0);
+    
+    // Simula obtener datos por categoría desde el modelo (ajusta esto según tu implementación)
+    java.util.List<String[]> datos = obtenerDatosPorIsbn(isbn); // Define este método según tu lógica
+    
+    // Agrega filas a la tabla
+    for (String[] fila : datos) {
+        tableModel.addRow(fila);
+    }
+}
+
+    private java.util.List<String[]> obtenerDatosPorIsbn(String isbn) {
+        java.util.List<String[]> datos = new java.util.ArrayList<>();
+        for (Ventas ventas : modelo.ventas) {
+            for (Libro ventasLib : ventas.getLibrosVendidos() ) {
+                if (ventasLib.getIsbn().equalsIgnoreCase(isbn)) {
+                    fecha=ventas.getFecha();
+                    cliente=ventas.getCliente();
+                    factura=ventas.getFactura()+"";
+                    cantidad=ventasLib.getCantidadVendido()+"";
+                    precioVenta=ventasLib.getPrecioVenta()+"";
+                    precioCosto=ventasLib.getPrecioCosto()+"";
+                    ejemplares+=Integer.parseInt(cantidad);
+                    importe=(Integer.parseInt(cantidad)*(Integer.parseInt(precioVenta))+"");
+                    System.out.println("importe: "+importe);
+                    recaudado+=Integer.parseInt(importe);
+                    ganancias+=(Integer.parseInt(precioVenta)-
+                            Integer.parseInt(precioCosto))*Integer.parseInt(cantidad);   
+                }
+                
+            }
+            
+        datos.add(new String[]{fecha, cliente, factura,cantidad, precioVenta, importe});  
+        fecha="";
+        cliente="";
+        factura="";
+        precioVenta="";
+        precioCosto="";
+        importe="";
+        }
+        
+                System.out.println(ejemplares);
+                System.out.println(recaudado );
+                System.out.println(ganancias); 
+       return datos;
+
+        
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
