@@ -136,10 +136,11 @@ private int cantidadVendidoEnVenta;
 
     @Override
     public String toString() {
-        return "Libro{" + "isbn=" + isbn + ", titulo=" + titulo + ", editorial=" 
-                + editorial + ", genero=" + genero + ", autor=" + autor 
-                + ", precioCosto=" + precioCosto + ", precioVenta=" + precioVenta +
-                ", ejemplares=" + ejemplares  + '}';
+        return "Libro: " + "isbn: " + isbn +
+                ", titulo:" + titulo + ", editorial: " 
+                + editorial + ", genero: " + genero + ", autor: " + autor 
+                + ", precioCosto: " + precioCosto + ", precioVenta: " + precioVenta +
+                ", ejemplares: " + ejemplares  ;
     }
     
     

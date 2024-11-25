@@ -11,6 +11,7 @@ import dominio.Libro;
 import dominio.Modelo;
 import dominio.Ventas;
 import static java.lang.Integer.parseInt;
+import javax.swing.JOptionPane;
 
 
 public class VentanaConsultaVentas extends javax.swing.JFrame {
@@ -256,7 +257,10 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     ejemplares = 0;
     recaudado = 0;
     ganancias = 0;
-        
+    
+    if(txtIsbn.getText().isEmpty()){
+          JOptionPane.showMessageDialog(this, "Campo vacío, escriba un ISBN", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     String isbn = txtIsbn.getText();
     
     javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();        

@@ -373,41 +373,43 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
     ArrayList<Libro> librosSinStock = new ArrayList<>();
 
     for (Libro libro : listaVentas) {
-        if (libro.getEjemplares() < libro.getCantidadVendido()) {
-            mensajeStock.append("No hay suficiente stock para el libro: ").append(libro.getTitulo())
-                    .append(". Disponible: ").append(libro.getEjemplares()).append(", Solicitado: ")
-                    .append(libro.getCantidadVendido()).append("\n");
-            libro.setCantidadVendido(libro.getEjemplares()); // Ajustar a la cantidad disponible
-        }
-        
-        
-        
-        if (libro.getCantidadVendido() == 0) {
-            librosSinStock.add(libro); // Añadir a la lista de libros sin stock
+        if (libro.getEjemplares() != 0) {
+            if (libro.getEjemplares() < libro.getCantidadVendido()) {
+                mensajeStock.append("No hay suficiente stock para el libro: ").append(libro.getTitulo())
+                        .append(". Disponible: ").append(libro.getEjemplares()).append(", Solicitado: ")
+                        .append(libro.getCantidadVendido()).append(". Se venderán: ").append(libro.getEjemplares()).append("\n");
+                libro.setCantidadVendido(libro.getEjemplares()); // Ajustar a la cantidad disponible
+            }
+
+            if (libro.getCantidadVendido() == 0) {
+                librosSinStock.add(libro); // Añadir a la lista de libros sin stock
+            }
+        } else {
+            librosSinStock.add(libro); // Añadir a la lista de libros sin stock si no hay ejemplares
         }
     }
 
-    for (Libro libro : listaVentas) {
-    libro.setCantidadVendido(libro.getCantidadVendido()); // Actualiza la cantidad vendida
-}
     listaVentas.removeAll(librosSinStock); // Eliminar libros sin stock de listaVentas
 
     if (listaVentas.isEmpty()) {
         JOptionPane.showMessageDialog(this, "No hay stock suficiente para realizar la venta.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
-    } else if (mensajeStock.length() > 0) {
-        JOptionPane.showMessageDialog(this, mensajeStock.toString(), "Stock Insuficiente", JOptionPane.WARNING_MESSAGE);
     } else {
         ArrayList<Libro> ventasAGuardar = new ArrayList<>();
         for (Libro libro : listaVentas) {
+            int ejemp = libro.getEjemplares() - libro.getCantidadVendido();
             // Crear una nueva instancia de Libro para ventasAGuardar
             Libro libroVenta = new Libro(libro.getIsbn(), libro.getTitulo(), libro.getPrecioCosto(), 
-                                         libro.getPrecioVenta(), libro.getEjemplares(), libro.getEditorial(), 
+                                         libro.getPrecioVenta(), ejemp, libro.getEditorial(), 
                                          libro.getGenero(), libro.getAutor(), libro.getCantidadVendido(), 
                                          libro.getCantidadVendido(), libro.getFoto());
 
             ventasAGuardar.add(libroVenta);
         }
+       if (mensajeStock.length() > 0) {
+       // JOptionPane.showMessageDialog(this, mensajeStock.toString(), "Stock Insuficiente", JOptionPane.WARNING_MESSAGE);
+       JOptionPane.showMessageDialog(null, mensajeStock.toString());
+    } 
 
         Ventas venta = new Ventas(fecha, cliente, obtenerTotalNumerico(), modelo.getNumeroFactura(), cantidad, ventasAGuardar);
         modelo.agregarVentas(venta);
@@ -425,7 +427,8 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
         actualizarListaVentas();
         cargarTotal();
     }
-   
+        
+
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
     
