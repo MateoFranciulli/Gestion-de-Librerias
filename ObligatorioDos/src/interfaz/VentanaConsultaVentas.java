@@ -22,6 +22,9 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     public VentanaConsultaVentas(Modelo modelo) {
         this.modelo=modelo;
         initComponents();
+        jList1.setVisible(false);
+        
+        
     }
     
     
@@ -214,7 +217,19 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIsbnActionPerformed
 
     private void btnPanelAuxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPanelAuxActionPerformed
-        // TODO add your handling code here:
+     jList1.setVisible(true);
+
+    // Obtener la lista de libros disponibles desde el modelo
+    java.util.List<Libro> librosDisponibles = modelo.getLibros(); // Asegúrate de tener este método en tu modelo
+
+    // Crear un array de nombres de libros
+    String[] nombresLibros = new String[librosDisponibles.size()];
+    for (int i = 0; i < librosDisponibles.size(); i++) {
+        nombresLibros[i] = librosDisponibles.get(i).getIsbn();
+    }
+
+    // Establecer los nombres de libros en jList1
+    jList1.setListData(nombresLibros);
     }//GEN-LAST:event_btnPanelAuxActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
