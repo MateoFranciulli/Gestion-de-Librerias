@@ -60,6 +60,8 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
         lblRecaudado = new javax.swing.JLabel();
         lbEVendidos = new javax.swing.JLabel();
         lblGanancias = new javax.swing.JLabel();
+        jlAyuda = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         setTitle("Consulta de Ventas");
 
@@ -150,11 +152,12 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
 
         jLabel4.setText("Total Ganancias");
 
-        lblRecaudado.setText("jLabel5");
-
-        lbEVendidos.setText("jLabel5");
-
-        lblGanancias.setText("jLabel5");
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jlAyuda.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,28 +165,34 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jlAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 37, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(70, 70, 70)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbEVendidos)
+                        .addGap(170, 170, 170)
+                        .addComponent(lblRecaudado))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(70, 70, 70)
+                        .addComponent(jLabel3)))
+                .addGap(101, 101, 101)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(lblGanancias))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(lbEVendidos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblRecaudado)
-                .addGap(134, 134, 134)
-                .addComponent(lblGanancias)
-                .addGap(79, 79, 79))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(jlAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -194,7 +203,7 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
                     .addComponent(lblRecaudado)
                     .addComponent(lblGanancias)
                     .addComponent(lbEVendidos))
-                .addGap(0, 28, Short.MAX_VALUE))
+                .addGap(0, 45, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,7 +233,16 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     // Agrega filas a la tabla
     for (String[] fila : datos) {
         tableModel.addRow(fila);
+        
     }
+    
+    lbEVendidos.setText(String.valueOf(ejemplares));
+    lblRecaudado.setText(String.valueOf(recaudado));
+    lblGanancias.setText(String.valueOf(ganancias));
+    
+        lbEVendidos.setForeground(java.awt.Color.BLUE);
+    lblRecaudado.setForeground(java.awt.Color.BLUE);
+    lblGanancias.setForeground(java.awt.Color.BLUE);
 }
 
     private java.util.List<String[]> obtenerDatosPorIsbn(String isbn) {
@@ -271,9 +289,11 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jlAyuda;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel lbEVendidos;
     private javax.swing.JLabel lblGanancias;
