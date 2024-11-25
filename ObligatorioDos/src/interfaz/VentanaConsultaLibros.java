@@ -85,7 +85,7 @@ public class VentanaConsultaLibros extends javax.swing.JFrame implements Observe
         btnConsultar = new javax.swing.JButton();
         panelLibros = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta de Libros");
 
         lblTitulo.setText("Título");

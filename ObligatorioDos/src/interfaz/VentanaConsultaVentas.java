@@ -229,10 +229,13 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
 
     private void btnPanelAuxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPanelAuxActionPerformed
         cambio = true;
-//jList1.setVisible(true);
-     //jlAyuda.setVisible(true);
- jlAyuda.setVisible(cambio);
-          jList1.setVisible(cambio);
+    if (jList1.isVisible() && jlAyuda.isVisible()) {
+        jList1.setVisible(false);
+        jlAyuda.setVisible(false);
+    } else {
+        jList1.setVisible(true);
+        jlAyuda.setVisible(true);
+ 
     java.util.List<Libro> librosDisponibles = modelo.getLibros(); 
 
     // Crea un array con los tiutlos de los libros
@@ -243,7 +246,10 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
 
     
     jList1.setListData(nombresLibros);
-  
+ }
+ 
+   jPanel1.revalidate();
+   jPanel1.repaint();
     }//GEN-LAST:event_btnPanelAuxActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
