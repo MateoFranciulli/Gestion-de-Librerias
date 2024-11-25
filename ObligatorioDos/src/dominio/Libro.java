@@ -41,6 +41,8 @@ private transient BufferedImage foto;
     
     }
 
+  
+    
     public BufferedImage getFoto() {
         return foto;
     }

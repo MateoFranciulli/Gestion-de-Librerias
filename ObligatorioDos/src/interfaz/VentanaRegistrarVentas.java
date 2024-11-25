@@ -399,7 +399,15 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
             libro.setEjemplares(libro.getEjemplares() - libro.getCantidadVendido()); // Descontar del stock
             //libro.setCantidadVendido(0); // Reiniciar la cantidad vendida
         }
-
+        
+//        for (Libro libro : listaVentas) {
+//        for (Libro libroRegistrado : modelo.getLibros()) {
+//            if (libro.getIsbn().equals(libroRegistrado.getIsbn())) {
+//                libroRegistrado.setCantidadVendido(libroRegistrado.getCantidadVendido() + libro.getCantidadVendido());
+//            }
+//        }
+//    }
+        
         JOptionPane.showMessageDialog(null, "Venta realizada:\n" + venta);
         modelo.incrementarNumeroFactura();
         txtFactura.setText(modelo.getNumeroFactura() + "");

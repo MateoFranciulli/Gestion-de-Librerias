@@ -228,41 +228,34 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
 }
 
     private java.util.List<String[]> obtenerDatosPorIsbn(String isbn) {
-        java.util.List<String[]> datos = new java.util.ArrayList<>();
-        for (Ventas ventas : modelo.ventas) {
-            for (Libro ventasLib : ventas.getLibrosVendidos() ) {
-                if (ventasLib.getIsbn().equalsIgnoreCase(isbn)) {
-                    fecha=ventas.getFecha();
-                    cliente=ventas.getCliente();
-                    factura=ventas.getFactura()+"";
-                    cantidad=ventasLib.getCantidadVendido()+"";
-                    precioVenta=ventasLib.getPrecioVenta()+"";
-                    precioCosto=ventasLib.getPrecioCosto()+"";
-                    ejemplares+=Integer.parseInt(cantidad);
-                    importe=(Integer.parseInt(cantidad)*(Integer.parseInt(precioVenta))+"");
-                    System.out.println("importe: "+importe);
-                    recaudado+=Integer.parseInt(importe);
-                    ganancias+=(Integer.parseInt(precioVenta)-
-                            Integer.parseInt(precioCosto))*Integer.parseInt(cantidad);   
-                }
+    java.util.List<String[]> datos = new java.util.ArrayList<>();
+    for (Ventas ventas : modelo.ventas) {
+        for (Libro ventasLib : ventas.getLibrosVendidos()) {
+            if (ventasLib.getIsbn().equalsIgnoreCase(isbn)) {
+                String fecha = ventas.getFecha();
+                String cliente = ventas.getCliente();
                 
+                String factura = ventas.getFactura() + "";
+                String cantidad = String.valueOf(ventasLib.getCantidadVendido());
+                String precioVenta = ventasLib.getPrecioVenta() + "";
+                String precioCosto = ventasLib.getPrecioCosto() + "";
+                
+                ejemplares += Integer.parseInt(cantidad);
+                String importe = String.valueOf((int) (Integer.parseInt(cantidad) * Double.parseDouble(precioVenta)));
+                System.out.println("importe: " + importe);
+                recaudado += Integer.parseInt(importe);
+                ganancias += (Double.parseDouble(precioVenta) - Double.parseDouble(precioCosto)) * Integer.parseInt(cantidad);
+                
+                datos.add(new String[]{fecha, cliente, factura, cantidad, precioVenta, importe});
+                importe = "";
+                cantidad = "";
             }
-            
-        datos.add(new String[]{fecha, cliente, factura,cantidad, precioVenta, importe});  
-        fecha="";
-        cliente="";
-        factura="";
-        precioVenta="";
-        precioCosto="";
-        importe="";
         }
-        
-                System.out.println(ejemplares);
-                System.out.println(recaudado );
-                System.out.println(ganancias); 
-       return datos;
-
-        
+    }
+    System.out.println(ejemplares);
+    System.out.println(recaudado);
+    System.out.println(ganancias);
+    return datos;
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**

@@ -23,7 +23,6 @@ public class Ventas implements Serializable{
     }
 
   
-
     
     
     public ArrayList<Libro> getLibrosVendidos() {
