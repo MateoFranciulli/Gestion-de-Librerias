@@ -1,3 +1,10 @@
+
+/*
+    Autores:
+    Mateo Franciulli 310956
+    Ivan Castelli 306188
+ */
+
 package interfaz;
 import dominio.*;
 import java.io.File;
@@ -8,10 +15,7 @@ import javax.swing.JOptionPane;
 
 public class VentanaMenuInicio extends javax.swing.JFrame {
     private Modelo modelo;
-    /**
-     * Creates new form VentanaMenuInicio
-     * @throws java.io.IOException
-     */
+    
     public VentanaMenuInicio() throws IOException {
          modelo = new Modelo();
         initComponents();

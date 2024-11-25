@@ -1,7 +1,9 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+    Autores:
+    Mateo Franciulli 310956
+    Ivan Castelli 306188
  */
+
 package interfaz;
 
 import dominio.Autor;
@@ -12,10 +14,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
-/**
- *
- * @author Usuario
- */
+
 public class VentanaRegistroAutor extends javax.swing.JFrame implements Observer{
 
     private DefaultListModel<String> liGenerosAutorModel = new DefaultListModel<>();

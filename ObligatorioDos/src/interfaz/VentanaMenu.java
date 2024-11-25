@@ -1,19 +1,20 @@
 
+/*
+    Autores:
+    Mateo Franciulli 310956
+    Ivan Castelli 306188
+ */
+
 package interfaz;
 
 import dominio.Modelo;
 
-/**
- *
- * @author Usuario
- */
+
 public class VentanaMenu extends javax.swing.JFrame {
     
     private Modelo modelo;
 
-    /**
-     * Creates new form VentanaMenu
-     */
+   
     public VentanaMenu(Modelo modelo) {
         
         this.modelo = modelo;

@@ -1,3 +1,9 @@
+/*
+    Autores:
+    Mateo Franciulli 310956
+    Ivan Castelli 306188
+ */
+
 package pruebas;
 import dominio.Modelo;
 import interfaz.*;

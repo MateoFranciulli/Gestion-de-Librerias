@@ -1,7 +1,10 @@
+
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+    Autores:
+    Mateo Franciulli 310956
+    Ivan Castelli 306188
  */
+
 package interfaz;
 
 import dominio.Libro;

@@ -1,13 +1,9 @@
 package dominio;
 
 /*
- * 
- * 
- */
-
-/**
- *
- * @author mateofranciulli
+    Autores:
+    Mateo Franciulli 310956
+    Ivan Castelli 306188
  */
 import java.io.*;
 import java.nio.file.Paths;

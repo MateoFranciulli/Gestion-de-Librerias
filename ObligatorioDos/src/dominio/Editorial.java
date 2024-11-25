@@ -1,3 +1,8 @@
+/*
+    Autores:
+    Mateo Franciulli 310956
+    Ivan Castelli 306188
+ */
 package dominio;
 import dominio.*;
 import java.io.Serializable;

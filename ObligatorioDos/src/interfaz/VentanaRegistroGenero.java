@@ -1,7 +1,9 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+    Autores:
+    Mateo Franciulli 310956
+    Ivan Castelli 306188
  */
+
 package interfaz;
 
 import dominio.Genero;
@@ -10,13 +12,10 @@ import java.util.*;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Usuario
- */
+
 public class VentanaRegistroGenero extends javax.swing.JFrame implements Observer {
     
-    // Para añadir a listas, aca declaro e inizialiso los "DefaultListModel" 
+   
     private DefaultListModel<String> liGenerosRegistradosModel = new DefaultListModel<>();
     private DefaultListModel<String> liDescGeneroRegistradoModel = new DefaultListModel<>();
     private Modelo modelo; // creo modelo global

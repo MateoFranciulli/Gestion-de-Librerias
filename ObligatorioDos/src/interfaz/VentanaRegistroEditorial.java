@@ -1,3 +1,10 @@
+
+/*
+    Autores:
+    Mateo Franciulli 310956
+    Ivan Castelli 306188
+ */
+
 package interfaz;
 
 import dominio.*;
@@ -6,7 +13,7 @@ import javax.swing.*;
 
 public class VentanaRegistroEditorial extends javax.swing.JFrame implements Observer {
     
-    // Para añadir a listas, aca declaro e inizialiso los "DefaultListModel" 
+    
     private DefaultListModel<String> liEditorialesIngresadasModel = new DefaultListModel<>();
     private DefaultListModel<String> liPaisEditorialRegistradaModel = new DefaultListModel<>();
     private Modelo modelo;

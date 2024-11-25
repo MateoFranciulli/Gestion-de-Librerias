@@ -1,19 +1,18 @@
+/*
+    Autores:
+    Mateo Franciulli 310956
+    Ivan Castelli 306188
+ */
+
 package interfaz;
 
+import dominio.ArchivoGrabacion;
 import dominio.Libro;
 import dominio.Modelo;
 import dominio.Ventas;
 import static java.lang.Integer.parseInt;
 
-/*
- * 
- * 
- */
 
-/**
- *
- * @author mateofranciulli
- */
 public class VentanaConsultaVentas extends javax.swing.JFrame {
     Modelo modelo;
     /**
@@ -24,7 +23,11 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
         initComponents();
         jList1.setVisible(false);
         
-        
+       jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            jList1MouseClicked(evt);
+        }
+    });
     }
     
     
@@ -91,6 +94,11 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
         });
 
         btnExportar.setText("Exportar");
+        btnExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarActionPerformed(evt);
+            }
+        });
 
         labelTitulo.setText(" ");
 
@@ -219,43 +227,35 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     private void btnPanelAuxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPanelAuxActionPerformed
      jList1.setVisible(true);
 
-    // Obtener la lista de libros disponibles desde el modelo
-    java.util.List<Libro> librosDisponibles = modelo.getLibros(); // Asegúrate de tener este método en tu modelo
+    
+    java.util.List<Libro> librosDisponibles = modelo.getLibros(); 
 
-    // Crear un array de nombres de libros
+    // Crea un array con los tiutlos de los libros
     String[] nombresLibros = new String[librosDisponibles.size()];
     for (int i = 0; i < librosDisponibles.size(); i++) {
         nombresLibros[i] = librosDisponibles.get(i).getIsbn();
     }
 
-    // Establecer los nombres de libros en jList1
+    
     jList1.setListData(nombresLibros);
     }//GEN-LAST:event_btnPanelAuxActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
     String isbn = txtIsbn.getText();
     
-
-    // Obtén el modelo de la tabla
-    javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();
-    
-    // Limpia las filas existentes (si deseas que se reemplacen los datos anteriores)
-    tableModel.setRowCount(0);
-    
-    // Simula obtener datos por categoría desde el modelo (ajusta esto según tu implementación)
-    java.util.List<String[]> datos = obtenerDatosPorIsbn(isbn); // Define este método según tu lógica
-    
-    // Agrega filas a la tabla
-    for (String[] fila : datos) {
-        tableModel.addRow(fila);
+    javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();        
+    tableModel.setRowCount(0);    
+    java.util.List<String[]> datos = obtenerDatosPorIsbn(isbn); 
         
+    for (String[] fila : datos) {
+        tableModel.addRow(fila);        
     }
     
     lbEVendidos.setText(String.valueOf(ejemplares));
     lblRecaudado.setText(String.valueOf(recaudado));
     lblGanancias.setText(String.valueOf(ganancias));
-    
-        lbEVendidos.setForeground(java.awt.Color.BLUE);
+    //color
+    lbEVendidos.setForeground(java.awt.Color.BLUE);
     lblRecaudado.setForeground(java.awt.Color.BLUE);
     lblGanancias.setForeground(java.awt.Color.BLUE);
 }
@@ -291,6 +291,74 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     return datos;
     }//GEN-LAST:event_btnConsultarActionPerformed
 
+    
+    private void exportarDatos() {
+    ArchivoGrabacion archivo = new ArchivoGrabacion("VENTAS.CSV");
+
+    // Escribir los títulos de las columnas
+    archivo.grabarLinea("Fecha;Cliente;Factura;Cantidad;Precio;Importe");
+
+    // Obtener el modelo de la tabla y escribir los datos
+    javax.swing.table.TableModel modeloTabla = jTable1.getModel();
+    for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+        StringBuilder linea = new StringBuilder();
+        for (int j = 0; j < modeloTabla.getColumnCount(); j++) {
+            linea.append(modeloTabla.getValueAt(i, j).toString());
+            if (j < modeloTabla.getColumnCount() - 1) {
+                linea.append(";");
+            }
+        }
+        archivo.grabarLinea(linea.toString());
+    }
+    archivo.cerrar();
+}
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+        exportarDatos();
+    }//GEN-LAST:event_btnExportarActionPerformed
+
+    
+    
+    
+    private String obtenerIsbnPorNombre(String nombreLibro) {
+    for (Libro libro : modelo.getLibros()) {
+        if (libro.getIsbn().equals(nombreLibro)) {
+            return libro.getIsbn();
+        }
+    }
+    return null;
+}
+    private void consultarLibro(String isbn) {
+    
+    javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    tableModel.setRowCount(0);
+    java.util.List<String[]> datos = obtenerDatosPorIsbn(isbn); 
+
+    // agrega filas a la tabla
+    for (String[] fila : datos) {
+        tableModel.addRow(fila);
+    }
+
+    lbEVendidos.setText(String.valueOf(ejemplares));
+    lblRecaudado.setText(String.valueOf(recaudado));
+    lblGanancias.setText(String.valueOf(ganancias));
+
+    lbEVendidos.setForeground(java.awt.Color.BLUE);
+    lblRecaudado.setForeground(java.awt.Color.BLUE);
+    lblGanancias.setForeground(java.awt.Color.BLUE);
+}
+    
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {
+    // Verificar si se hizo doble clic en un elemento
+    if (evt.getClickCount() == 2) {
+        String nombreLibroSeleccionado = jList1.getSelectedValue();
+        if (nombreLibroSeleccionado != null) {
+            
+            String isbnSeleccionado = obtenerIsbnPorNombre(nombreLibroSeleccionado);            
+            consultarLibro(isbnSeleccionado);            
+            jList1.setVisible(false);
+        }
+    }
+}
     /**
      * @param args the command line arguments
      */
