@@ -57,9 +57,9 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblRecaudado = new javax.swing.JLabel();
+        lbEVendidos = new javax.swing.JLabel();
+        lblGanancias = new javax.swing.JLabel();
 
         setTitle("Consulta de Ventas");
 
@@ -150,11 +150,11 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
 
         jLabel4.setText("Total Ganancias");
 
-        jLabel5.setText("jLabel5");
+        lblRecaudado.setText("jLabel5");
 
-        jLabel6.setText("jLabel5");
+        lbEVendidos.setText("jLabel5");
 
-        jLabel7.setText("jLabel5");
+        lblGanancias.setText("jLabel5");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,11 +173,11 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addComponent(jLabel6)
+                .addComponent(lbEVendidos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
+                .addComponent(lblRecaudado)
                 .addGap(134, 134, 134)
-                .addComponent(jLabel7)
+                .addComponent(lblGanancias)
                 .addGap(79, 79, 79))
         );
         layout.setVerticalGroup(
@@ -191,9 +191,9 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel6))
+                    .addComponent(lblRecaudado)
+                    .addComponent(lblGanancias)
+                    .addComponent(lbEVendidos))
                 .addGap(0, 28, Short.MAX_VALUE))
         );
 
@@ -271,13 +271,13 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JLabel lbEVendidos;
+    private javax.swing.JLabel lblGanancias;
+    private javax.swing.JLabel lblRecaudado;
     private javax.swing.JTextField txtIsbn;
     // End of variables declaration//GEN-END:variables
 }
