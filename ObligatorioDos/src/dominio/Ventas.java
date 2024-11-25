@@ -93,7 +93,7 @@ public class Ventas implements Serializable{
                 "\n Cliente: " + cliente +//completar
                 "\n Precio: " + precio + //completar
                 "\n Factura: "+ factura +//completar
-                "\n Cantidad: "+ cantidad+
+               // "\n Cantidad: "+ cantidad+
                "\n Libros" + librosVendidos;
    
     }

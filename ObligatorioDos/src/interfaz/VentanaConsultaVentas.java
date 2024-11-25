@@ -11,6 +11,7 @@ import dominio.Libro;
 import dominio.Modelo;
 import dominio.Ventas;
 import static java.lang.Integer.parseInt;
+import static javax.management.Query.value;
 import javax.swing.JOptionPane;
 
 
@@ -313,6 +314,8 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
 
     
     private void exportarDatos() {
+
+      
     ArchivoGrabacion archivo = new ArchivoGrabacion("VENTAS.CSV");
 
     // Escribir los títulos de las columnas
@@ -323,7 +326,9 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     for (int i = 0; i < modeloTabla.getRowCount(); i++) {
         StringBuilder linea = new StringBuilder();
         for (int j = 0; j < modeloTabla.getColumnCount(); j++) {
-            linea.append(modeloTabla.getValueAt(i, j).toString());
+            Object value = modeloTabla.getValueAt(i, j);
+            //linea.append(modeloTabla.getValueAt(i, j).toString());
+            linea.append(value != null ? value.toString() : "");
             if (j < modeloTabla.getColumnCount() - 1) {
                 linea.append(";");
             }
@@ -331,9 +336,16 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
         archivo.grabarLinea(linea.toString());
     }
     archivo.cerrar();
+    
+    
 }
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+    javax.swing.table.TableModel modeloTabla = jTable1.getModel();
+  
         exportarDatos();
+        JOptionPane.showMessageDialog(this, "Exportado!");
+    
+   
     }//GEN-LAST:event_btnExportarActionPerformed
 
     
@@ -347,6 +359,7 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     }
     return null;
 }
+    
     private void consultarLibro(String isbn) {
     
     javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();
@@ -369,7 +382,7 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {
         
-// Verificar si se hizo doble clic en un elemento
+    // Verificar si se hizo doble clic en un elemento
     if (evt.getClickCount() == 2) {
         String nombreLibroSeleccionado = jList1.getSelectedValue();
         cambio = false;

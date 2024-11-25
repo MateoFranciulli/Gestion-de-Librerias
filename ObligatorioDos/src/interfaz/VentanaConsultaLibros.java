@@ -178,7 +178,7 @@ public class VentanaConsultaLibros extends javax.swing.JFrame implements Observe
     }//GEN-LAST:event_txtAutorActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        panelLibros.removeAll();
+         panelLibros.removeAll();
     
     String genero = txtGenero.getText().toUpperCase();
     String titulo = txtTitulo.getText().toUpperCase();
@@ -196,19 +196,32 @@ public class VentanaConsultaLibros extends javax.swing.JFrame implements Observe
                 libro.getAutor().toUpperCase().contains(autor)) {
 
                 JButton nuevo = new JButton();
-                String rutaImagen = "imagenes/" + libro.getIsbn() + ".png";
-                System.out.println("Ruta de la imagen: " + rutaImagen);  // Verifica la ruta
+                String isbn = libro.getIsbn();
+                String[] extensiones = {".png", ".jpg", ".jpeg", ".gif"};
+                File archivoImagen = null;
 
-                File archivoImagen = new File(rutaImagen);
-                if (archivoImagen.exists()) {
-                    // Si la imagen existe, carga la imagen y la escala
-                    ImageIcon icono = new ImageIcon(archivoImagen.getAbsolutePath());
-                    Image imagenEscalada = icono.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-                    nuevo.setIcon(new ImageIcon(imagenEscalada));
-                } else {
-                    // Si no existe la imagen, muestra el ISBN
-                    nuevo.setText(libro.getIsbn());
+                // Intentamos encontrar la imagen con las distintas extensiones
+                for (String ext : extensiones) {
+                    archivoImagen = new File("imagenes/" + isbn + ext);
+                    if (archivoImagen.exists()) {
+                        break; // Sale del bucle si encuentra la imagen
+                    }
                 }
+
+                if (archivoImagen != null && archivoImagen.exists()) {
+                    // Si encontramos una imagen, la mostramos
+                    try {
+                        ImageIcon icono = new ImageIcon(archivoImagen.getAbsolutePath());
+                        Image imagenEscalada = icono.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                        nuevo.setIcon(new ImageIcon(imagenEscalada));
+                    } catch (Exception e) {
+                        nuevo.setText(isbn); // Si ocurre un error al cargar la imagen, mostramos el ISBN
+                    }
+                } else {
+                    // Si no se encuentra la imagen, mostramos el ISBN
+                    nuevo.setText(isbn);
+                }
+
                 nuevo.addActionListener(new LibroListener(libro));
                 panelLibros.add(nuevo);
             }
