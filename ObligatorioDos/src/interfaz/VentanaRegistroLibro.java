@@ -300,7 +300,81 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
 
    
      private void registrarLibro() {
-        try {
+       
+    try {
+        String isbn = txtIsbn1.getText();
+        String titulo = txtTitulo.getText();
+        double precioCosto = Double.parseDouble(txtPrecioCosto1.getText());
+        double precioVenta = Double.parseDouble(txtPrecioVenta.getText());
+        int ejemplares = Integer.parseInt(txtEjemplares.getText());
+        String editorial = liEditorialesLibro.getSelectedValue();
+        String genero = liGenerosLibro.getSelectedValue();
+        String autor = liAutoresLibro.getSelectedValue();
+        int cantidadVendidoEnVenta = 0; // Inicializar el nuevo parámetro
+
+        // Validaciones
+        if (liEditorialesLibro.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione una editorial ", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (liGenerosLibro.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione genero ", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (liAutoresLibro.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione autor ", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (!modelo.verificoLibros(isbn)) {
+            JOptionPane.showMessageDialog(this, "Isbn ya añadido anteriormente", "Error", JOptionPane.ERROR_MESSAGE);
+            txtIsbn1.setText("");
+        } else if (txtIsbn1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Coloquele un isbn al libro", "Error", JOptionPane.ERROR_MESSAGE);
+            txtIsbn1.setText("");
+        } else if (isbn.matches("[a-zA-Z ]+")) {
+            JOptionPane.showMessageDialog(this, "Isbn incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+            txtIsbn1.setText("");
+        } else if (txtTitulo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Coloquele un título", "Error", JOptionPane.ERROR_MESSAGE);
+            txtTitulo.setText("");
+        } else if (!titulo.matches("[a-zA-Z ]+")) {
+            JOptionPane.showMessageDialog(this, "El título debe ser de letras", "Error", JOptionPane.ERROR_MESSAGE);
+            txtTitulo.setText("");
+        } else if (txtPrecioVenta.getText().isEmpty() || txtPrecioCosto1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Coloquele precios", "Error", JOptionPane.ERROR_MESSAGE);
+            txtPrecioCosto1.setText("");
+            txtPrecioVenta.setText("");
+        } else if (txtPrecioCosto1.getText().matches("[a-zA-Z ]+") || txtPrecioVenta.getText().matches("[a-zA-Z ]+")) {
+            JOptionPane.showMessageDialog(this, "Coloquele precios numérico", "Error", JOptionPane.ERROR_MESSAGE);
+            txtPrecioCosto1.setText("");
+            txtPrecioVenta.setText("");
+        } else if (ejemplares < 0 || txtEjemplares.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La cantidad de ejemplares debe ser mayor o igual a 0.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            BufferedImage foto = null;
+            if (fotoSeleccionada != null) {
+                foto = convertirArchivoAImagen(fotoSeleccionada);
+            }
+            // Asegúrate de pasar todos los parámetros requeridos al constructor de Libro
+            modelo.agregarLibro(new Libro(isbn, titulo, precioCosto, precioVenta, ejemplares, editorial, genero, autor, 0, cantidadVendidoEnVenta, foto));
+
+            if (fotoSeleccionada != null) {
+                File carpetaImagenes = new File("imagenes");
+                if (!carpetaImagenes.exists()) {
+                    carpetaImagenes.mkdirs();
+                }
+
+                File archivoDestino = new File(carpetaImagenes, isbn + obtenerExtensionArchivo(fotoSeleccionada));
+                copiarArchivo(fotoSeleccionada, archivoDestino);
+            }
+
+            JOptionPane.showMessageDialog(this, "Libro registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al registrar el libro: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+
+         
+         
+         
+         /*
+         try {
             String isbn = txtIsbn1.getText();
             String titulo = txtTitulo.getText();
             double precioCosto = Double.parseDouble(txtPrecioCosto1.getText());
@@ -378,7 +452,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
             e.printStackTrace();
         }
         
-        
+        */
     }
      
      private BufferedImage convertirArchivoAImagen(File archivo) {
@@ -404,6 +478,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
                 os.write(buffer, 0, length);
             }
         }
+         
     }
     
     

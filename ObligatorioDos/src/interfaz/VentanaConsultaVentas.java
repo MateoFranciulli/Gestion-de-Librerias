@@ -236,7 +236,7 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
                 String cliente = ventas.getCliente();
                 
                 String factura = ventas.getFactura() + "";
-                String cantidad = String.valueOf(ventasLib.getCantidadVendido());
+                String cantidad = String.valueOf(ventasLib.getCantidadVendidoEnVenta());
                 String precioVenta = ventasLib.getPrecioVenta() + "";
                 String precioCosto = ventasLib.getPrecioCosto() + "";
                 

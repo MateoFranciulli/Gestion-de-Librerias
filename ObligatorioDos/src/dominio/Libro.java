@@ -23,11 +23,19 @@ private double precioVenta;
 private int ejemplares;
 private int cantidadVendido=0;//Valor aux
 private transient BufferedImage foto;
+private int cantidadVendidoEnVenta;
 
+    public int getCantidadVendidoEnVenta() {
+        return cantidadVendidoEnVenta;
+    }
+
+    public void setCantidadVendidoEnVenta(int cantidadVendidoEnVenta) {
+        this.cantidadVendidoEnVenta = cantidadVendidoEnVenta;
+    }
 
     public Libro(String isbn, String titulo, double precioCosto, double precioVenta,
             int ejemplares, String editorial, String genero, String autor, 
-            int cantidadVendido,BufferedImage foto) {
+            int cantidadVendido, int cantidadVendidoEnVenta, BufferedImage foto) {
     this.isbn = isbn;
     this.titulo = titulo;
     this.precioCosto = precioCosto;
@@ -38,6 +46,7 @@ private transient BufferedImage foto;
     this.autor = autor;
     this.cantidadVendido =cantidadVendido;// Inicializar a 0
     this.foto=foto;
+    this.cantidadVendidoEnVenta = cantidadVendidoEnVenta;
     
     }
 
