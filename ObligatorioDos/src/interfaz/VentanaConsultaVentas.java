@@ -15,19 +15,22 @@ import static java.lang.Integer.parseInt;
 
 public class VentanaConsultaVentas extends javax.swing.JFrame {
     Modelo modelo;
+    Boolean cambio = false;
     /**
      * Creates new form VentanaConsultaVentas
      */
     public VentanaConsultaVentas(Modelo modelo) {
         this.modelo=modelo;
         initComponents();
-        jList1.setVisible(false);
-        
-       jList1.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            jList1MouseClicked(evt);
-        }
-    });
+        // jList1.setVisible(false);
+        jlAyuda.setVisible(cambio);
+          jList1.setVisible(cambio);
+
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
     }
     
     
@@ -225,9 +228,11 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIsbnActionPerformed
 
     private void btnPanelAuxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPanelAuxActionPerformed
-     jList1.setVisible(true);
-
-    
+        cambio = true;
+//jList1.setVisible(true);
+     //jlAyuda.setVisible(true);
+ jlAyuda.setVisible(cambio);
+          jList1.setVisible(cambio);
     java.util.List<Libro> librosDisponibles = modelo.getLibros(); 
 
     // Crea un array con los tiutlos de los libros
@@ -238,9 +243,14 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
 
     
     jList1.setListData(nombresLibros);
+  
     }//GEN-LAST:event_btnPanelAuxActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+    ejemplares = 0;
+    recaudado = 0;
+    ganancias = 0;
+        
     String isbn = txtIsbn.getText();
     
     javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();        
@@ -348,14 +358,23 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
 }
     
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {
-    // Verificar si se hizo doble clic en un elemento
+        
+// Verificar si se hizo doble clic en un elemento
     if (evt.getClickCount() == 2) {
         String nombreLibroSeleccionado = jList1.getSelectedValue();
+        cambio = false;
         if (nombreLibroSeleccionado != null) {
             
             String isbnSeleccionado = obtenerIsbnPorNombre(nombreLibroSeleccionado);            
             consultarLibro(isbnSeleccionado);            
-            jList1.setVisible(false);
+            //jList1.setVisible(false);
+                ejemplares = 0;
+                recaudado = 0;
+                ganancias = 0;
+                //jlAyuda.setVisible(false);
+                 jlAyuda.setVisible(cambio);
+          jList1.setVisible(cambio);
+         
         }
     }
 }

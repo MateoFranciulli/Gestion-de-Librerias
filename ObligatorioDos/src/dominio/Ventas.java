@@ -29,7 +29,7 @@ public class Ventas implements Serializable{
     }
 
   
-        public void agregarLibroVendido(Libro libro, int cantidad) {
+    public void agregarLibroVendido(Libro libro, int cantidad) {
         libro.setCantidadVendidoEnVenta(cantidad);
         this.librosVendidos.add(libro);
     }
