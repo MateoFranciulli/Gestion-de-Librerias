@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observer {
-    //private int factura;
+    
     private Modelo modelo;
     public ArrayList<Libro> listaVentas = new ArrayList<>();
     
@@ -38,27 +38,27 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
         fechaActual();
         cargarTotal();
         
-        txtFactura.setText(modelo.getNumeroFactura()+"");//que no se pueda tocar
+        txtFactura.setText(modelo.getNumeroFactura()+"");
         
         modelo.addObserver(this);
     }
     
  
     private void cargarListaLibros() {
-    // Ordena los libros por título y luego combina ISBN y título
-    jlLibros.setListData(modelo.getLibros().stream()
-        .sorted((libro1, libro2) -> libro1.getTitulo().compareToIgnoreCase(libro2.getTitulo()))
-        .map(libro -> libro.getIsbn() + " - " + libro.getTitulo())
-        .toArray(String[]::new));
+        // Ordena los libros por titulo y luego combina ISBN y titulo
+        jlLibros.setListData(modelo.getLibros().stream()
+            .sorted((libro1, libro2) -> libro1.getTitulo().compareToIgnoreCase(libro2.getTitulo()))
+            .map(libro -> libro.getIsbn() + " - " + libro.getTitulo())
+            .toArray(String[]::new));
     
     }
             
             
     private void actualizarListaVentas() {
-    String[] datos = listaVentas.stream()
-        .map(libro -> libro.getCantidadVendido() + " - " + libro.getTitulo()+ " - $" + libro.getPrecioVenta())
-        .toArray(String[]::new);
-    jlVenta.setListData(datos);
+        String[] datos = listaVentas.stream()
+            .map(libro -> libro.getCantidadVendido() + " - " + libro.getTitulo()+ " - $" + libro.getPrecioVenta())
+            .toArray(String[]::new);
+        jlVenta.setListData(datos);
     }
     
     private void cargarTotal() {
@@ -82,13 +82,9 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
         // Obtener el texto actual del lblTotal
         String textoTotal = lblTotal.getText();
 
-        // Eliminar el prefijo "Total: $" y convertir el resto a double
+        // Quito "Total: $" y lo convierto  a double
         return Double.parseDouble(textoTotal.replace("Total: $", "").trim());
-        /*catch (NumberFormatException e) {
-        // Manejo de errores si el texto no es convertible
-        JOptionPane.showMessageDialog(this, "Error al obtener el total numérico.", "Error", JOptionPane.ERROR_MESSAGE);
-        return 0.0;
-        }*/
+       
     }
  
     /**
@@ -298,40 +294,39 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
     
        
     private void btnDerechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDerechaActionPerformed
-    // Obtener el libro seleccionado de la lista jlLibros
-    String seleccionado = jlLibros.getSelectedValue();
-    
-    if (seleccionado == null) {
-        // No se seleccionó ningún libro
-       JOptionPane.showMessageDialog(this, "Seleccione libro ", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    // Extraer el ISBN de la selección (suponiendo que el formato es "ISBN-Título")
-    String isbn = seleccionado.split("-")[0].trim();
-
-    // Buscar el libro en el modelo usando el ISBN
-    Libro libroEncontrado = modelo.getLibros().stream()
-        .filter(libro -> libro.getIsbn().equals(isbn))
-        .findFirst().orElse(null);
-
-
-    // Evitar duplicados en listaVentas
-    if (listaVentas.contains(libroEncontrado)) {
-        libroEncontrado.setCantidadVendido(libroEncontrado.getCantidadVendido() + 1);
-        //libroEncontrado.setEjemplares(libroEncontrado.getEjemplares() - 1);
         
-    }else{
-    libroEncontrado.setCantidadVendido(0);    
-    // Agregar el libro a la lista de ventas
-    libroEncontrado.setCantidadVendido(libroEncontrado.getCantidadVendido() + 1);
-    //libroEncontrado.setEjemplares(libroEncontrado.getEjemplares() - 1);
-    listaVentas.add(libroEncontrado);
-    
-    }
+        String seleccionado = jlLibros.getSelectedValue();
 
-    // Actualizar la lista jlVenta
-    actualizarListaVentas();
-    cargarTotal();
+        if (seleccionado == null) {
+            
+           JOptionPane.showMessageDialog(this, "Seleccione libro ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Conseguir el ISBN 
+        String isbn = seleccionado.split("-")[0].trim();
+
+        // Buscar el libro en el modelo usando el ISBN
+        Libro libroEncontrado = modelo.getLibros().stream()
+            .filter(libro -> libro.getIsbn().equals(isbn))
+            .findFirst().orElse(null);
+
+
+        // Evitar duplicados en listaVentas
+        if (listaVentas.contains(libroEncontrado)) {
+            libroEncontrado.setCantidadVendido(libroEncontrado.getCantidadVendido() + 1);
+           
+
+        }else{
+        libroEncontrado.setCantidadVendido(0);    
+        // Agregar el libro a la lista de ventas
+        libroEncontrado.setCantidadVendido(libroEncontrado.getCantidadVendido() + 1);        
+        listaVentas.add(libroEncontrado);
+
+        }
+
+        // Actualizar la lista jlVenta
+        actualizarListaVentas();
+        cargarTotal();
     }//GEN-LAST:event_btnDerechaActionPerformed
 
     private void btnIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzquierdaActionPerformed
@@ -348,10 +343,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
                 } else {
                     
                     listaVentas.remove(selectedIndex);
-                }
-
-
-                //libroSeleccionado.setEjemplares(libroSeleccionado.getEjemplares() + 1);
+                }               
                 
                 actualizarListaVentas();
                 cargarTotal();
@@ -378,7 +370,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
                 mensajeStock.append("No hay suficiente stock para el libro: ").append(libro.getTitulo())
                         .append(". Disponible: ").append(libro.getEjemplares()).append(", Solicitado: ")
                         .append(libro.getCantidadVendido()).append(". Se venderán: ").append(libro.getEjemplares()).append("\n");
-                libro.setCantidadVendido(libro.getEjemplares()); // Ajustar a la cantidad disponible
+                libro.setCantidadVendido(libro.getEjemplares()); // Ajusto a la cantidad disponible
             }
 
             if (libro.getCantidadVendido() == 0) {
@@ -398,6 +390,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
         ArrayList<Libro> ventasAGuardar = new ArrayList<>();
         for (Libro libro : listaVentas) {
             int ejemp = libro.getEjemplares() - libro.getCantidadVendido();
+            
             // Crear una nueva instancia de Libro para ventasAGuardar
             Libro libroVenta = new Libro(libro.getIsbn(), libro.getTitulo(), libro.getPrecioCosto(), 
                                          libro.getPrecioVenta(), ejemp, libro.getEditorial(), 
@@ -406,8 +399,8 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
 
             ventasAGuardar.add(libroVenta);
         }
-       if (mensajeStock.length() > 0) {
-       // JOptionPane.showMessageDialog(this, mensajeStock.toString(), "Stock Insuficiente", JOptionPane.WARNING_MESSAGE);
+    if (mensajeStock.length() > 0) {
+     
        JOptionPane.showMessageDialog(null, mensajeStock.toString());
     } 
 
@@ -456,7 +449,7 @@ public class VentanaRegistrarVentas extends javax.swing.JFrame implements Observ
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Modelo) {
-            // Actualizar la lista de libros cuando el modelo cambie
+          
             cargarListaLibros();
             cargarTotal();
         }

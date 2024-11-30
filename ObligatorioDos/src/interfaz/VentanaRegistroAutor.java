@@ -166,7 +166,8 @@ public class VentanaRegistroAutor extends javax.swing.JFrame implements Observer
     private void txtNombreAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreAutorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreAutorActionPerformed
-     private void cargarGeneros() {
+    
+    private void cargarGeneros() {
         liGenerosAutorModel.clear();
         for (Genero genero : modelo.getGeneros()) {
             liGenerosAutorModel.addElement(genero.getNombre());
@@ -174,11 +175,11 @@ public class VentanaRegistroAutor extends javax.swing.JFrame implements Observer
     }
      
    private void cargarAutores() {
-    liAutoresRegistradosModel.clear();
-    for (Autor autor : modelo.getAutores()) {
-        liAutoresRegistradosModel.addElement(autor.getNombre());
+        liAutoresRegistradosModel.clear();
+        for (Autor autor : modelo.getAutores()) {
+            liAutoresRegistradosModel.addElement(autor.getNombre());
+        }
     }
-}
     
     
     @Override
@@ -215,7 +216,7 @@ public class VentanaRegistroAutor extends javax.swing.JFrame implements Observer
             JOptionPane.showMessageDialog(null, "Autor añadido:\n" + autor);
         }
         
-        // vacío campos
+        // limpio campos
         txtNombreAutor.setText("");
         txtNacionalidadAutor.setText("");
     }//GEN-LAST:event_jbIngresarAutorActionPerformed

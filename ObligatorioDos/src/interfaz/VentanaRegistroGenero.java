@@ -179,23 +179,20 @@ public class VentanaRegistroGenero extends javax.swing.JFrame implements Observe
 
         if (!modelo.verificoGeneros(nombre)) {
             JOptionPane.showMessageDialog(null, "Nombre ya registrado, por favor registre uno válido.");
-        }else// Validación para asegurarse de que solo se ingresen letras
-            if (!nombre.matches("[a-zA-Z ]+")||!descripcion.matches("[a-zA-Z ]+")) { // esta validacion fue hecha con ayuda de chat GPT (link:https://chatgpt.com/share/66fb3ee0-30e0-800d-a8cb-438856f220ca)
+        }else
+            if (!nombre.matches("[a-zA-Z ]+")||!descripcion.matches("[a-zA-Z ]+")) { 
                 JOptionPane.showMessageDialog(null,"Los datos solo admiten letras, ingrese datos válidos");
-        }else 
-        
+        }else         
             if(nombre.length()<2||descripcion.length()<2){
                 JOptionPane.showMessageDialog(null, "Complete todos los campos.");
         } else {
-            Genero genero = new Genero(nombre, descripcion); // objeto genero
-            modelo.agregarGenero(genero); // aniado el genero a la lista            
-            //liGenerosRegistradosModel.addElement(nombre); // aniado el nombre al modelo de la lista
-            //liDescGeneroRegistradoModel.addElement(descripcion); // aniado la desc. al modelo de la lista
+            Genero genero = new Genero(nombre, descripcion); 
+            modelo.agregarGenero(genero);                         
             cargarGeneros();
             JOptionPane.showMessageDialog(null, "Nuevo Género ingresado:\n" + genero);
         }
 
-        // vacío campos
+        // limpio campos
         txtNombreGenero.setText("");
         txtAreaDescripcion.setText("");  
     }//GEN-LAST:event_jbIngresarGeneroActionPerformed

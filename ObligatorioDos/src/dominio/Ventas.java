@@ -82,18 +82,16 @@ public class Ventas implements Serializable{
         this.precio = precio;
     }
     
-    /*public ArrayList<Libro> getLibrosVendidos() {
-        return librosVendidos;
-    }*/
+   
     
     @Override
     public String toString() {
         return "Venta:" +
                 "\n Fecha: " + fecha +
-                "\n Cliente: " + cliente +//completar
-                "\n Precio: " + precio + //completar
-                "\n Factura: "+ factura +//completar
-               // "\n Cantidad: "+ cantidad+
+                "\n Cliente: " + cliente +
+                "\n Precio: " + precio + 
+                "\n Factura: "+ factura +
+               
                "\n Libros" + librosVendidos;
    
     }

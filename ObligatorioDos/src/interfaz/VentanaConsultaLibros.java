@@ -34,12 +34,12 @@ public class VentanaConsultaLibros extends javax.swing.JFrame implements Observe
     }
     
     private void configurarPanelLibros() {
-    panelLibros.setLayout(new java.awt.GridLayout(5,5)); // Ejemplo: diseño con 5 columnas
+    panelLibros.setLayout(new java.awt.GridLayout(5,5)); 
     }
 
     
     
-    //cargar panel
+    
     
      private class LibroListener implements ActionListener {
         private Libro libro;
@@ -59,13 +59,7 @@ public class VentanaConsultaLibros extends javax.swing.JFrame implements Observe
      }
 
     
-    /*@Override
-    public void update(Observable o, Object arg) {
-        if (arg instanceof Ventas) {
-            Ventas venta = (Ventas) arg;
-            cargarListaDatos(venta);
-        }
-    }*/
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -178,62 +172,62 @@ public class VentanaConsultaLibros extends javax.swing.JFrame implements Observe
     }//GEN-LAST:event_txtAutorActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-         panelLibros.removeAll();
+        panelLibros.removeAll();
     
-    String genero = txtGenero.getText().toUpperCase();
-    String titulo = txtTitulo.getText().toUpperCase();
-    String autor = txtAutor.getText().toUpperCase();
+        String genero = txtGenero.getText().toUpperCase();
+        String titulo = txtTitulo.getText().toUpperCase();
+        String autor = txtAutor.getText().toUpperCase();
 
-    if (genero.isEmpty() || titulo.isEmpty() || autor.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Complete todos los campos");
-    } else {
-        Iterator<Libro> iterador = modelo.getLibros().iterator();
-        
-        while (iterador.hasNext()) {
-            Libro libro = iterador.next();
-            if (libro.getGenero().toUpperCase().contains(genero) || 
-                libro.getTitulo().toUpperCase().contains(titulo) ||
-                libro.getAutor().toUpperCase().contains(autor)) {
+        if (genero.isEmpty() || titulo.isEmpty() || autor.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos");
+        } else {
+            Iterator<Libro> iterador = modelo.getLibros().iterator();
 
-                JButton nuevo = new JButton();
-                String isbn = libro.getIsbn();
-                String[] extensiones = {".png", ".jpg", ".jpeg", ".gif"};
-                File archivoImagen = null;
+            while (iterador.hasNext()) {
+                Libro libro = iterador.next();
+                if (libro.getGenero().toUpperCase().contains(genero) || 
+                    libro.getTitulo().toUpperCase().contains(titulo) ||
+                    libro.getAutor().toUpperCase().contains(autor)) {
 
-                // Intentamos encontrar la imagen con las distintas extensiones
-                for (String ext : extensiones) {
-                    archivoImagen = new File("imagenes/" + isbn + ext);
-                    if (archivoImagen.exists()) {
-                        break; // Sale del bucle si encuentra la imagen
+                    JButton nuevo = new JButton();
+                    String isbn = libro.getIsbn();
+                    String[] extensiones = {".png", ".jpg", ".jpeg", ".gif"};
+                    File archivoImagen = null;
+
+                    // Intentamos encontrar la imagen con las distintas extensiones
+                    for (String ext : extensiones) {
+                        archivoImagen = new File("imagenes/" + isbn + ext);
+                        if (archivoImagen.exists()) {
+                            break; // Sale del bucle si encuentra la imagen, aunque sea mala practica
+                        }
                     }
-                }
 
-                if (archivoImagen != null && archivoImagen.exists()) {
-                    // Si encontramos una imagen, la mostramos
-                    try {
-                        ImageIcon icono = new ImageIcon(archivoImagen.getAbsolutePath());
-                        Image imagenEscalada = icono.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-                        nuevo.setIcon(new ImageIcon(imagenEscalada));
-                    } catch (Exception e) {
-                        nuevo.setText(isbn); // Si ocurre un error al cargar la imagen, mostramos el ISBN
+                    if (archivoImagen != null && archivoImagen.exists()) {
+                        // Si encontramos una imagen, la mostramos
+                        try {
+                            ImageIcon icono = new ImageIcon(archivoImagen.getAbsolutePath());
+                            Image imagenEscalada = icono.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+                            nuevo.setIcon(new ImageIcon(imagenEscalada));
+                        } catch (Exception e) {
+                            nuevo.setText(isbn); // Si ocurre un error al cargar la imagen, mostramos el ISBN
+                        }
+                    } else {
+                        // Si no se encuentra la imagen, mostramos el ISBN
+                        nuevo.setText(isbn);
                     }
-                } else {
-                    // Si no se encuentra la imagen, mostramos el ISBN
-                    nuevo.setText(isbn);
-                }
 
-                nuevo.addActionListener(new LibroListener(libro));
-                panelLibros.add(nuevo);
+                    nuevo.addActionListener(new LibroListener(libro));
+                    panelLibros.add(nuevo);
+                }
             }
+
+            panelLibros.revalidate();
+            panelLibros.repaint();
+
+            txtGenero.setText("");
+            txtTitulo.setText("");
+            txtAutor.setText("");
         }
-
-        panelLibros.revalidate();
-        panelLibros.repaint();
-
-        txtGenero.setText("");
-        txtTitulo.setText("");
-        txtAutor.setText("");
-    }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
@@ -253,6 +247,6 @@ public class VentanaConsultaLibros extends javax.swing.JFrame implements Observe
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
     }

@@ -307,7 +307,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
         String editorial = liEditorialesLibro.getSelectedValue();
         String genero = liGenerosLibro.getSelectedValue();
         String autor = liAutoresLibro.getSelectedValue();
-        int cantidadVendidoEnVenta = 0; // Inicializar el nuevo parámetro
+        int cantidadVendidoEnVenta = 0;
 
         // Validaciones
         if (liEditorialesLibro.getSelectedValue() == null) {
@@ -346,7 +346,7 @@ public class VentanaRegistroLibro extends javax.swing.JFrame {
             if (fotoSeleccionada != null) {
                 foto = convertirArchivoAImagen(fotoSeleccionada);
             }
-            // Asegúrate de pasar todos los parámetros requeridos al constructor de Libro
+           
             modelo.agregarLibro(new Libro(isbn, titulo, precioCosto, precioVenta, ejemplares, editorial, genero, autor, 0, cantidadVendidoEnVenta, foto));
 
             if (fotoSeleccionada != null) {

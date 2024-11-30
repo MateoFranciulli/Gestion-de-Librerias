@@ -24,9 +24,9 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
     public VentanaConsultaVentas(Modelo modelo) {
         this.modelo=modelo;
         initComponents();
-        // jList1.setVisible(false);
+        
         jlAyuda.setVisible(cambio);
-          jList1.setVisible(cambio);
+        jList1.setVisible(cambio);
 
         jList1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -231,176 +231,198 @@ public class VentanaConsultaVentas extends javax.swing.JFrame {
 
     private void btnPanelAuxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPanelAuxActionPerformed
         cambio = true;
-    if (jList1.isVisible() && jlAyuda.isVisible()) {
-        jList1.setVisible(false);
-        jlAyuda.setVisible(false);
-    } else {
-        jList1.setVisible(true);
-        jlAyuda.setVisible(true);
- 
-    java.util.List<Libro> librosDisponibles = modelo.getLibros(); 
+        if (jList1.isVisible() && jlAyuda.isVisible()) {
+            jList1.setVisible(false);
+            jlAyuda.setVisible(false);
+        } else {
+            jList1.setVisible(true);
+            jlAyuda.setVisible(true);
 
-    // Crea un array con los tiutlos de los libros
-    String[] nombresLibros = new String[librosDisponibles.size()];
-    for (int i = 0; i < librosDisponibles.size(); i++) {
-        nombresLibros[i] = librosDisponibles.get(i).getIsbn();
-    }
+        java.util.List<Libro> librosDisponibles = modelo.getLibros(); 
 
-    
-    jList1.setListData(nombresLibros);
- }
+        // Crea un array con los tiutlos de los libros
+        String[] nombresLibros = new String[librosDisponibles.size()];
+        for (int i = 0; i < librosDisponibles.size(); i++) {
+            nombresLibros[i] = librosDisponibles.get(i).getIsbn();
+        }
+
+
+        jList1.setListData(nombresLibros);
+        }
  
-   jPanel1.revalidate();
-   jPanel1.repaint();
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }//GEN-LAST:event_btnPanelAuxActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-    ejemplares = 0;
-    recaudado = 0;
-    ganancias = 0;
-    
-    if(txtIsbn.getText().isEmpty()){
-          JOptionPane.showMessageDialog(this, "Campo vacío, escriba un ISBN", "Error", JOptionPane.ERROR_MESSAGE);
+        ejemplares = 0;
+        recaudado = 0;
+        ganancias = 0;
+
+        if(txtIsbn.getText().isEmpty()){
+              JOptionPane.showMessageDialog(this, "Campo vacío, escriba un ISBN", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        String isbn = txtIsbn.getText();
+
+        javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();        
+        tableModel.setRowCount(0);    
+        java.util.List<String[]> datos = obtenerDatosPorIsbn(isbn); 
+
+        for (String[] fila : datos) {
+            tableModel.addRow(fila);        
+        }
+
+        lbEVendidos.setText(String.valueOf(ejemplares));
+        lblRecaudado.setText(String.valueOf(recaudado));
+        lblGanancias.setText(String.valueOf(ganancias));
+        //color
+        lbEVendidos.setForeground(java.awt.Color.BLUE);
+        lblRecaudado.setForeground(java.awt.Color.BLUE);
+        lblGanancias.setForeground(java.awt.Color.BLUE);
     }
-    String isbn = txtIsbn.getText();
-    
-    javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();        
-    tableModel.setRowCount(0);    
-    java.util.List<String[]> datos = obtenerDatosPorIsbn(isbn); 
-        
-    for (String[] fila : datos) {
-        tableModel.addRow(fila);        
-    }
-    
-    lbEVendidos.setText(String.valueOf(ejemplares));
-    lblRecaudado.setText(String.valueOf(recaudado));
-    lblGanancias.setText(String.valueOf(ganancias));
-    //color
-    lbEVendidos.setForeground(java.awt.Color.BLUE);
-    lblRecaudado.setForeground(java.awt.Color.BLUE);
-    lblGanancias.setForeground(java.awt.Color.BLUE);
-}
 
     private java.util.List<String[]> obtenerDatosPorIsbn(String isbn) {
-    java.util.List<String[]> datos = new java.util.ArrayList<>();
-    for (Ventas ventas : modelo.ventas) {
-        for (Libro ventasLib : ventas.getLibrosVendidos()) {
-            if (ventasLib.getIsbn().equalsIgnoreCase(isbn)) {
-                String fecha = ventas.getFecha();
-                String cliente = ventas.getCliente();
-                
-                String factura = ventas.getFactura() + "";
-                String cantidad = String.valueOf(ventasLib.getCantidadVendidoEnVenta());
-                String precioVenta = ventasLib.getPrecioVenta() + "";
-                String precioCosto = ventasLib.getPrecioCosto() + "";
-                
-                ejemplares += Integer.parseInt(cantidad);
-                String importe = String.valueOf((int) (Integer.parseInt(cantidad) * Double.parseDouble(precioVenta)));
-                System.out.println("importe: " + importe);
-                recaudado += Integer.parseInt(importe);
-                ganancias += (Double.parseDouble(precioVenta) - Double.parseDouble(precioCosto)) * Integer.parseInt(cantidad);
-                
-                datos.add(new String[]{fecha, cliente, factura, cantidad, precioVenta, importe});
-                importe = "";
-                cantidad = "";
+        java.util.List<String[]> datos = new java.util.ArrayList<>();
+        for (Ventas ventas : modelo.ventas) {
+            for (Libro ventasLib : ventas.getLibrosVendidos()) {
+                if (ventasLib.getIsbn().equalsIgnoreCase(isbn)) {
+                    String fecha = ventas.getFecha();
+                    String cliente = ventas.getCliente();
+
+                    String factura = ventas.getFactura() + "";
+                    String cantidad = String.valueOf(ventasLib.getCantidadVendidoEnVenta());
+                    String precioVenta = ventasLib.getPrecioVenta() + "";
+                    String precioCosto = ventasLib.getPrecioCosto() + "";
+
+                    ejemplares += Integer.parseInt(cantidad);
+                    String importe = String.valueOf((int) (Integer.parseInt(cantidad) * Double.parseDouble(precioVenta)));
+
+                    recaudado += Integer.parseInt(importe);
+                    ganancias += (Double.parseDouble(precioVenta) - Double.parseDouble(precioCosto)) * Integer.parseInt(cantidad);
+
+                    datos.add(new String[]{fecha, cliente, factura, cantidad, precioVenta, importe});
+                    importe = "";
+                    cantidad = "";
+                }
             }
         }
-    }
-    System.out.println(ejemplares);
-    System.out.println(recaudado);
-    System.out.println(ganancias);
-    return datos;
+
+        return datos;
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     
     private void exportarDatos() {
+        javax.swing.table.TableModel modeloTabla = jTable1.getModel();
+        if (modeloTabla.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "La tabla está vacía. No hay datos para exportar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-      
-    ArchivoGrabacion archivo = new ArchivoGrabacion("VENTAS.CSV");
+        ArchivoGrabacion archivo = new ArchivoGrabacion("VENTAS.CSV");
 
-    // Escribir los títulos de las columnas
-    archivo.grabarLinea("Fecha;Cliente;Factura;Cantidad;Precio;Importe");
+        // Escribir los titulos de las columnas
+        archivo.grabarLinea("Fecha;Cliente;Factura;Cantidad;Precio;Importe");
 
-    // Obtener el modelo de la tabla y escribir los datos
-    javax.swing.table.TableModel modeloTabla = jTable1.getModel();
-    for (int i = 0; i < modeloTabla.getRowCount(); i++) {
-        StringBuilder linea = new StringBuilder();
-        for (int j = 0; j < modeloTabla.getColumnCount(); j++) {
-            Object value = modeloTabla.getValueAt(i, j);
-            //linea.append(modeloTabla.getValueAt(i, j).toString());
-            linea.append(value != null ? value.toString() : "");
-            if (j < modeloTabla.getColumnCount() - 1) {
-                linea.append(";");
+        // Escribir los datos de la tabla
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            StringBuilder linea = new StringBuilder();
+            boolean filaVacia = true;
+            for (int j = 0; j < modeloTabla.getColumnCount(); j++) {
+                Object value = modeloTabla.getValueAt(i, j);
+                if (value != null && !value.toString().trim().isEmpty()) {
+                    filaVacia = false;
+                }
+                linea.append(value != null ? value.toString() : "");
+                if (j < modeloTabla.getColumnCount() - 1) {
+                    linea.append(";");
+                }
+            }
+            // Solo escribir la fila si no esta vacia
+            if (!filaVacia) {
+                archivo.grabarLinea(linea.toString());
             }
         }
-        archivo.grabarLinea(linea.toString());
-    }
-    archivo.cerrar();
-    
+        archivo.cerrar();
+        
+     
     
 }
-    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-    javax.swing.table.TableModel modeloTabla = jTable1.getModel();
-  
-        exportarDatos();
-        JOptionPane.showMessageDialog(this, "Exportado!");
     
-   
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+        javax.swing.table.TableModel modeloTabla = jTable1.getModel();
+        boolean tieneDatos = false;
+
+        for (int i = 0; i < modeloTabla.getRowCount() && !tieneDatos; i++) {
+            for (int j = 0; j < modeloTabla.getColumnCount(); j++) {
+                if (modeloTabla.getValueAt(i, j) != null && !modeloTabla.getValueAt(i, j).toString().trim().isEmpty()) {
+                    tieneDatos = true;
+
+                }
+            }
+
+        }
+
+        if (tieneDatos) {
+            exportarDatos();
+            JOptionPane.showMessageDialog(this, "Exportado!");
+        } else {
+
+            JOptionPane.showMessageDialog(this, "La tabla está vacía. No hay datos para exportar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnExportarActionPerformed
 
     
     
     
     private String obtenerIsbnPorNombre(String nombreLibro) {
-    for (Libro libro : modelo.getLibros()) {
-        if (libro.getIsbn().equals(nombreLibro)) {
-            return libro.getIsbn();
+        for (Libro libro : modelo.getLibros()) {
+            if (libro.getIsbn().equals(nombreLibro)) {
+                return libro.getIsbn();
+            }
         }
+        return null;
     }
-    return null;
-}
     
     private void consultarLibro(String isbn) {
     
-    javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();
-    tableModel.setRowCount(0);
-    java.util.List<String[]> datos = obtenerDatosPorIsbn(isbn); 
+        javax.swing.table.DefaultTableModel tableModel = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        tableModel.setRowCount(0);
+        java.util.List<String[]> datos = obtenerDatosPorIsbn(isbn); 
 
-    // agrega filas a la tabla
-    for (String[] fila : datos) {
-        tableModel.addRow(fila);
-    }
+        // agrega filas a la tabla
+        for (String[] fila : datos) {
+            tableModel.addRow(fila);
+        }
 
-    lbEVendidos.setText(String.valueOf(ejemplares));
-    lblRecaudado.setText(String.valueOf(recaudado));
-    lblGanancias.setText(String.valueOf(ganancias));
+        lbEVendidos.setText(String.valueOf(ejemplares));
+        lblRecaudado.setText(String.valueOf(recaudado));
+        lblGanancias.setText(String.valueOf(ganancias));
 
-    lbEVendidos.setForeground(java.awt.Color.BLUE);
-    lblRecaudado.setForeground(java.awt.Color.BLUE);
-    lblGanancias.setForeground(java.awt.Color.BLUE);
+        lbEVendidos.setForeground(java.awt.Color.BLUE);
+        lblRecaudado.setForeground(java.awt.Color.BLUE);
+        lblGanancias.setForeground(java.awt.Color.BLUE);
 }
     
-    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {
-        
-    // Verificar si se hizo doble clic en un elemento
-    if (evt.getClickCount() == 2) {
-        String nombreLibroSeleccionado = jList1.getSelectedValue();
-        cambio = false;
-        if (nombreLibroSeleccionado != null) {
-            
-            String isbnSeleccionado = obtenerIsbnPorNombre(nombreLibroSeleccionado);            
-            consultarLibro(isbnSeleccionado);            
-            //jList1.setVisible(false);
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {        
+        // Verificar si se hizo doble click
+        if (evt.getClickCount() == 2) {
+            String nombreLibroSeleccionado = jList1.getSelectedValue();
+            cambio = false;
+            if (nombreLibroSeleccionado != null) {
+
+                String isbnSeleccionado = obtenerIsbnPorNombre(nombreLibroSeleccionado);            
+                consultarLibro(isbnSeleccionado);            
+
                 ejemplares = 0;
                 recaudado = 0;
                 ganancias = 0;
-                //jlAyuda.setVisible(false);
-                 jlAyuda.setVisible(cambio);
-          jList1.setVisible(cambio);
-         
+
+                jlAyuda.setVisible(cambio);
+                jList1.setVisible(cambio);
+
+            }
         }
     }
-}
     /**
      * @param args the command line arguments
      */

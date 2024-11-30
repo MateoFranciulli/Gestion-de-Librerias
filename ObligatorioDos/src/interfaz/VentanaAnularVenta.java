@@ -138,10 +138,10 @@ private void cargarListaDatos(Ventas venta) {
             + " - Factura: " + venta.getFactura()
             + " - Precio Total: " + venta.getPrecio();
     datosLibros.add(datosVenta);
-    System.out.println("PrimeerREGISTRO");
+    
 
     if (venta.getLibrosVendidos() != null) {
-        System.out.println("Cantidad de libros vendidos: " + venta.getLibrosVendidos().size());
+        
         for (Libro libro : venta.getLibrosVendidos()) {
             String datosLibro = "Título: " + libro.getTitulo()
                     + " - Cantidad: " + libro.getCantidadVendido()
@@ -149,11 +149,9 @@ private void cargarListaDatos(Ventas venta) {
                     + " - Editorial: " + libro.getEditorial()
                     + " - Autor: " + libro.getAutor();
             datosLibros.add(datosLibro);
-            System.out.println("Entro anular");
+            
         }
-    } else {
-        System.out.println("La lista de libros vendidos es nula.");
-    }
+    } 
 
     if (datosLibros.isEmpty()) {
         JOptionPane.showMessageDialog(this, "No hay libros vendidos en esta venta.");
@@ -169,16 +167,16 @@ private void cargarListaDatos(Ventas venta) {
             return venta;
         }
     }
-    return null; // Si no se encuentra la venta
+    return null; // si no se encuentra la venta
 }
     
     
     
-    private void txtNFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNFacturaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNFacturaActionPerformed
+    private void txtNFacturaActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    }
 
-    private void jbAnularVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularVentaActionPerformed
+    private void jbAnularVentaActionPerformed(java.awt.event.ActionEvent evt) {
      try {
             int numeroFactura = Integer.parseInt(txtNFactura.getText().trim());
             Ventas venta = buscarVentaPorNumeroFactura(numeroFactura);
@@ -197,7 +195,7 @@ private void cargarListaDatos(Ventas venta) {
         }
     
 
-    }//GEN-LAST:event_jbAnularVentaActionPerformed
+    }
 
        private void anularVenta(Ventas venta) {
         modelo.getVentas().remove(venta);
@@ -208,7 +206,7 @@ private void cargarListaDatos(Ventas venta) {
         modelo.guardarDatos();
     }
         
-    private void jbIngresarNFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarNFacturaActionPerformed
+    private void jbIngresarNFacturaActionPerformed(java.awt.event.ActionEvent evt) {
        
         try {
             int numeroFactura = Integer.parseInt(txtNFactura.getText().trim());
@@ -223,7 +221,7 @@ private void cargarListaDatos(Ventas venta) {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Número de factura inválido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jbIngresarNFacturaActionPerformed
+    }
 
     /**
      * @param args the command line arguments

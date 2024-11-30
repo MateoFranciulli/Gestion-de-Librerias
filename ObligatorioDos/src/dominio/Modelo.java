@@ -103,7 +103,7 @@ public class Modelo extends Observable implements Serializable {
     }
 
     public void agregarLibro(Libro libro) {
-         if (libros == null) { // Ensure libros is initialized
+         if (libros == null) { //Para asegurar que se inializan
             libros = new ArrayList<>();
         }
         libros.add(libro);
@@ -178,15 +178,4 @@ public class Modelo extends Observable implements Serializable {
         setChanged();
         super.notifyObservers();
     }
-}   /*
-    public void guardarDatos() {
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("sistema"));
-            out.writeObject(this);
-            out.close();
-        } catch(IOException e) {
-            System.out.println("No hay datos"); 
-        }
-        notifyObservers();
-    }
-*/
+}  

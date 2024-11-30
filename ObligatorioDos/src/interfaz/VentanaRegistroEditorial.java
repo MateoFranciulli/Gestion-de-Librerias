@@ -26,7 +26,7 @@ public class VentanaRegistroEditorial extends javax.swing.JFrame implements Obse
         liEditorialesIngresadas.setModel(liEditorialesIngresadasModel);
         liPaisEditorialRegistrada.setModel(liPaisEditorialRegistradaModel);
         cargarEditoriales();
-        modelo.addObserver(this); // Añadir la ventana como observador
+        modelo.addObserver(this); 
     }
 
     /**

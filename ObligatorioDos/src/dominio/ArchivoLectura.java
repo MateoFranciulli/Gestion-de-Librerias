@@ -33,7 +33,7 @@ public class ArchivoLectura {
     }
     
     public String linea() {
-        // devuelve la última linea leida
+        // devuelve la ultima linea leida
         return linea;
     }
     public void cerrar() {

@@ -193,31 +193,10 @@ public class VentanaMenu extends javax.swing.JFrame {
        
     // Guardar datos al cerrar la ventana
     modelo.guardarDatos();
-    System.out.println("Datos guardados al cerrar la ventana.");  
-    
-    
-    /*metodo que espera respuesta:
     
     
     
-          int respuesta = javax.swing.JOptionPane.showConfirmDialog(
-        this,
-        "¿Estás seguro de que quieres salir? Los datos se guardarán automáticamente.",
-        "Confirmar salida",
-        javax.swing.JOptionPane.YES_NO_OPTION,
-        javax.swing.JOptionPane.WARNING_MESSAGE
-    );
-
-    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
-        modelo.guardarDatos();
-        System.out.println("Datos guardados al cerrar la ventana.");
-        dispose(); // Cierra la ventana
-    } else {
-        // Cancela el cierre
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-    }
-    
-    */
+   
     
     
     
